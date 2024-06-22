@@ -15,10 +15,14 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#893D07'
+          DEFAULT: '#FFFFFF'
         },
-        secondary: '#F2B49B',
-        tertiary: '#A65E30',
+        secondary: {
+          DEFAULT: '#3F51B5',
+        },
+        tertiary: {
+          DEFAULT: '#FFC107',
+        },
         ...defaultTheme.colors 
       },
     }
