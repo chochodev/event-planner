@@ -2,11 +2,13 @@ import AccentLink from 'components/link/accent';
 import PrimaryLink from 'components/link/primary';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { RiAddLine } from 'react-icons/ri';
+import { RiAddLine, RiMenu4Line } from 'react-icons/ri';
+import { Modal } from '@mui/material';
 
 
 const Header = () => {
-  const [smallNav, setSmallNav] = useState(false);
+  const [smallNav, setSmallNav] = useState(true);
+  const [openNav, setOpenNav] = useState(false);
   const [userLoggedIn, setUserLoggedIn] = useState(false);
 
   return (
@@ -22,7 +24,7 @@ const Header = () => {
 
         <div className='flex justify-between items-center w-full h-max px-[1rem] sm:px-[2rem] '>
           <div className='flex justify-between items-center max-w-[75rem] w-full mx-auto h-max py-[1rem] '>
-            <div className='flex items-center gap-[3rem]'>
+            <div className='flex items-center gap-[1.875rem] lg:gap-[3rem]'>
               <Link to='/' className='flex items-center gap-[0.5]'>
                 {/* :::::::::::::::::::::: LOGO */}
                 <img 
@@ -37,29 +39,49 @@ const Header = () => {
               <div className='flex items-center gap-[2rem] h-full '>
                 <Link 
                   to='/events'
-                  className='text-black/50 text-[0.75rem] font-[600] hover:text-secondary-hover ease-250'
+                  className='text-black/50 text-[0.875rem] font-[600] hover:text-secondary-hover ease-250'
                 >Discover</Link>
                 <Link 
                   to='/dashboard'
-                  className='text-black/50 text-[0.75rem] font-[600] hover:text-secondary-hover ease-250'
+                  className='text-black/50 text-[0.875rem] font-[600] hover:text-secondary-hover ease-250'
                 >Dashboard</Link>
               </div>
             </div>
             
-            <div className='flex gap-[0.5rem] items-center'>
-              <PrimaryLink to='/events/create'>
-                <p className='flex items-center gap-[0.25rem]'><RiAddLine className='text-[1.25rem] text-white' />Create</p>
-              </PrimaryLink>
-              <button className='flex items-center gap-[0.5rem] p-[0.25rem] rounded-[5rem] border-solid border-[2px] border-black/20 hover:border-black/40 ease-250 '>
-                <img
-                  src='/assets/images/dp.png'
-                  alt='Profile'
-                  className='h-[2rem] w-[2rem] min-w-[2rem] rounded-[50rem] object-cover '
-                />
-                <p className='text-[0.875rem] text-black/90 font-[600] pr-[0.5rem] '>Michelle</p>
-              </button>
-            </div>
+            {smallNav === false? 
+              <div className='flex gap-[0.5rem] items-center'>
+                <PrimaryLink to='/events/create'>
+                  <p className='flex items-center gap-[0.25rem]'><RiAddLine className='text-[1.25rem] text-white' />Create</p>
+                </PrimaryLink>
+                <button className='flex items-center gap-[0.5rem] p-[0.25rem] rounded-[5rem] border-solid border-[2px] border-black/20 hover:border-black/40 ease-250 '>
+                  <img
+                    src='/assets/images/dp.png'
+                    alt='Profile'
+                    className='h-[2rem] w-[2rem] min-w-[2rem] rounded-[50rem] object-cover '
+                  />
+                  <p className='text-[0.875rem] text-black/90 font-[600] pr-[0.5rem] '>Michelle</p>
+                </button>
+              </div> :
+              <div>
+                <button 
+                  onClick={()=>setOpenNav(true)}
+                  className='flex items-center justify-center h-[2.5rem] w-[2.5rem] rounded-[4px] hover:bg-secondary/10 active:bg-secondary/30 ease-250'
+                >
+                  <RiMenu4Line className='text-secondary text-[1.375rem]' />
+                </button>
+              </div>
+            }
 
+            <Modal
+              open={openNav}
+              onClose={()=>setOpenNav(false)}
+            >
+              <div className='flex flex-col w-screen h-screen bg-secondary'>
+                <div>
+                  <Link to='/'>Account</Link>
+                </div>
+              </div>  
+            </Modal>
           </div>
         </div>
       </header>
