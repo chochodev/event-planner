@@ -4,7 +4,15 @@ import React from 'react'
 const HomePage = () => {
   return (
     <HomeLayout>
-      <p className='text-3xl font-[600]'>HomePage</p>
+      <div className='flex flex-col items-center justify-center text-center max-w-[75rem] mx-auto w-full py-[3rem] px-[1rem] sm:px-[2rem] '>
+        <div className='flex flex-col gap-[0.5rem] items-center text-center w-max mx-auto'>
+          <p className='text-[0.75rem] font-[600] text-black/50'>CREATE, EXPLORE, & BOOK EVENTS.</p>
+          <h1 
+            className='text-[2rem] text-black font-[600]'
+          >Transform Your Ideas into Unforgettable Events</h1>
+        </div>
+
+      </div>
     </HomeLayout>
   )
 }

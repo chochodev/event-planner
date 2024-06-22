@@ -4,7 +4,7 @@ import React from 'react'
 
 const HomeLayout = ({ children }) => {
   return (
-    <div className='relative bg-secondary'>
+    <div className='relative bg-primary'>
     <Header />
     {children}
     <Footer />

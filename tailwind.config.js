@@ -19,9 +19,12 @@ module.exports = {
         },
         secondary: {
           DEFAULT: '#3F51B5',
+          dark: '#323d76',
+          hover: '#4963c7',
+          light: '#5d7dd4',
         },
         tertiary: {
-          DEFAULT: '#FFC107',
+          DEFAULT: '#FF3131',
         },
         ...defaultTheme.colors 
       },
