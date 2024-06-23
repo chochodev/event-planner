@@ -21,7 +21,7 @@ const AccentLink = ({ to, children }) => {
         },
       }}
     >
-      <span className='text-primary text-[0.875rem]'>{children}</span>
+      <span className='text-primary text-[0.625rem] md:text-[0.875rem]'>{children}</span>
     </Button>
   )
 }
