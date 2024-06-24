@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Button, 
   FormControl, 
   MenuItem, 
   Select, 
-  TextField 
+  TextField,
+  Alert, 
+  Collapse
 } from '@mui/material';
 import Logo from 'components/logo';
 import axiosInstance from 'utils/csrftoken';
+import { RiCheckLine, RiCloseLine } from "react-icons/ri";
 
 const SignUp = () => {
+  const [openFlashMessage, setOpenFlashMessage] = useState(false);
+  const [flashMessage, setFlashMessage] = useState('');
+
   const [form, setForm] = useState({
     first_name: '',
     last_name: '',
@@ -32,13 +38,54 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post('/auth/signup', form);
+      const response = await axiosInstance.post('/auth/signup/', form);
       console.log('Success:', response.data);
+      setFlashMessage(response.data);
+      setOpenFlashMessage(true);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error:', error.response ? error.response.data : error.message);
     }
   };
+
+  useEffect(() => {
+    const resetFlashMessage = () => {
+      if (openFlashMessage === true) {
+        setTimeout(() => {
+          setOpenFlashMessage(false);
+        }, 5000);
+      }
+    }
+
+    resetFlashMessage();
+  }, [openFlashMessage])
+
   return (
+    <>
+    {openFlashMessage && 
+    // <div className=''>
+    // <Alert 
+    //   icon={<RiCheckLine className='text-green-500 text-[1rem]' />} 
+    //   severity="success"
+    // >{flashMessage}</Alert>
+
+    <Collapse in={openFlashMessage}>
+      <Alert
+        action={
+          <Button
+            color="inherit"
+            size="small"
+            onClick={() => {
+              setOpenFlashMessage(false);
+            }}
+          >
+            <RiCloseLine className='text-[1rem] ' />
+          </Button>
+        }
+        sx={{ mb: 2 }}
+      >{flashMessage}</Alert>
+    </Collapse>
+    // </div>
+    }
     <div className='grid grid-cols-1 md:grid-cols-2 justify-center items-center w-full min-h-screen'>
       <div className='flex flex-col gap-[1.875rem] px-[2rem] lg:px-[4rem] py-[2rem]'>
         <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Welcome</h2>
@@ -187,6 +234,7 @@ const SignUp = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

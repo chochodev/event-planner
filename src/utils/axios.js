@@ -1,25 +1,27 @@
+// utils/csrftoken.js
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_API_URL || 'http://127.0.0.1:8000',
+  baseURL: process.env.REACT_APP_BACKEND_API_URL || 'http://127.0.0.1:8000/api',
 });
 
 let csrfToken = null;
 let isFetchingToken = false;
 
 const fetchCsrfToken = async () => {
-  try {
-    if (!csrfToken && !isFetchingToken) {
+  if (!csrfToken && !isFetchingToken) {
+    try {
       isFetchingToken = true;
-      const response = await axiosInstance.get('/request-token'); 
+      const response = await axiosInstance.get('/request-token/');
       csrfToken = response.data.csrfToken;
-      Cookies.set('csrftoken', csrfToken); // Store the token in cookies if needed
+      Cookies.set('csrfToken', csrfToken);
+      console.log('CSRF Token:', csrfToken);
+    } catch (error) {
+      console.error('Error fetching CSRF token:', error);
+    } finally {
       isFetchingToken = false;
     }
-  } catch (error) {
-    console.error('Error fetching CSRF token:', error);
-    isFetchingToken = false;
   }
 };
 
@@ -31,9 +33,7 @@ axiosInstance.interceptors.request.use(
     config.headers['X-CSRFToken'] = csrfToken;
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 export default axiosInstance;
