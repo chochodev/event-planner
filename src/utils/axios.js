@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_API_URL,
+  baseURL: process.env.REACT_APP_BACKEND_API_URL || 'http://127.0.0.1:8000',
 });
 
 let csrfToken = null;

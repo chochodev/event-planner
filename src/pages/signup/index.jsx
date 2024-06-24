@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, FormControl, MenuItem, Select, TextField } from '@mui/material';
+import { 
+  Button, 
+  FormControl, 
+  MenuItem, 
+  Select, 
+  TextField 
+} from '@mui/material';
 import Logo from 'components/logo';
+import axiosInstance from 'utils/csrftoken';
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -22,12 +29,15 @@ const SignUp = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Send form data to the backend here
-    console.log(form);
+    try {
+      const response = await axiosInstance.post('/auth/signup', form);
+      console.log('Success:', response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
-
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 justify-center items-center w-full min-h-screen'>
       <div className='flex flex-col gap-[1.875rem] px-[2rem] lg:px-[4rem] py-[2rem]'>
@@ -159,7 +169,7 @@ const SignUp = () => {
             />
           </FormControl>
         </form>
-        <Button type="submit" variant="contained" color="primary" fullWidth>
+        <Button onClick={handleSubmit} variant="contained" color="primary" fullWidth>
           Sign Up
         </Button>
         <div className='flex gap-[0.5rem] items-center'>
