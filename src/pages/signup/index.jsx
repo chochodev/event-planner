@@ -11,11 +11,12 @@ import {
 } from '@mui/material';
 import Logo from 'components/logo';
 import axiosInstance from 'utils/csrftoken';
-import { RiCheckLine, RiCloseLine } from "react-icons/ri";
+import { RiCheckLine, RiCloseLine, RiErrorWarningLine } from "react-icons/ri";
 
 const SignUp = () => {
   const [openFlashMessage, setOpenFlashMessage] = useState(false);
   const [flashMessage, setFlashMessage] = useState('');
+  const [flashSeverity, setFlashSeverity] = useState('success'); // New state for severity
 
   const [form, setForm] = useState({
     first_name: '',
@@ -40,16 +41,21 @@ const SignUp = () => {
     try {
       const response = await axiosInstance.post('/auth/signup/', form);
       console.log('Success:', response.data);
-      setFlashMessage(response.data);
+      setFlashMessage(response.data.message || 'User created successfully');
+      setFlashSeverity('success');
       setOpenFlashMessage(true);
     } catch (error) {
       console.error('Error:', error.response ? error.response.data : error.message);
+      const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
+      setFlashMessage(errorMessage);
+      setFlashSeverity('error');
+      setOpenFlashMessage(true);
     }
   };
 
   useEffect(() => {
     const resetFlashMessage = () => {
-      if (openFlashMessage === true) {
+      if (openFlashMessage) {
         setTimeout(() => {
           setOpenFlashMessage(false);
         }, 5000);
@@ -57,35 +63,36 @@ const SignUp = () => {
     }
 
     resetFlashMessage();
-  }, [openFlashMessage])
+  }, [openFlashMessage]);
 
   return (
     <>
-    {openFlashMessage && 
-    // <div className=''>
-    // <Alert 
-    //   icon={<RiCheckLine className='text-green-500 text-[1rem]' />} 
-    //   severity="success"
-    // >{flashMessage}</Alert>
-
-    <Collapse in={openFlashMessage}>
-      <Alert
-        action={
-          <Button
-            color="inherit"
-            size="small"
-            onClick={() => {
-              setOpenFlashMessage(false);
-            }}
-          >
-            <RiCloseLine className='text-[1rem] ' />
-          </Button>
-        }
-        sx={{ mb: 2 }}
-      >{flashMessage}</Alert>
-    </Collapse>
-    // </div>
-    }
+      <Collapse in={openFlashMessage}>
+        <Alert
+          severity={flashSeverity} // Set severity dynamically
+          icon={flashSeverity === 'success' ? 
+            <RiCheckLine className='text-green-500 text-[1rem]' /> : 
+            <RiErrorWarningLine className='text-red-500 text-[1rem]' />
+          }
+          action={
+            <Button
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setOpenFlashMessage(false);
+              }}
+              sx={{
+                paddingX: '0',
+                borderRadius: '50rem'
+              }}
+            >
+              <RiCloseLine className='text-[1rem] ' />
+            </Button>
+          }
+        >
+          {flashMessage}
+        </Alert>
+      </Collapse>
     <div className='grid grid-cols-1 md:grid-cols-2 justify-center items-center w-full min-h-screen'>
       <div className='flex flex-col gap-[1.875rem] px-[2rem] lg:px-[4rem] py-[2rem]'>
         <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Welcome</h2>
