@@ -32,6 +32,9 @@ This would be a cliche signing in method.
 
 
 <!-- :::::::::::::::::::::::::::::::::::::::: -->
+session logged in state not working
+new token are fetched every response
+<!-- :::::::::::::::::::::::::::::::::::::::: -->
 
 
 # Getting Started with Create React App

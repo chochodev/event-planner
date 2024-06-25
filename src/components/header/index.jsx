@@ -12,13 +12,24 @@ import {
   RiLogoutBoxLine
 } from 'react-icons/ri';
 import { Modal } from '@mui/material';
+import { getSessionStatus } from 'utils/auth_status';
 
 
 const Header = () => {
   const [openNav, setOpenNav] = useState(false);
-  // const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
+    // Check session status
+    getSessionStatus()
+      .then((response) => {
+        console.log('true', response.authenticated)
+        setAuthenticated(response.authenticated);
+      })
+      .catch((error) => {
+        console.error('Error checking session status:', error);
+      })
+
     const handleResize = () => {
       if (window.innerWidth > 768) {
         setOpenNav(false);
@@ -32,6 +43,7 @@ const Header = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     }
+
   }, []);
 
   const links = [
@@ -45,12 +57,14 @@ const Header = () => {
       <header 
         className={`sticky top-0 left-0 z-[10] w-full bg-primary border-solid border-black/20 border-x-0 border-t-0 border-b-[1px] `}
       >
+        {!authenticated &&
         <div className='flex flex-col items-center justify-center w-full bg-secondary px-[1rem] sm:px-[2rem] '>
           <div className='flex max-sm:flex-col gap-y-[0.875rem] justify-between items-start sm:items-center py-[0.5rem] max-w-[75rem] w-full mx-auto'>
             <p className='text-[0.75rem] md:text-[0.875rem] text-primary '>Sign in to Create Memorable Moments, Hassle-Free!!</p>
             <AccentLink to='/signin'>Sign in</AccentLink>
           </div>
         </div>
+        }
 
         <div className='flex justify-between items-center w-full h-max px-[1rem] sm:px-[2rem] '>
           <div className='flex justify-between items-center max-w-[75rem] w-full mx-auto h-max py-[0.75rem] md:py-[1rem] '>
