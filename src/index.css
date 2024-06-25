@@ -82,3 +82,13 @@ html {
   }
 }
 
+/* HTML: <div className="loader"></div> */
+.loader {
+  width: 30px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid;
+  border-color: #fff #fff0;
+  animation: rotate-spinner 1s infinite;
+}
+@keyframes rotate-spinner {to{transform: rotate(.5turn)}}

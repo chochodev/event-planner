@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/style-prop-object */
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Button, 
@@ -10,13 +11,14 @@ import {
   Collapse
 } from '@mui/material';
 import Logo from 'components/logo';
-import axiosInstance from 'utils/csrftoken';
+import axiosInstance from 'utils/axios';
 import { RiCheckLine, RiCloseLine, RiErrorWarningLine } from "react-icons/ri";
 
 const SignUp = () => {
   const [openFlashMessage, setOpenFlashMessage] = useState(false);
   const [flashMessage, setFlashMessage] = useState('');
-  const [flashSeverity, setFlashSeverity] = useState('success'); // New state for severity
+  const [flashSeverity, setFlashSeverity] = useState('success');
+  const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
     first_name: '',
@@ -38,32 +40,36 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
       const response = await axiosInstance.post('/auth/signup/', form);
       console.log('Success:', response.data);
-      setFlashMessage(response.data.message || 'User created successfully');
+      setFlashMessage(response.data?.message || 'User created successfully');
       setFlashSeverity('success');
+      setLoading(false);
       setOpenFlashMessage(true);
+
+      // closes the flash message and redirect
+      setTimeout(() => {
+        setOpenFlashMessage(false);
+        window.location.href = '/signin';
+      }, 5000);
     } catch (error) {
       console.error('Error:', error.response ? error.response.data : error.message);
       const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
       setFlashMessage(errorMessage);
       setFlashSeverity('error');
+      setLoading(false);
       setOpenFlashMessage(true);
+
+      // closes the flash message
+      setTimeout(() => {
+        setOpenFlashMessage(false);
+      }, 5000);
     }
   };
 
-  useEffect(() => {
-    const resetFlashMessage = () => {
-      if (openFlashMessage) {
-        setTimeout(() => {
-          setOpenFlashMessage(false);
-        }, 5000);
-      }
-    }
-
-    resetFlashMessage();
-  }, [openFlashMessage]);
 
   return (
     <>
@@ -223,8 +229,8 @@ const SignUp = () => {
             />
           </FormControl>
         </form>
-        <Button onClick={handleSubmit} variant="contained" color="primary" fullWidth>
-          Sign Up
+        <Button onClick={handleSubmit} variant="contained" color="primary" sx={{height: '3rem'}} fullWidth>
+          {loading? <div className="loader"></div> : "Sign Up"}
         </Button>
         <div className='flex gap-[0.5rem] items-center'>
           <p className='text-[0.875rem]'>Already have an account?</p>

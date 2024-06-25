@@ -13,7 +13,7 @@ const fetchCsrfToken = async () => {
   if (!csrfToken && !isFetchingToken) {
     try {
       isFetchingToken = true;
-      const response = await axiosInstance.get('/request-token/');
+      const response = await axiosInstance.get('/auth/request-token/');
       csrfToken = response.data.csrfToken;
       Cookies.set('csrfToken', csrfToken);
       console.log('CSRF Token:', csrfToken);

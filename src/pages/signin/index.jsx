@@ -1,17 +1,26 @@
+/* eslint-disable react/style-prop-object */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, FormControl, MenuItem, Select, TextField } from '@mui/material';
+import { 
+  Button, 
+  FormControl, 
+  TextField,
+  Alert, 
+  Collapse 
+} from '@mui/material';
 import Logo from 'components/logo';
+import axiosInstance from 'utils/axios';
+import { RiCheckLine, RiCloseLine, RiErrorWarningLine } from "react-icons/ri";
 
 const SignIn = () => {
+  const [openFlashMessage, setOpenFlashMessage] = useState(false);
+  const [flashMessage, setFlashMessage] = useState('');
+  const [flashSeverity, setFlashSeverity] = useState('success');
+  const [loading, setLoading] = useState(false);
+
   const [form, setForm] = useState({
-    first_name: '',
-    last_name: '',
     email: '',
-    gender: '',
     password: '',
-    address: '',
-    zip_code: ''
   });
 
   const handleChange = (e) => {
@@ -22,13 +31,66 @@ const SignIn = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Send form data to the backend here
-    console.log(form);
+    setLoading(true);
+
+    try {
+      const response = await axiosInstance.post('/auth/signin/', form);
+      console.log('Success:', response.data);
+      setFlashMessage(response.data?.message || 'User logged in successfully');
+      setFlashSeverity('success');
+      setLoading(false);
+      setOpenFlashMessage(true);
+
+      // closes the flash message and redirect
+      setTimeout(() => {
+        setOpenFlashMessage(false);
+        window.location.href = '/';
+      }, 5000);
+    } catch (error) {
+      console.error('Error:', error.response ? error.response.data : error.message);
+      const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
+      setFlashMessage(errorMessage);
+      setFlashSeverity('error');
+      setLoading(false);
+      setOpenFlashMessage(true);
+
+      // closes the flash message
+      setTimeout(() => {
+        setOpenFlashMessage(false);
+      }, 5000);
+    }
   };
 
   return (
+    <>
+    <Collapse in={openFlashMessage}>
+      <Alert
+        severity={flashSeverity}
+        icon={flashSeverity === 'success' ? 
+          <RiCheckLine className='text-green-500 text-[1rem]' /> : 
+          <RiErrorWarningLine className='text-red-500 text-[1rem]' />
+        }
+        action={
+          <Button
+            color="inherit"
+            size="small"
+            onClick={() => {
+              setOpenFlashMessage(false);
+            }}
+            sx={{
+              paddingX: '0',
+              borderRadius: '50rem'
+            }}
+          >
+            <RiCloseLine className='text-[1rem] ' />
+          </Button>
+        }
+      >
+        {flashMessage}
+      </Alert>
+    </Collapse>
     <div className='grid grid-cols-1 md:grid-cols-2 justify-center items-center w-full min-h-screen'>
       <div className='flex flex-col gap-[1.875rem] px-[2rem] lg:px-[4rem] py-[2rem]'>
         <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Welcome</h2>
@@ -70,8 +132,8 @@ const SignIn = () => {
             />
           </FormControl>
         </form>
-        <Button type="submit" variant="contained" color="primary" fullWidth>
-          Sign In
+        <Button onClick={handleSubmit} variant="contained" color="primary" sx={{height: '3rem'}} fullWidth>
+          {loading? <div className="loader"></div> : "Sign Up"}
         </Button>
         <div className='flex gap-[0.5rem] items-center'>
           <p className='text-[0.875rem]'>Don't have an account?</p>
@@ -88,6 +150,7 @@ const SignIn = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
