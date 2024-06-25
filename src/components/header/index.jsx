@@ -23,8 +23,8 @@ const Header = () => {
     // Check session status
     getSessionStatus()
       .then((response) => {
-        console.log('true', response.authenticated)
-        setAuthenticated(response.authenticated);
+        console.log('true', response)
+        setAuthenticated(response);
       })
       .catch((error) => {
         console.error('Error checking session status:', error);

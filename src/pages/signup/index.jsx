@@ -228,6 +228,7 @@ const SignUp = () => {
               }}
             />
           </FormControl>
+          <button type='submit' hidden ></button>
         </form>
         <Button onClick={handleSubmit} variant="contained" color="primary" sx={{height: '3rem'}} fullWidth>
           {loading? <div className="loader"></div> : "Sign Up"}

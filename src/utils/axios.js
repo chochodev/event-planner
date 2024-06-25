@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BACKEND_API_URL || 'http://127.0.0.1:8000/api',
 });
 
-let csrfToken = null;
+let csrfToken = Cookies.get('csrfToken');
 let isFetchingToken = false;
 
 const fetchCsrfToken = async () => {
@@ -15,7 +15,7 @@ const fetchCsrfToken = async () => {
       isFetchingToken = true;
       const response = await axiosInstance.get('/auth/request-token/');
       csrfToken = response.data.csrfToken;
-      Cookies.set('csrfToken', csrfToken);
+      Cookies.set('csrfToken', csrfToken, { expires: 1 });
       console.log('CSRF Token:', csrfToken);
     } catch (error) {
       console.error('Error fetching CSRF token:', error);
