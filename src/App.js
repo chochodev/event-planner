@@ -2,8 +2,6 @@ import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 import MyRoute from 'routes';
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 
@@ -24,13 +22,11 @@ const customTheme = createTheme({
 
 function App() {
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={customTheme}>
-        <Router>
-          <MyRoute />
-        </Router>
-      </ThemeProvider>
-    </Provider>
+    <ThemeProvider theme={customTheme}>
+      <Router>
+        <MyRoute />
+      </Router>
+    </ThemeProvider>
   );
 }
 

@@ -1,6 +1,5 @@
-import React, { Suspense, lazy } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import useAuthCheck from 'hooks/useAuthCheck';
 
 const SignIn = lazy(() => import('pages/signin'));
 const SignUp = lazy(() => import('pages/signup'));
@@ -8,8 +7,11 @@ const HomePage = lazy(() => import('pages/home'));
 
 
 const MyRoute = () => {
-  useAuthCheck();
-
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    
+  }, []);
+  
   return (
     <Suspense fallback={
       <div className='fixed z-[100] inset-0 w-screen h-screen flex justify-center bg-secondary items-center'>

@@ -10,7 +10,6 @@ import {
 } from '@mui/material';
 import Logo from 'components/logo';
 import axiosInstance from 'utils/axios';
-import { getSessionStatus } from 'utils/auth_status';
 import { RiCheckLine, RiCloseLine, RiErrorWarningLine } from "react-icons/ri";
 
 const SignIn = () => {
@@ -38,37 +37,31 @@ const SignIn = () => {
 
     try {
       const response = await axiosInstance.post('/auth/signin/', form);
-      console.log('Success:', response.data);
       setFlashMessage(response.data?.message || 'User logged in successfully');
       setFlashSeverity('success');
-      setLoading(false);
       setOpenFlashMessage(true);
-      localStorage.setItem('token', response.data.token);
 
-      // closes the flash message and redirect
+      // :::::::: store token to local storage
+      localStorage.setItem('token', response.data?.token);
+
+      // :::::::: closes the flash message and redirect
       setTimeout(() => {
         setOpenFlashMessage(false);
-        // window.location.href = '/';
-        getSessionStatus()
-        .then((response) => {
-          console.log('loggedin state: ', response)
-        })
-        .catch((error) => {
-          console.error('Error checking session status:', error);
-        })
+        window.location.href = '/';
       }, 3000);
     } catch (error) {
       console.error('Error:', error.response ? error.response.data : error.message);
       const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
       setFlashMessage(errorMessage);
       setFlashSeverity('error');
-      setLoading(false);
       setOpenFlashMessage(true);
-
+      
       // closes the flash message
       setTimeout(() => {
         setOpenFlashMessage(false);
-      }, 5000);
+      }, 3000);
+    } finally {
+      setLoading(false);
     }
   };
 

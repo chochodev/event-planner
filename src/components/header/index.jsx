@@ -12,7 +12,6 @@ import {
   RiLogoutBoxLine
 } from 'react-icons/ri';
 import { Modal } from '@mui/material';
-import { getSessionStatus } from 'utils/auth_status';
 
 
 const Header = () => {
@@ -20,15 +19,6 @@ const Header = () => {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check session status
-    getSessionStatus()
-      .then((response) => {
-        setAuthenticated(response);
-      })
-      .catch((error) => {
-        console.error('Error checking session status:', error);
-      })
-
     const handleResize = () => {
       if (window.innerWidth > 768) {
         setOpenNav(false);
