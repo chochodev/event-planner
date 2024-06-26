@@ -1,8 +1,9 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 import MyRoute from 'routes';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { AuthProvider } from 'context/authStatusContext';
 
 
 const customTheme = createTheme({
@@ -22,11 +23,13 @@ const customTheme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={customTheme}>
-      <Router>
-        <MyRoute />
-      </Router>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={customTheme}>
+        <Router>
+          <MyRoute />
+        </Router>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 

@@ -26,6 +26,11 @@ module.exports = {
         tertiary: {
           DEFAULT: '#FF3131',
         },
+        black: {
+          DEFAULT: '#000000',
+          dim: '#23262F',
+          light: '#777E90'
+        },
         ...defaultTheme.colors 
       },
     }

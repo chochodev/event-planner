@@ -5,7 +5,8 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState('')
+  const [firstname, setFirstname] = useState('');
+  const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const checkAuthStatus = async () => {
@@ -21,9 +22,10 @@ export const AuthProvider = ({ children }) => {
           'Authorization': `Token ${token}`,
         },
       });
-      
       setIsAuthenticated(response.data?.authenticated);
-      setUsername(response.data?.username);
+      const user = response.data?.user
+      setFirstname(user?.firstname);
+      setImage(user?.image);
     } catch (error) {
       setIsAuthenticated(false);
     } finally {
@@ -36,7 +38,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, username, loading }}>
+    <AuthContext.Provider value={{ isAuthenticated, firstname, image, loading }}>
       {children}
     </AuthContext.Provider>
   );

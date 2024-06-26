@@ -1,33 +1,40 @@
-import React, { useEffect } from 'react';
-import { Alert, Button, Collapse } from '@mui/material';
-import { RiCheckLine, RiCloseLine } from 'react-icons/ri';
+import React from 'react';
+import { Button, Collapse } from '@mui/material';
+import { Alert } from '@mui/material';
+import { RiCheckLine, RiCloseLine, RiErrorWarningLine } from "react-icons/ri";
 
-const FlashMessage = ({ open, message = 'Alert', onClose, duration = 5000 }) => {
-  useEffect(() => {
-    if (open) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, duration);
-
-      return () => clearTimeout(timer);
-    }
-  }, [open, duration, onClose]);
+const FlashMessage = ({ 
+  openFlashMessage, 
+  setOpenFlashMessage, 
+  flashMessage, 
+  flashSeverity 
+}) => {
 
   return (
-    <Collapse in={open}>
+    <Collapse in={openFlashMessage}>
       <Alert
-        icon={<RiCheckLine className='text-green-500 text-[1rem]' />} 
+        severity={flashSeverity}
+        icon={flashSeverity === 'success' ? 
+          <RiCheckLine className='text-green-500 text-[1rem]' /> : 
+          <RiErrorWarningLine className='text-red-500 text-[1rem]' />
+        }
         action={
           <Button
             color="inherit"
             size="small"
-            onClick={onClose}
+            onClick={() => {
+              setOpenFlashMessage(false);
+            }}
+            sx={{
+              paddingX: '0',
+              borderRadius: '50rem'
+            }}
           >
-            <RiCloseLine className='text-[1rem]' />
+            <RiCloseLine className='text-[1rem] ' />
           </Button>
         }
       >
-        {message}
+        {flashMessage}
       </Alert>
     </Collapse>
   );

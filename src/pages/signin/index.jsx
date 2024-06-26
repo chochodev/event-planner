@@ -11,6 +11,7 @@ import {
 import Logo from 'components/logo';
 import axiosInstance from 'utils/axios';
 import { RiCheckLine, RiCloseLine, RiErrorWarningLine } from "react-icons/ri";
+import FlashMessage from 'components/alert';
 
 const SignIn = () => {
   const [openFlashMessage, setOpenFlashMessage] = useState(false);
@@ -67,32 +68,12 @@ const SignIn = () => {
 
   return (
     <>
-    <Collapse in={openFlashMessage}>
-      <Alert
-        severity={flashSeverity}
-        icon={flashSeverity === 'success' ? 
-          <RiCheckLine className='text-green-500 text-[1rem]' /> : 
-          <RiErrorWarningLine className='text-red-500 text-[1rem]' />
-        }
-        action={
-          <Button
-            color="inherit"
-            size="small"
-            onClick={() => {
-              setOpenFlashMessage(false);
-            }}
-            sx={{
-              paddingX: '0',
-              borderRadius: '50rem'
-            }}
-          >
-            <RiCloseLine className='text-[1rem] ' />
-          </Button>
-        }
-      >
-        {flashMessage}
-      </Alert>
-    </Collapse>
+    <FlashMessage
+      openFlashMessage={openFlashMessage}
+      setOpenFlashMessage={setOpenFlashMessage}
+      flashMessage={flashMessage}
+      flashSeverity={flashSeverity}
+    />
     <div className='grid grid-cols-1 md:grid-cols-2 justify-center items-center w-full min-h-screen'>
       <div className='flex flex-col gap-[1.875rem] px-[2rem] lg:px-[4rem] py-[2rem]'>
         <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Welcome</h2>
