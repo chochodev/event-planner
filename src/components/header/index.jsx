@@ -23,7 +23,7 @@ const Header = () => {
     // Check session status
     getSessionStatus()
       .then((response) => {
-        console.log('true', response)
+        // console.log('true', response)
         setAuthenticated(response);
       })
       .catch((error) => {
