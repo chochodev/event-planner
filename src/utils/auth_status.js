@@ -1,11 +1,32 @@
 import axiosInstance from './axios';
 
+// export const getSessionStatus = async () => {
+//   try {
+//     const response = await axiosInstance.get('/auth/status');
+//     console.log('status', response.data?.authenticated);
+//     return response.data?.authenticated;
+//   } catch (error) {
+//     throw new Error('Error checking session status');
+//   }
+// };
+
 export const getSessionStatus = async () => {
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    return false;
+  }
+
   try {
-    const response = await axiosInstance.get('/auth/status');
+    const response = await axiosInstance.get('/auth/status/', {
+      headers: {
+        'Authorization': `Token ${token}`,
+      },
+    });
     console.log('status', response.data?.authenticated);
     return response.data?.authenticated;
   } catch (error) {
-    throw new Error('Error checking session status');
+    console.error('Error checking session status:', error);
+    return false;
   }
 };

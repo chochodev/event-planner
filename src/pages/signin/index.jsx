@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import Logo from 'components/logo';
 import axiosInstance from 'utils/axios';
+import { getSessionStatus } from 'utils/auth_status';
 import { RiCheckLine, RiCloseLine, RiErrorWarningLine } from "react-icons/ri";
 
 const SignIn = () => {
@@ -42,12 +43,20 @@ const SignIn = () => {
       setFlashSeverity('success');
       setLoading(false);
       setOpenFlashMessage(true);
+      localStorage.setItem('token', response.data.token);
 
       // closes the flash message and redirect
       setTimeout(() => {
         setOpenFlashMessage(false);
-        window.location.href = '/';
-      }, 5000);
+        // window.location.href = '/';
+        getSessionStatus()
+        .then((response) => {
+          console.log('loggedin state: ', response)
+        })
+        .catch((error) => {
+          console.error('Error checking session status:', error);
+        })
+      }, 3000);
     } catch (error) {
       console.error('Error:', error.response ? error.response.data : error.message);
       const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
@@ -134,7 +143,7 @@ const SignIn = () => {
           <button type='submit' hidden ></button>
         </form>
         <Button onClick={handleSubmit} variant="contained" color="primary" sx={{height: '3rem'}} fullWidth>
-          {loading? <div className="loader"></div> : "Sign Up"}
+          {loading? <div className="loader"></div> : "Sign In"}
         </Button>
         <div className='flex gap-[0.5rem] items-center'>
           <p className='text-[0.875rem]'>Don't have an account?</p>

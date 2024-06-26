@@ -2,7 +2,9 @@ import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 import MyRoute from 'routes';
-import useAuthCheck from 'hooks/withAuthCheck';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 
 const customTheme = createTheme({
@@ -21,12 +23,14 @@ const customTheme = createTheme({
 });
 
 function App() {
-  useAuthCheck()
-  
   return (
-    <ThemeProvider theme={customTheme}>
-      <MyRoute />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={customTheme}>
+        <Router>
+          <MyRoute />
+        </Router>
+      </ThemeProvider>
+    </Provider>
   );
 }
 

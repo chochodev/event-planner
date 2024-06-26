@@ -18,7 +18,7 @@ const PrimaryLink = ({ to, children }) => {
         }
       }}
     >
-      <p className='text-[0.875rem] font-[600] text-primary capitalize'>{children}</p>
+      <span className='text-[0.875rem] font-[600] text-primary capitalize'>{children}</span>
     </Button>
   );
 }
