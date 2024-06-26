@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [firstname, setFirstname] = useState('');
+  const [firstname, setFirstname] = useState('Anonymous');
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -13,6 +13,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
 
     if (!token) {
+      setLoading(false);
       return false;
     }
 

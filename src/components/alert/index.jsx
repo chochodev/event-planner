@@ -16,7 +16,7 @@ const FlashMessage = ({
         severity={flashSeverity}
         icon={flashSeverity === 'success' ? 
           <RiCheckLine className='text-green-500 text-[1rem]' /> : 
-          <RiErrorWarningLine className='text-red-500 text-[1rem]' />
+          <RiErrorWarningLine className='text-red-500 text-[1.25rem]' />
         }
         action={
           <Button
@@ -34,7 +34,7 @@ const FlashMessage = ({
           </Button>
         }
       >
-        {flashMessage}
+        <span className={`${flashSeverity === 'success'? 'text-green-500' : 'text-red-700'} `}>{flashMessage}</span>
       </Alert>
     </Collapse>
   );

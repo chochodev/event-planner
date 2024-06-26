@@ -6,8 +6,11 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(
-  async (config) => {
-    // config.headers['X-CSRFToken'] = csrfToken;
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Token ${token}`;
+    }
     return config;
   },
   (error) => Promise.reject(error)
@@ -15,7 +18,7 @@ axiosInstance.interceptors.request.use(
 
 export const logout = async () => {
   try {
-    const response = await axiosInstance.post('/auth/logout/');
+    const response = await axiosInstance.post('/auth/logout/', {action: 'logout'});
     console.log('Logout success:', response.data);
     localStorage.removeItem('token');
     return response.data;
