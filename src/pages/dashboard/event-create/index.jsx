@@ -60,7 +60,7 @@ const CreateEventPage = () => {
 
   return (
     <HomeLayout>
-      <div className='relative flex flex-col max-w-[75rem] w-full mx-auto h-max py-[0.75rem] md:py-[1rem]'>
+      <div className='flex flex-col max-w-[75rem] w-full mx-auto h-max py-[0.75rem] md:py-[1rem] px-[1rem] md:px-[2rem] '>
         <Stepper activeStep={activeStep}>
           {steps.map((label, index) => (
             <Step key={index}>
@@ -68,7 +68,7 @@ const CreateEventPage = () => {
             </Step>
           ))}
         </Stepper>
-        <div className='flex w-full h-max '>
+        <div className='relative flex gap-[1rem] w-full h-max '>
           <div className='flex flex-1 flex-col gap-[1rem] '>
             <div>
               {renderStepContent(activeStep)}
@@ -92,12 +92,12 @@ const CreateEventPage = () => {
               )}
             </div>
           </div>
-          <div className='h-full'>
+          <div className='h-full min-h-screen'>
             <div
-              className='sticky top-[1rem] flex flex-col'
+              className='sticky top-[8.5rem] flex flex-col rounded-[12px] overflow-hidden '
             >
               <img src="/assets/images/dp.png" alt="Event"
-                className='w-[25rem] min-w-[25rem] h-[20rem] object-cover '
+                className='w-[25rem] min-w-[22rem] h-[20rem] object-cover '
               />
             </div>
           </div>
