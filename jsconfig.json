@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@redux/*": ["redux/*"]
+      "zustand": ["src/zustand"]
     }
   },
   "include": ["src"]

@@ -9,17 +9,16 @@ import {
   TextField,
   FormControl,
 } from '@mui/material';
+import HomeLayout from 'components/layout';
+import useCreateFormStore from '../../../zustand/store';
+import Step1Form from './components/step_01';
+import Step2Form from './components/step_02';
 
 const steps = ['Personal Information', 'Address Details', 'Review & Submit'];
 
 const CreateEventPage = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [formValues, setFormValues] = useState({
-    name: '',
-    email: '',
-    address: '',
-    city: '',
-  });
+  const { formValues, setFormValues } = useCreateFormStore();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -27,11 +26,6 @@ const CreateEventPage = () => {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
   };
 
   const handleSubmit = () => {
@@ -43,50 +37,11 @@ const CreateEventPage = () => {
     switch (step) {
       case 0:
         return (
-          <Box>
-            <FormControl fullWidth margin="normal">
-              <TextField
-                label="Name"
-                name="name"
-                value={formValues.name}
-                onChange={handleChange}
-                required
-              />
-            </FormControl>
-            <FormControl fullWidth margin="normal">
-              <TextField
-                label="Email"
-                name="email"
-                type="email"
-                value={formValues.email}
-                onChange={handleChange}
-                required
-              />
-            </FormControl>
-          </Box>
+          <Step1Form />
         );
       case 1:
         return (
-          <Box>
-            <FormControl fullWidth margin="normal">
-              <TextField
-                label="Address"
-                name="address"
-                value={formValues.address}
-                onChange={handleChange}
-                required
-              />
-            </FormControl>
-            <FormControl fullWidth margin="normal">
-              <TextField
-                label="City"
-                name="city"
-                value={formValues.city}
-                onChange={handleChange}
-                required
-              />
-            </FormControl>
-          </Box>
+          <Step2Form />
         );
       case 2:
         return (
@@ -104,36 +59,51 @@ const CreateEventPage = () => {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      <Box sx={{ mt: 2, mb: 2 }}>
-        {renderStepContent(activeStep)}
-      </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Button
-          disabled={activeStep === 0}
-          onClick={handleBack}
-          sx={{ mr: 1 }}
-        >
-          Back
-        </Button>
-        {activeStep === steps.length - 1 ? (
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
-            Submit
-          </Button>
-        ) : (
-          <Button variant="contained" color="primary" onClick={handleNext}>
-            Next
-          </Button>
-        )}
-      </Box>
-    </Box>
+    <HomeLayout>
+      <div className='relative flex flex-col max-w-[75rem] w-full mx-auto h-max py-[0.75rem] md:py-[1rem]'>
+        <Stepper activeStep={activeStep}>
+          {steps.map((label, index) => (
+            <Step key={index}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+        <div className='flex w-full h-max '>
+          <div className='flex flex-1 flex-col gap-[1rem] '>
+            <div>
+              {renderStepContent(activeStep)}
+            </div>
+            <div>
+              <Button
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
+              >
+                Back
+              </Button>
+              {activeStep === steps.length - 1 ? (
+                <Button variant="contained" color="primary" onClick={handleSubmit}>
+                  Submit
+                </Button>
+              ) : (
+                <Button variant="contained" color="primary" onClick={handleNext}>
+                  Next
+                </Button>
+              )}
+            </div>
+          </div>
+          <div className='h-full'>
+            <div
+              className='sticky top-[1rem] flex flex-col'
+            >
+              <img src="/assets/images/dp.png" alt="Event"
+                className='w-[25rem] min-w-[25rem] h-[20rem] object-cover '
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </HomeLayout>
   );
 };
 
