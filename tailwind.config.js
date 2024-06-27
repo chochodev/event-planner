@@ -29,7 +29,8 @@ module.exports = {
         black: {
           DEFAULT: '#000000',
           dim: '#23262F',
-          light: '#777E90'
+          light: '#777E90',
+          fade: '#B1B5C3'
         },
         ...defaultTheme.colors 
       },

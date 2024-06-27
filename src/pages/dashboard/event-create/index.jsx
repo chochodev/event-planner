@@ -60,45 +60,47 @@ const CreateEventPage = () => {
 
   return (
     <HomeLayout>
-      <div className='flex flex-col max-w-[75rem] w-full mx-auto h-max py-[0.75rem] md:py-[1rem] px-[1rem] md:px-[2rem] '>
-        <Stepper activeStep={activeStep}>
-          {steps.map((label, index) => (
-            <Step key={index}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-        <div className='relative flex gap-[1rem] w-full h-max '>
-          <div className='flex flex-1 flex-col gap-[1rem] '>
-            <div>
-              {renderStepContent(activeStep)}
+      <div className='flex flex-col w-full h-max px-[1rem] md:px-[2rem] '>
+        <div className='flex flex-col gap-[2rem] max-w-[75rem] w-full mx-auto h-max py-[2.875rem] md:py-[3rem] '>
+          <Stepper activeStep={activeStep}>
+            {steps.map((label, index) => (
+              <Step key={index}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <div className='relative flex gap-[1rem] w-full h-max '>
+            <div className='flex flex-1 flex-col gap-[1rem] '>
+              <div>
+                {renderStepContent(activeStep)}
+              </div>
+              <div>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  Back
+                </Button>
+                {activeStep === steps.length - 1 ? (
+                  <Button variant="contained" color="primary" onClick={handleSubmit}>
+                    Submit
+                  </Button>
+                ) : (
+                  <Button variant="contained" color="primary" onClick={handleNext}>
+                    Next
+                  </Button>
+                )}
+              </div>
             </div>
-            <div>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
+            <div className='h-full min-h-screen'>
+              <div
+                className='sticky top-[8.5rem] flex flex-col rounded-[12px] overflow-hidden '
               >
-                Back
-              </Button>
-              {activeStep === steps.length - 1 ? (
-                <Button variant="contained" color="primary" onClick={handleSubmit}>
-                  Submit
-                </Button>
-              ) : (
-                <Button variant="contained" color="primary" onClick={handleNext}>
-                  Next
-                </Button>
-              )}
-            </div>
-          </div>
-          <div className='h-full min-h-screen'>
-            <div
-              className='sticky top-[8.5rem] flex flex-col rounded-[12px] overflow-hidden '
-            >
-              <img src="/assets/images/dp.png" alt="Event"
-                className='w-[25rem] min-w-[22rem] h-[20rem] object-cover '
-              />
+                <img src="/assets/images/dp.png" alt="Event"
+                  className='w-[25rem] min-w-[22rem] h-[20rem] object-cover '
+                />
+              </div>
             </div>
           </div>
         </div>
