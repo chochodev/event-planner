@@ -9,7 +9,7 @@ const useCreateFormStore = create((set) => ({
     start_time: '',
     end_time: '',
     ticket_qty: 0,
-    ticket_price: 0,
+    ticket_price: 0.00,
     description: '',
     ticket_desc: '',
     ticket_type: '',
