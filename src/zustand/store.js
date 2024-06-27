@@ -3,14 +3,14 @@ import { create } from 'zustand';
 
 const useCreateFormStore = create((set) => ({
   formValues: {
-    name: '',
+    name: '', // done
     start_date: new Date(),
     end_date: new Date(),
     start_time: '',
     end_time: '',
-    ticket_qty: 0,
-    ticket_price: 0.00,
-    description: '',
+    ticket_qty: 0, // done
+    ticket_price: 0.00, // done
+    description: '', // done
     ticket_desc: '',
     ticket_type: '',
     organizer_company_name: '',
@@ -27,7 +27,16 @@ const useCreateFormStore = create((set) => ({
     // ::::::::::: floor plan mode
     floorplanMode: '',
     floorplanImage: null,
-    floorplanLayout: []
+    floorplanLayout: [],
+
+    // ::::::::::: ticket variant
+    ticket_variants: [
+      {
+        ticket_name: '',
+        ticket_price: 0.00,
+        ticket_description: ''
+      }
+    ]
   },
   setFormValues: (values) => set((state) => ({
     formValues: { ...state.formValues, ...values }
