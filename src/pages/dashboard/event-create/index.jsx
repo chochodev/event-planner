@@ -13,7 +13,6 @@ import Step1Form from './components/step_01';
 import Step2Form from './components/step_02';
 import PrimaryLink from 'components/link/primary';
 import { RiArrowRightLine } from 'react-icons/ri';
-import AccentLink from 'components/link/accent';
 
 const steps = ['Personal Information', 'Address Details', 'Review & Submit'];
 

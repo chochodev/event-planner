@@ -11,14 +11,19 @@ const useCreateFormStore = create((set) => ({
     ticket_qty: 0, // done
     ticket_price: 0.00, // done
     description: '', // done
-    ticket_desc: '',
-    ticket_type: '',
-    organizer_company_name: '',
-    for_contact_phone: '',
-    for_contact_email: '',
+    // ticket_desc: '',
+    // ticket_type: '',
+    organizer_company_name: '', // done
+    for_contact_phone: '', // done
+    for_contact_email: '', // done
     source_image: null,
-    location: '',
-    full_address: '',
+    // location: '',
+
+    // full_address: '',
+    address: '', // done
+    city: '', // done
+    state: '', // done
+    zipcode: '', // done
     lat: 41.8527,
     lng: 87.6158,
     is_floor: 0,

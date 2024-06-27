@@ -34,3 +34,9 @@ const BaseInput = ({ name, value, onChange, ...props }) => {
 };
 
 export default BaseInput;
+
+/*
+class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-gy0sau-MuiInputBase-root-MuiOutlinedInput-root"
+
+
+*/

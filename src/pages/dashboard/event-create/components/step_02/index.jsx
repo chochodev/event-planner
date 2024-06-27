@@ -1,38 +1,187 @@
-import React from 'react'
-import {
-  TextField,
-  FormControl,
-} from '@mui/material';
+import React, { useState } from 'react';
+import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import useCreateFormStore from '../../../../../zustand/store';
+import BaseInput from 'components/input';
+import dayjs from 'dayjs';
 
 const Step2Form = () => {
   const { formValues, setFormValues } = useCreateFormStore();
-  
+  const [startDate, setStartDate] = useState(dayjs(formValues.start_date));
+  const [endDate, setEndDate] = useState(dayjs(formValues.end_date));
+
+  const handleDateChange = (name, newValue) => {
+    setFormValues({ [name]: newValue });
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ [name]: value });
   };
 
   return (
-    <div>
-      <FormControl fullWidth margin="normal">
-        <TextField
-          label="Address"
-          name="address"
-          value={formValues.address}
-          onChange={handleChange}
-          required
-        />
-      </FormControl>
-      <FormControl fullWidth margin="normal">
-        <TextField
-          label="City"
-          name="city"
+    <div className='flex flex-col gap-[2rem] '>
+      {/* ::::::::::::::::::::::::: MANAGER DETAILS */}
+      <p className='text-[1rem] text-black-light font-[600] underline underline-offset-[2px] '>Contact Details</p>
+      <div className='flex flex-col gap-[0.5rem] '>
+        <label 
+          htmlFor='name' 
+          className='text-black-fade text-[0.75rem] uppercase font-[600] '
+        >Phone</label>
+        <BaseInput 
+          id='for_contact_phone'
+          name='for_contact_phone'
+          type='number'
           value={formValues.city}
           onChange={handleChange}
-          required
+          placeholder='e.g +00345346345'
         />
-      </FormControl>
+      </div>
+      <div className='flex flex-col gap-[0.5rem] '>
+        <label 
+          htmlFor='name' 
+          className='text-black-fade text-[0.75rem] uppercase font-[600] '
+        >Email</label>
+        <BaseInput 
+          id='for_contact_email'
+          name='for_contact_email'
+          type='text'
+          value={formValues.city}
+          onChange={handleChange}
+          placeholder='e.g Pacifista Kuma'
+        />
+      </div>
+
+      {/* ::::::::::::::::::::::::: TIME */}
+      <p className='text-[1rem] text-black-light font-[600] underline underline-offset-[2px] '>Time</p>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <div className='flex flex-col gap-[0.5rem] '>
+          <label 
+            htmlFor='start_date' 
+            className='text-black-fade text-[0.75rem] uppercase font-[600] '
+          >Start Date & Time</label>
+          <DateTimePicker
+            value={startDate}
+            onChange={(newValue) => {
+              setStartDate(newValue);
+              handleDateChange('start_date', newValue);
+            }}
+            sx={{
+              '& .MuiInputBase-root': {
+                borderRadius: '12px',
+                border: '0px solid',
+                borderColor: 'rgba(119,126,144,0)',
+                '&:hover': {
+                  borderColor: 'rgba(119,126,144,0)'
+                },
+                '&:focus': {
+                  borderColor: 'rgba(119,126,144,0)'
+                },
+              },
+              "& .Mui-focused": {
+                borderColor: 'rgba(0,0,0,0)' 
+              },
+              "& .MuiOutlinedInput-root": {
+                height: '3rem',
+                borderRadius: '12px',
+                border: '2px solid',
+                borderColor: 'rgba(119,126,144,0)',
+                '&:hover': {
+                  borderColor: 'rgba(119,126,144,0)'
+                },
+                '&:focus': {
+                  borderColor: 'rgba(119,126,144,0)'
+                },
+              },
+            }}
+            renderInput={(params) => <BaseInput {...params} />}
+          />
+        </div>
+
+        <div className='flex flex-col gap-[0.5rem] '>
+          <label 
+            htmlFor='end_date' 
+            className='text-black-fade text-[0.75rem] uppercase font-[600] '
+          >End Date & Time</label>
+          <DateTimePicker
+            value={endDate}
+            onChange={(newValue) => {
+              setEndDate(newValue);
+              handleDateChange('end_date', newValue);
+            }}
+            sx={{
+              borderRadius: '12px',
+              border: 'solid 2px '
+            }}
+            renderInput={(params) => <BaseInput {...params} />}
+          />
+        </div>
+      </LocalizationProvider>
+
+      {/* ::::::::::::::::::::::::: LOCATION */}
+      <p className='text-[1rem] text-black-light font-[600] underline underline-offset-[2px] '>Location Details</p>
+      
+      <div className='flex flex-col gap-[0.5rem] '>
+        <label 
+          htmlFor='name' 
+          className='text-black-fade text-[0.75rem] uppercase font-[600] '
+        >Address</label>
+        <BaseInput 
+          id='organizer_company_name'
+          name='organizer_company_name'
+          type='text'
+          value={formValues.city}
+          onChange={handleChange}
+          placeholder='e.g No 24. Street 134'
+        />
+      </div>
+      
+      <div className='flex gap-[1rem] items-center w-full'>
+        <div className='flex flex-col gap-[0.5rem] '>
+          <label 
+            htmlFor='name' 
+            className='text-black-fade text-[0.75rem] uppercase font-[600] '
+          >City</label>
+          <BaseInput 
+            id='city'
+            name='city'
+            type='text'
+            value={formValues.city}
+            onChange={handleChange}
+            placeholder='e.g Akure'
+          />
+        </div>
+        
+        <div className='flex flex-col gap-[0.5rem] '>
+          <label 
+            htmlFor='name' 
+            className='text-black-fade text-[0.75rem] uppercase font-[600] '
+          >State</label>
+          <BaseInput 
+            id='state'
+            name='state'
+            type='text'
+            value={formValues.state}
+            onChange={handleChange}
+            placeholder='e.g Ondo'
+          />
+        </div>
+        
+        <div className='flex flex-col gap-[0.5rem] '>
+          <label 
+            htmlFor='name' 
+            className='text-black-fade text-[0.75rem] uppercase font-[600] '
+          >Zip code</label>
+          <BaseInput 
+            id='zipcode'
+            name='zipcode'
+            type='number'
+            value={formValues.zipcode}
+            onChange={handleChange}
+            placeholder='e.g 086345'
+          />
+        </div>
+      </div>
     </div>
   )
 }
