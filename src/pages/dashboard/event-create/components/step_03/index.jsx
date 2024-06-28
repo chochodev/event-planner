@@ -1,9 +1,6 @@
-import React from 'react'
-import {
-  TextField,
-  FormControl,
-} from '@mui/material';
+import React from 'react';
 import useCreateFormStore from '../../../../../zustand/store';
+import UploadImage from 'components/image_input';
 
 const Step1Form = () => {
   const { formValues, setFormValues } = useCreateFormStore();
@@ -14,26 +11,12 @@ const Step1Form = () => {
   };
 
   return (
-    <div>
-    <FormControl fullWidth margin="normal">
-      <TextField
-        label="Name"
-        name="name"
-        value={formValues.name}
+    <div className='flex flex-col gap-[2rem] '>
+      {/* ::::::::::::::::::::::::: MANAGER DETAILS */}
+      <p className='text-[1rem] text-black-light font-[600] underline underline-offset-[2px] '>Contact Details</p>
+      <UploadImage
         onChange={handleChange}
-        required
       />
-    </FormControl>
-    <FormControl fullWidth margin="normal">
-      <TextField
-        label="Email"
-        name="email"
-        type="email"
-        value={formValues.email}
-        onChange={handleChange}
-        required
-      />
-    </FormControl>
     </div>
   )
 }
