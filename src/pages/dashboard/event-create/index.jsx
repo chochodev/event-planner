@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Stepper,
-  Step,
-  Button,
-  Typography,
-  Box,
-  CircularProgress
-} from '@mui/material';
+import { Stepper, Step, Button, Typography, Box, StepLabel } from '@mui/material';
 import HomeLayout from 'components/layout';
 import useCreateFormStore from '../../../zustand/store';
 import Step1Form from './components/step_01';
@@ -19,6 +12,13 @@ import Preview from './components/preview';
 const CreateEventPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const { formValues } = useCreateFormStore();
+
+  const steps = [
+    {name: '', icon: <RiArrowRightLine />},
+    {name: '', icon: <RiArrowRightLine />},
+    {name: '', icon: <RiArrowRightLine />},
+    {name: '', icon: <RiArrowRightLine />},
+  ]
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -61,15 +61,15 @@ const CreateEventPage = () => {
       <div className='flex flex-col w-full h-max px-[1rem] md:px-[2rem]'>
         <div className='flex flex-col gap-[2rem] max-w-[75rem] w-full mx-auto h-max py-[2.875rem] md:py-[3rem]'>
           <Stepper activeStep={activeStep} alternativeLabel>
-            {[...Array(4).keys()].map((_, index) => (
-              <Step key={index} />
+            {steps.map((step, index) => (
+              <Step key={index} >
+                <StepLabel>{''}</StepLabel>
+              </Step>
             ))}
           </Stepper>
           <div className='relative flex justify-between gap-[1rem] w-full h-full'>
             <div className='flex flex-1 flex-col gap-[3rem] w-full xlg:max-w-[40rem]'>
-              <div>
-                {renderStepContent(activeStep)}
-              </div>
+              <div>{renderStepContent(activeStep)}</div>
               <div className='flex gap-[1rem] w-full pt-[3rem] border-solid border-0 border-[#000000]/20 border-t-[1px]'>
                 <Button
                   disabled={activeStep === 0}
@@ -84,10 +84,8 @@ const CreateEventPage = () => {
                 >
                   <p className='capitalize text-black-light'>Back</p>
                 </Button>
-                {activeStep === [...Array(4).keys()].length - 1 ? (
-                  <PrimaryLink onClick={handleSubmit}>
-                    Submit
-                  </PrimaryLink>
+                {activeStep === steps.length - 1 ? (
+                  <PrimaryLink onClick={handleSubmit}>Submit</PrimaryLink>
                 ) : (
                   <div className='flex-1 flex justify-between'>
                     <PrimaryLink width='max-content' onClick={handleNext}>
@@ -98,13 +96,12 @@ const CreateEventPage = () => {
                     </PrimaryLink>
                     <div className='flex items-center gap-[0.5rem]'>
                       <p className='uppercase text-black-light font-[600] text-[0.75rem]'>Auto Saving</p>
-                      <CircularProgress size={24} />
+                      <div className="loader-saving mx-[1rem]"></div>
                     </div>
                   </div>
                 )}
               </div>
             </div>
-
             {/* :::::::::::::::::::::::: PREVIEW */}
             <Preview />
           </div>
