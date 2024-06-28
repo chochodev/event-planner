@@ -4,6 +4,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import useCreateFormStore from '../../../../../zustand/store';
 import BaseInput from 'components/input';
 import dayjs from 'dayjs';
+import LocationSelector from 'components/map';
+
 
 const Step2Form = () => {
   const { formValues, setFormValues } = useCreateFormStore();
@@ -144,6 +146,13 @@ const Step2Form = () => {
 
       {/* ::::::::::::::::::::::::: LOCATION */}
       <p className='text-[1rem] text-black-light font-[600] underline underline-offset-[2px] '>Location Details</p>
+      <span className='text-[0.875rem] text-black-light my-[-1rem]'>Pinpoint on your event venue</span>
+      <LocationSelector 
+        lat={formValues.lat}
+        lng={formValues.lng}
+        setLat={(lat) => setFormValues({ lat })}
+        setLng={(lng) => setFormValues({ lng })}
+      />
       
       <div className='flex flex-col gap-[0.5rem] '>
         <label 

@@ -24,8 +24,8 @@ const useCreateFormStore = create((set) => ({
     city: '', // done
     state: '', // done
     zipcode: '', // done
-    lat: 41.8527,
-    lng: 87.6158,
+    lat: 41.8527, // done
+    lng: 87.6158, // done
     is_floor: 0,
     domain_url: '',
 
