@@ -14,7 +14,9 @@ const Preview = () => {
       className='max-xlg:hidden sticky top-[8.5rem] flex flex-col gap-[1rem] w-[22rem] h-max p-[2rem] rounded-[12px] overflow-hidden shadow-[0_2px_40px_8px_rgba(0,0,0,0.1)] '
     >
       <p className='text-[1.25rem] text-black font-[600] '>Preview</p>
-      <img src="/assets/images/dp.png" alt="Event"
+      <img 
+        src={formValues.source_image? URL.createObjectURL(formValues.source_image) : "/assets/images/dp.png"} 
+        alt="Event"
         className='w-full h-[20rem] object-cover rounded-[12px] '
       />
       <div className='flex gap-[0.5rem] items-center justify-between'>
@@ -27,7 +29,7 @@ const Preview = () => {
 
       <div className='flex justify-between items-center w-full'>
         <p className='text-black-light text-[0.625rem] tracking-[0.05px] font-[600] uppercase '>Location:</p>
-        <p className='text-black-dim font-[600] text-[0.75rem]'>Swan hotel, Akure city</p>
+        <p className='text-black-dim font-[600] text-[0.75rem]'>{formValues.address || 'No address'}, {formValues.city || 'No city'}</p>
       </div>
       <div className='flex justify-between w-full'>
         <p className='text-black-light text-[0.625rem] tracking-[0.05px] font-[600] uppercase'>Start date:</p>
