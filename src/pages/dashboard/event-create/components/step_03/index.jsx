@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useCreateFormStore from '../../../../../zustand/store';
 import UploadImage from 'components/image_input';
 import BaseInput from 'components/input';
@@ -20,6 +20,11 @@ const Step1Form = () => {
     setFormValues({ ...formValues, is_floor: newValue });
     console.log(formValues.is_floor)
   };
+
+  // ::::::::::::::::::: SEATING ARRANGEMENT
+  useEffect(() => {
+    // if is_floor is true; open seating arrangement modal
+  }, [formValues.is_floor]);
 
   return (
     <div className='flex flex-col gap-[2rem] '>
