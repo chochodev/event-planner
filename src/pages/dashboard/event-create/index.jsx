@@ -13,6 +13,7 @@ import Step1Form from './components/step_01';
 import Step2Form from './components/step_02';
 import PrimaryLink from 'components/link/primary';
 import { RiArrowRightLine } from 'react-icons/ri';
+import dayjs from 'dayjs';
 
 const steps = ['Personal Information', 'Address Details', 'Review & Submit'];
 
@@ -26,6 +27,11 @@ const CreateEventPage = () => {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  // :::::::::::::::::: format date
+  const formatDate = (date) => {
+    return date ? dayjs(date).format('YYYY-MM-DD HH:mm') : 'No date value';
   };
 
   const handleSubmit = () => {
@@ -70,11 +76,11 @@ const CreateEventPage = () => {
             ))}
           </Stepper>
           <div className='relative flex justify-between gap-[1rem] w-full h-full '>
-            <div className='flex flex-1 flex-col gap-[1rem] w-full xlg:max-w-[40rem] '>
+            <div className='flex flex-1 flex-col gap-[3rem] w-full xlg:max-w-[40rem] '>
               <div>
                 {renderStepContent(activeStep)}
               </div>
-              <div className='flex gap-[1rem] w-full'>
+              <div className='flex gap-[1rem] w-full pt-[3rem] border-solid border-0 border-[#000000]/20 border-t-[1px]'>
                 <Button
                   disabled={activeStep === 0}
                   onClick={handleBack}
@@ -123,17 +129,21 @@ const CreateEventPage = () => {
                 <p className='text-[0.875rem] text-black-dim '>{formValues.name || 'No name value'}</p>
                 <p
                   className='text-secondary text-[0.75rem] font-[600] w-max px-[0.25rem] py-[0.1rem] border-solid border-[2px] border-secondary/50 rounded-[4px]'
-                >${formValues.ticket_price || '0.00'}</p>
+                >${parseFloat(formValues.ticket_price).toFixed(2) || '0.00'}</p>
               </div>
               <div className='w-full h-[1px] bg-black-fade/50' />
-              <div className='flex justify-between w-full'>
-                <p className='text-black-light text-[0.625rem] tracking-[1.5px] font-[600] uppercase'>seats available:</p>
-                <p className='text-black-light text-[0.875rem]'>35</p>
-              </div>
 
               <div className='flex justify-between items-center w-full'>
-                <p className='text-black-light text-[0.625rem] tracking-[1.5px] font-[600] uppercase '>Location:</p>
-                <p className='text-black-light text-[0.875rem]'>Swan hotel, Akure city</p>
+                <p className='text-black-light text-[0.625rem] tracking-[0.05px] font-[600] uppercase '>Location:</p>
+                <p className='text-black-dim font-[600] text-[0.75rem]'>Swan hotel, Akure city</p>
+              </div>
+              <div className='flex justify-between w-full'>
+                <p className='text-black-light text-[0.625rem] tracking-[0.05px] font-[600] uppercase'>Start date:</p>
+                <p className='text-secondary font-[600] text-[0.75rem] underline'>{formatDate(formValues.start_date)}</p>
+              </div>
+              <div className='flex justify-between w-full'>
+                <p className='text-black-light text-[0.625rem] tracking-[0.05px] font-[600] uppercase'>End date:</p>
+                <p className='text-secondary font-[600] text-[0.75rem] underline'>{formatDate(formValues.end_date)}</p>
               </div>
             </div>
             </div>

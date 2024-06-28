@@ -110,8 +110,32 @@ const Step2Form = () => {
               handleDateChange('end_date', newValue);
             }}
             sx={{
-              borderRadius: '12px',
-              border: 'solid 2px '
+              '& .MuiInputBase-root': {
+                borderRadius: '12px',
+                border: '0px solid',
+                borderColor: 'rgba(119,126,144,0)',
+                '&:hover': {
+                  borderColor: 'rgba(119,126,144,0)'
+                },
+                '&:focus': {
+                  borderColor: 'rgba(119,126,144,0)'
+                },
+              },
+              "& .Mui-focused": {
+                borderColor: 'rgba(0,0,0,0)' 
+              },
+              "& .MuiOutlinedInput-root": {
+                height: '3rem',
+                borderRadius: '12px',
+                border: '2px solid',
+                borderColor: 'rgba(119,126,144,0)',
+                '&:hover': {
+                  borderColor: 'rgba(119,126,144,0)'
+                },
+                '&:focus': {
+                  borderColor: 'rgba(119,126,144,0)'
+                },
+              },
             }}
             renderInput={(params) => <BaseInput {...params} />}
           />

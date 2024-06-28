@@ -4,10 +4,10 @@ import { create } from 'zustand';
 const useCreateFormStore = create((set) => ({
   formValues: {
     name: '', // done
-    start_date: new Date(),
-    end_date: new Date(),
-    start_time: '',
-    end_time: '',
+    start_date: new Date(), // done
+    end_date: new Date(), // done
+    start_time: '', // done
+    end_time: '', // done
     ticket_qty: 0, // done
     ticket_price: 0.00, // done
     description: '', // done

@@ -67,7 +67,7 @@ const Step1Form = () => {
             id='ticket_qty'
             name='ticket_qty'
             type='number'
-            value={formValues.name}
+            value={formValues.ticket_qty}
             onChange={handleChange}
             placeholder='e.g 34'
           />
@@ -82,7 +82,7 @@ const Step1Form = () => {
             id='ticket_price'
             name='ticket_price'
             type='number'
-            value={formValues.name}
+            value={formValues.ticket_price}
             onChange={handleChange}
             placeholder='e.g 45'
           />
