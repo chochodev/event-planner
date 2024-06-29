@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stepper, Step, Button, Typography, Box, StepLabel } from '@mui/material';
+import { Stepper, Step, Button, StepLabel } from '@mui/material';
 import HomeLayout from 'components/layout';
 import useCreateFormStore from '../../../zustand/store';
 import Step1Form from './components/step_01';
@@ -8,9 +8,10 @@ import Step3Form from './components/step_03';
 import PrimaryLink from 'components/link/primary';
 import { RiArrowRightLine } from 'react-icons/ri';
 import Preview from './components/preview';
+import Step4Form from './components/step_04';
 
 const CreateEventPage = () => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(3);
   const { formValues } = useCreateFormStore();
 
   const steps = [
@@ -43,13 +44,14 @@ const CreateEventPage = () => {
         return <Step3Form />;
       case 3:
         return (
-          <Box>
-            <Typography variant="h6">Review your details:</Typography>
-            <Typography>Name: {formValues.name}</Typography>
-            <Typography>Email: {formValues.email}</Typography>
-            <Typography>Address: {formValues.address}</Typography>
-            <Typography>City: {formValues.city}</Typography>
-          </Box>
+          // <Box>
+          //   <Typography variant="h6">Review your details:</Typography>
+          //   <Typography>Name: {formValues.name}</Typography>
+          //   <Typography>Email: {formValues.email}</Typography>
+          //   <Typography>Address: {formValues.address}</Typography>
+          //   <Typography>City: {formValues.city}</Typography>
+          // </Box>
+          <Step4Form />
         );
       default:
         return 'Unknown step';
@@ -68,7 +70,7 @@ const CreateEventPage = () => {
             ))}
           </Stepper>
           <div className='relative flex justify-between gap-[1rem] w-full h-full'>
-            <div className='flex flex-1 flex-col gap-[3rem] w-full xlg:max-w-[40rem]'>
+            <div className={`flex flex-1 flex-col gap-[3rem] w-full ${activeStep !== 3 && 'xlg:max-w-[40rem]'}`}>
               <div>{renderStepContent(activeStep)}</div>
               <div className='flex gap-[1rem] w-full pt-[3rem] border-solid border-0 border-[#000000]/20 border-t-[1px]'>
                 <Button
