@@ -68,7 +68,7 @@ const useCreateFormStore = create(
         lng: 87.6158,
         is_floor: true,
         domain_url: '',
-        floorplanMode: '',
+        floorplanMode: 0,
         floorplanImage: null,
         floorplanLayout: [],
         ticket_variants: [

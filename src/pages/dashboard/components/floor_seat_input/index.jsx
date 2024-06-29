@@ -1,17 +1,12 @@
-"use client";
-
 import React, { useState } from "react";
 import { RiAddLine, RiProfileLine, RiMoneyDollarCircleLine, RiListView } from "react-icons/ri";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { TextField, InputAdornment } from "@mui/material";
-// redux
-import { useSelector, useDispatch } from 'react-redux';
-import { setFloorItems } from '@/store/slices/floorSlice';
+import useCreateFormStore from '../../../../zustand/store';
 
-
-// Component for individual item inputs
 const TextForm = () => {
-  const dispatch = useDispatch();
+  const { formValues, setFormValues } = useCreateFormStore();
+  const { floorplanLayout } = formValues;
 
   const [itemUpdate, setItemUpdate] = useState({ 
     name: "", 
@@ -21,7 +16,6 @@ const TextForm = () => {
     serveware: "",
     desc: ""
   });
-  const items = useSelector((state) => state.floorData.items);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -30,7 +24,7 @@ const TextForm = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(setFloorItems([...items, itemUpdate]));
+    setFormValues({ floorplanLayout: [...floorplanLayout, itemUpdate] });
     setItemUpdate({ name: "", alias: "", price: "", people: "", serveware: "", desc: "" });
   };
 
@@ -38,14 +32,14 @@ const TextForm = () => {
     input: {
       width: '100%'
     }
-  }
+  };
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4 max-lg:px-[1rem] h-max w-full lg:max-w-[18rem] ">
       <TextField
         label="Name"
         variant='outlined'
-        name={`name`}
+        name="name"
         type="text"
         InputProps={{
           startAdornment: (
@@ -64,13 +58,13 @@ const TextForm = () => {
         <TextField
           label="Alias"
           variant='outlined'
-          name={`alias`}
+          name="alias"
           type="text"
           InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <RiProfileLine className='text-[1.25rem] text-slate-400 ' />
-            </InputAdornment>
+            startAdornment: (
+              <InputAdornment position="start">
+                <RiProfileLine className='text-[1.25rem] text-slate-400 ' />
+              </InputAdornment>
             ),
           }}
           value={itemUpdate.alias}
@@ -81,13 +75,13 @@ const TextForm = () => {
         <TextField
           label="Price"
           variant='outlined'
-          name={`price`}
+          name="price"
           type="number"
           InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <RiMoneyDollarCircleLine className='text-[1.25rem] text-slate-400 ' />
-            </InputAdornment>
+            startAdornment: (
+              <InputAdornment position="start">
+                <RiMoneyDollarCircleLine className='text-[1.25rem] text-slate-400 ' />
+              </InputAdornment>
             ),
           }}
           value={itemUpdate.price}
@@ -98,13 +92,13 @@ const TextForm = () => {
         <TextField
           label="People"
           variant='outlined'
-          name={`people`}
+          name="people"
           type="number"
           InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <RiMoneyDollarCircleLine className='text-[1.25rem] text-slate-400 ' />
-            </InputAdornment>
+            startAdornment: (
+              <InputAdornment position="start">
+                <RiMoneyDollarCircleLine className='text-[1.25rem] text-slate-400 ' />
+              </InputAdornment>
             ),
           }}
           value={itemUpdate.people}
@@ -115,13 +109,13 @@ const TextForm = () => {
         <TextField
           label="Serve Wares"
           variant='outlined'
-          name={`serveware`}
+          name="serveware"
           type="number"
           InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <RiMoneyDollarCircleLine className='text-[1.25rem] text-slate-400 ' />
-            </InputAdornment>
+            startAdornment: (
+              <InputAdornment position="start">
+                <RiMoneyDollarCircleLine className='text-[1.25rem] text-slate-400 ' />
+              </InputAdornment>
             ),
           }}
           value={itemUpdate.serveware}
@@ -132,13 +126,13 @@ const TextForm = () => {
         <TextField
           label="Description"
           variant='outlined'
-          name={`desc`}
+          name="desc"
           type="text"
           InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <RiListView className='text-[1.25rem] text-slate-400 ' />
-            </InputAdornment>
+            startAdornment: (
+              <InputAdornment position="start">
+                <RiListView className='text-[1.25rem] text-slate-400 ' />
+              </InputAdornment>
             ),
           }}
           value={itemUpdate.desc}
