@@ -3,14 +3,11 @@
 
 // const useCreateFormStore = create((set) => ({
 //   formValues: {
-//     name: '', // done
 //     start_date: new Date(), // done
 //     end_date: new Date(), // done
 //     start_time: '', // done
 //     end_time: '', // done
-//     ticket_qty: 0, // done
-//     ticket_price: 0.00, // done
-//     description: '', // done
+
 //     organizer_company_name: '', // done
 //     for_contact_phone: '', // done
 //     for_contact_email: '', // done

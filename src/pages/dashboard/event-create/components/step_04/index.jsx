@@ -41,34 +41,47 @@ const Step4Form = () => {
         }
 
         {/* :::::::::::::::::::::::: EVENT DETAILS */}
-        <div classNmae='flex flex-col gap-[1rem] '>
-          <p className='text-[1rem] text-black-light font-[600] underline underline-offset-[2px] '>Event Details</p>
-          <ul className='flex flex-col gap-[0.5rem] '>
+        <div classNmae='flex flex-col '>
+          <p className='text-[1rem] text-black-light font-[600] mt-[2rem] underline underline-offset-[2px] '>Event Details</p>
+          <ul className='flex flex-col gap-[0.5rem] py-[1rem] '>
             <li className='flex items-center gap-[0.5rem] '>
               <p className='text-[1rem] text-black-light '>Event name:</p>
               <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.name || 'No Event name'}</span>
             </li>
             <li className='flex items-center gap-[0.5rem] '>
               <p className='text-[1rem] text-black-light '>Event Description:</p>
-              <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.description || 'No Event name'}</span>
+              <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.description || 'No Description name'}</span>
             </li>
             <li className='flex items-center gap-[0.5rem] '>
-              <p className='text-[1rem] text-black-light '>Event name:</p>
-              <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.name || 'No Event name'}</span>
+              <p className='text-[1rem] text-black-light '>Ticket Quantity:</p>
+              <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.ticket_qty || 'No Ticket Quantity'}</span>
             </li>
             <li className='flex items-center gap-[0.5rem] '>
-              <p className='text-[1rem] text-black-light '>Event name:</p>
-              <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.name || 'No Event name'}</span>
+              <p className='text-[1rem] text-black-light '>Ticket price:</p>
+              <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.ticket_price || 'No Ticket price'}</span>
             </li>
-            <li className='flex items-center gap-[0.5rem] '>
-              <p className='text-[1rem] text-black-light '>Event name:</p>
-              <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.name || 'No Event name'}</span>
-            </li>
-            <li className='flex items-center gap-[0.5rem] '>
-              <p className='text-[1rem] text-black-light '>Event name:</p>
-              <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.name || 'No Event name'}</span>
-            </li>
+
           </ul>
+        
+          <div classNmae='flex flex-col'>
+            <p className='text-[1rem] text-black-light font-[600] mt-[2rem] underline underline-offset-[2px] '>Ticket Variants</p>
+            {formValues.ticket_variants.map((ticket, index) => (
+            <div key={index} className='flex flex-col gap-[0.5rem] py-[1rem] '>
+              <div className='flex items-center gap-[0.5rem] '>
+                <p className='text-[1rem] text-black-light '>Ticket name:</p>
+                <span className='text-[1rem] text-slate-700 font-[600]'>{ticket.ticket_name || 'No Ticket name'}</span>
+              </div>
+              <div className='flex items-center gap-[0.5rem] '>
+                <p className='text-[1rem] text-black-light '>Ticket price:</p>
+                <span className='text-[1rem] text-slate-700 font-[600]'>{ticket.ticket_price || 'No Ticket price'}</span>
+              </div>
+              <div className='flex items-center gap-[0.5rem] '>
+                <p className='text-[1rem] text-black-light '>Ticket Description:</p>
+                <span className='text-[1rem] text-slate-700 font-[600]'>{ticket.ticket_description || 'No Ticket Description'}</span>
+              </div>               
+            </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
