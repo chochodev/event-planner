@@ -30,7 +30,10 @@ const TextForm = () => {
 
   const styles = {
     input: {
-      width: '100%'
+      width: '100%',
+      borderRadius: '8px',
+      border: '2px solid',
+      borderColor: ''
     }
   };
 

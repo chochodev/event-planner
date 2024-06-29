@@ -9,21 +9,18 @@ import {
   TableRow,
   Paper
 } from '@mui/material';
-// redux
-import { useSelector, useDispatch } from 'react-redux';
-import { setFloorItems } from '@/store/slices/floorSlice';
+import useCreateFormStore from '../../../../zustand/store';
 
 
 // Component for individual item inputs
 const ItemAppendForm = () => {
   const [openDrawer, setOpenDrawer] = useState(false)
 
-  const items = useSelector((state) => state.floorData.items);
-  const dispatch = useDispatch();
+  const { formValues, setFormValues } = useCreateFormStore();
 
   const onDelete = (index) => {
-    const updatedItems = items.filter((_, i) => i !== index);
-    dispatch(setFloorItems(updatedItems));
+    const updatedItems = formValues.floorplanLayout.filter((_, i) => i !== index);
+    setFormValues({...formValues, floorplanLayout: updatedItems});
   };
 
   return (
@@ -65,7 +62,7 @@ const ItemAppendForm = () => {
             </TableRow>
           </TableHead>
           <TableBody className='bg-base/20'>
-            {items.map((item, index) => (
+            {formValues.floorplanLayout.map((item, index) => (
               <TableRow
                 key={index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

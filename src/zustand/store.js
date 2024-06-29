@@ -66,7 +66,7 @@ const useCreateFormStore = create(
         zipcode: '',
         lat: 41.8527,
         lng: 87.6158,
-        is_floor: true,
+        is_floor: false,
         domain_url: '',
         floorplanMode: 0,
         floorplanImage: null,

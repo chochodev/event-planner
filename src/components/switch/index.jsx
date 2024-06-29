@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch } from '@mui/material';
 
-const SwitchWithLabel = ({ checked, onChange, label }) => {
+const SwitchWithLabel = ({ checked = false, onChange=prop=>{}, label='default label' }) => {
   const handleToggle = () => {
     onChange(!checked);
   };
