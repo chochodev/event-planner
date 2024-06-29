@@ -17,7 +17,7 @@ const Preview = () => {
       <p className='text-[1.25rem] text-black font-[600] '>Preview</p>
       {formValues.source_image? 
       <img 
-        src={formValues.source_image? URL.createObjectURL(formValues.source_image) : "/assets/images/dp.png"} 
+        src={formValues.source_image instanceof File? URL.createObjectURL(formValues.source_image) : "/assets/images/dp.png"} 
         alt="Event"
         className='w-full h-[20rem] object-cover rounded-[12px] '
       /> : 

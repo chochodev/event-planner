@@ -1,12 +1,13 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 
-const BaseInput = ({ name, value, onChange, ...props }) => {
+const BaseInput = ({ name, value, onChange, required = true, ...props }) => {
   return (
     <TextField
       name={name}
       value={value}
       onChange={onChange}
+      required={required}
       variant="outlined"
       fullWidth
       sx={{
@@ -16,7 +17,7 @@ const BaseInput = ({ name, value, onChange, ...props }) => {
           fontSize: '0.875rem',
           fontWeight: 600,
           fontFamily: 'Poppins, sans-serif',
-          paddingLeft: 'rem',
+          // paddingLeft: '1rem',
           borderRadius: '12px',
           border: '2px solid',
           borderColor: 'rgba(119,126,144,0.3)',

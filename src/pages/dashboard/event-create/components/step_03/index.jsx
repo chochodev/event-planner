@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useCreateFormStore from '../../../../../zustand/store';
-import UploadImage from 'components/image_input';
+import UploadImage, { UploadImageSmall } from 'components/image_input';
 import BaseInput from 'components/input';
 import SwitchWithLabel from 'components/switch';
 import { Modal } from '@mui/material';
@@ -17,8 +17,12 @@ const Step3Form = () => {
     setFormValues({ [name]: value });
   };
 
-  const handleImageChange = (file) => {
+  const handleEventImageChange = (file) => {
     setFormValues({ ...formValues, source_image: file });
+  };
+  
+  const handleFloorImageChange = (file) => {
+    setFormValues({ ...formValues, floorplanImage: file });
   };
 
   const handleSwitchChange = (newValue) => {
@@ -50,10 +54,10 @@ const Step3Form = () => {
       <p className='text-[1rem] text-black-light font-[600] underline underline-offset-[2px] '>Contact Details</p>
       <UploadImage
         name="source_image"
-        onChange={handleImageChange}
+        onChange={handleEventImageChange}
         errorMessage={formValues.source_image ? '' : 'Image is required'}
       />
-      {formValues.source_image &&
+      {formValues.source_image instanceof File &&
       <>
       <p className='text-[0.75rem] text-black-light mb-[-1.5rem] uppercase '>Image preview:</p>
       <img 
@@ -162,16 +166,39 @@ const Step3Form = () => {
             ) : (
               <>
               <div 
-                className={`flex flex-col lg:flex-row gap-x-[1rem] gap-y-[2rem] w-full h-max`}
+                className={`flex max-lg:flex-col gap-x-[1rem] gap-y-[2rem] w-full h-max`}
               >
                 {/* ::::::::::::::::::::::::::::: IMAGE */}
-                <div className='flex flex-col gap-[1rem] w-full lg:w-[50%] h-full pt-[1rem]'>
-                  <h2>Upload Floor-plan Image</h2>
+                <div className='flex flex-col gap-[1rem] w-full lg:w-[50%] h-full '>
+                  {formValues.floorplanImage?
+                  <UploadImageSmall 
+                    name="floor_image"
+                    onChange={handleFloorImageChange}
+                    errorMessage={formValues.floorplanImage ? '' : 'Image is required'}
+                  /> :
                   <UploadImage 
                     name="floor_image"
-                    onChange={handleImageChange}
+                    onChange={handleFloorImageChange}
                     errorMessage={formValues.floorplanImage ? '' : 'Image is required'}
-                  />
+                  />}
+
+                  {formValues.floorplanImage instanceof File && 
+                    <div className='relative flex flex-col gap-[1rem] w-full overflow-hidden rounded-[8px] '>
+
+                      <img
+                        src={URL.createObjectURL(formValues.floorplanImage)}
+                        alt='Floor plan'
+                        className='relative z-[2] w-full h-[30rem] object-contain'
+                      />
+
+                      {/* :::::::::::::::::: Background blur */}
+                      <img
+                        src={URL.createObjectURL(formValues.floorplanImage)}
+                        alt='Floor plan'
+                        className='absolute top-0 left-0 w-full h-[30rem] object-cover blur-[10px]'
+                      />
+                    </div>
+                  }
                 </div>
                 
                 {localFloorMode === 0?
