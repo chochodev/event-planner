@@ -87,7 +87,11 @@ const CreateEventPage = () => {
                   <p className='capitalize text-black-light'>Back</p>
                 </Button>
                 {activeStep === steps.length - 1 ? (
-                  <PrimaryLink onClick={handleSubmit}>Submit</PrimaryLink>
+                  <PrimaryLink width='max-content' onClick={handleSubmit}>
+                    <div className='flex items-center gap-[0.5rem]'>
+                      <p>Submit</p>
+                    </div>
+                  </PrimaryLink>
                 ) : (
                   <div className='flex-1 flex justify-between'>
                     <PrimaryLink width='max-content' onClick={handleNext}>
