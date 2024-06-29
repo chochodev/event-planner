@@ -103,7 +103,7 @@ const CreateEventPage = () => {
               </div>
             </div>
             {/* :::::::::::::::::::::::: PREVIEW */}
-            <Preview />
+            {activeStep !== 3 && <Preview />}
           </div>
         </div>
       </div>
