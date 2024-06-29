@@ -163,7 +163,7 @@ const Step2Form = () => {
           id='organizer_company_name'
           name='organizer_company_name'
           type='text'
-          value={formValues.city}
+          value={formValues.address}
           onChange={handleChange}
           placeholder='e.g No 24. Street 134'
         />

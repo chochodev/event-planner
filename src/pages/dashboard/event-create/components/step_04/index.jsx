@@ -110,6 +110,28 @@ const Step4Form = () => {
               </li>
             </ul>
           </div>
+          
+          <div classNmae='flex flex-col '>
+            <p className='text-[1rem] text-black-light font-[600] mt-[2rem] underline underline-offset-[2px] '>Location Details</p>
+            <ul className='flex flex-col gap-[0.5rem] py-[1rem] '>
+              <li className='flex items-center gap-[0.5rem] '>
+                <p className='text-[1rem] text-black-light '>Address:</p>
+                <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.address || 'No Address'}</span>
+              </li>
+              <li className='flex items-center gap-[0.5rem] '>
+                <p className='text-[1rem] text-black-light '>City:</p>
+                <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.city || 'No City'}</span>
+              </li>
+              <li className='flex items-center gap-[0.5rem] '>
+                <p className='text-[1rem] text-black-light '>State:</p>
+                <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.state || 'No State'}</span>
+              </li>
+              <li className='flex items-center gap-[0.5rem] '>
+                <p className='text-[1rem] text-black-light '>Zipcode:</p>
+                <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.zipcode || 'No Zipcode'}</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
