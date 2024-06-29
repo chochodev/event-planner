@@ -136,14 +136,15 @@ const Step4Form = () => {
 
           {/* ::::::::::::::::::::::: LAST DETAILS */}
           <div classNmae='flex flex-col '>
+            <p className='text-[1rem] text-black-light font-[600] mt-[2rem] mb-[1rem] underline underline-offset-[2px] '>Seat Details</p>
             <SwitchWithLabel
               checked={formValues.is_floor}
               onChange={()=>{}}
               label="Custom seating arrangement"
             />  
-            <div className='flex items-center gap-[0.5rem] '>
+            <div className='flex items-center gap-[0.5rem] py-[1rem] '>
               <p className='text-[1rem] text-black-light '>URL:</p>
-              <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.zipcode || 'No Zip code'}</span>
+              <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.domain_url? <>rana-event/events/{formValues.domain_url}</> : 'No Domain name'}</span>
             </div>
           </div>
 
