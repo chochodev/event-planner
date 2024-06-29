@@ -34,7 +34,7 @@ const Step2Form = () => {
           id='for_contact_phone'
           name='for_contact_phone'
           type='number'
-          value={formValues.city}
+          value={formValues.for_contact_phone}
           onChange={handleChange}
           placeholder='e.g +00345346345'
         />
@@ -48,7 +48,7 @@ const Step2Form = () => {
           id='for_contact_email'
           name='for_contact_email'
           type='text'
-          value={formValues.city}
+          value={formValues.for_contact_email}
           onChange={handleChange}
           placeholder='e.g Pacifista Kuma'
         />

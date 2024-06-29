@@ -28,14 +28,6 @@
 //     floorplanImage: null,
 //     floorplanLayout: [],
 
-//     // ::::::::::: ticket variant
-//     ticket_variants: [
-//       {
-//         ticket_name: '',
-//         ticket_price: 0.00,
-//         ticket_description: ''
-//       }
-//     ]
 //   },
 
 import { create } from 'zustand';
