@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { RiAddLine, RiProfileLine, RiMoneyDollarCircleLine, RiListView } from "react-icons/ri";
-import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
-import { TextField, InputAdornment } from "@mui/material";
+import { RiAddLine } from "react-icons/ri";
 import useCreateFormStore from '../../../../zustand/store';
+import BaseInput from 'components/input';
 
 const TextForm = () => {
   const { formValues, setFormValues } = useCreateFormStore();
@@ -28,127 +27,101 @@ const TextForm = () => {
     setItemUpdate({ name: "", alias: "", price: "", people: "", serveware: "", desc: "" });
   };
 
-  const styles = {
-    input: {
-      width: '100%',
-      borderRadius: '8px',
-      border: '2px solid',
-      borderColor: ''
-    }
-  };
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-4 max-lg:px-[1rem] h-max w-full lg:max-w-[18rem] ">
-      <TextField
-        label="Name"
-        variant='outlined'
-        name="name"
-        type="text"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <MdOutlineDriveFileRenameOutline className='text-[1.25rem] text-slate-400 ' />
-            </InputAdornment>
-          ),
-        }}
-        value={itemUpdate.name}
-        style={styles.input}
-        placeholder="e.g. Parlour 1"
-        onChange={onChange}
-      />
+    <form onSubmit={onSubmit} className="flex flex-col gap-[1rem] max-lg:px-[1rem] h-max w-full lg:max-w-[18rem] ">
+      <div className='flex flex-col gap-[0.5rem] '>
+        <label 
+          htmlFor='name' 
+          className='text-black-fade text-[0.75rem] uppercase font-[600] '
+        >Name</label>
+        <BaseInput 
+          id='name'
+          name='name'
+          type='text'
+          value={itemUpdate.name}
+          onChange={onChange}
+          placeholder='e.g VIP 1'
+        />
+      </div>
           
-      <div className='flex flex-col gap-[2rem] w-full '>
-        <TextField
-          label="Alias"
-          variant='outlined'
-          name="alias"
-          type="text"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <RiProfileLine className='text-[1.25rem] text-slate-400 ' />
-              </InputAdornment>
-            ),
-          }}
-          value={itemUpdate.alias}
-          placeholder="e.g. P 1"
-          onChange={onChange}
-          style={styles.input}
-        />
-        <TextField
-          label="Price"
-          variant='outlined'
-          name="price"
-          type="number"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <RiMoneyDollarCircleLine className='text-[1.25rem] text-slate-400 ' />
-              </InputAdornment>
-            ),
-          }}
-          value={itemUpdate.price}
-          placeholder="e.g. 100"
-          onChange={onChange}
-          style={styles.input}
-        />
-        <TextField
-          label="People"
-          variant='outlined'
-          name="people"
-          type="number"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <RiMoneyDollarCircleLine className='text-[1.25rem] text-slate-400 ' />
-              </InputAdornment>
-            ),
-          }}
-          value={itemUpdate.people}
-          placeholder="e.g. 3"
-          onChange={onChange}
-          style={styles.input}
-        />
-        <TextField
-          label="Serve Wares"
-          variant='outlined'
-          name="serveware"
-          type="number"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <RiMoneyDollarCircleLine className='text-[1.25rem] text-slate-400 ' />
-              </InputAdornment>
-            ),
-          }}
-          value={itemUpdate.serveware}
-          placeholder="e.g. 5"
-          onChange={onChange}
-          style={styles.input}
-        />
-        <TextField
-          label="Description"
-          variant='outlined'
-          name="desc"
-          type="text"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <RiListView className='text-[1.25rem] text-slate-400 ' />
-              </InputAdornment>
-            ),
-          }}
-          value={itemUpdate.desc}
-          placeholder="Children below 12 years are not allowed here"
-          onChange={onChange}
-          style={{ width: '100%', height: '5.5rem'}}
-        />
+      <div className='flex flex-col gap-[1rem] w-full '>
+        <div className='flex flex-col gap-[0.5rem] '>
+          <label 
+            htmlFor='alias' 
+            className='text-black-fade text-[0.75rem] uppercase font-[600] '
+          >Alias</label>
+          <BaseInput 
+            id='alias'
+            name='alias'
+            type='text'
+            value={itemUpdate.alias}
+            onChange={onChange}
+            placeholder='e.g V1'
+          />
+        </div>
+        <div className='flex flex-col gap-[0.5rem] '>
+          <label 
+            htmlFor='price' 
+            className='text-black-fade text-[0.75rem] uppercase font-[600] '
+          >Price - $</label>
+          <BaseInput 
+            id='price'
+            name='price'
+            type='number'
+            value={itemUpdate.price}
+            onChange={onChange}
+            placeholder='e.g 50'
+          />
+        </div>
+        <div className='flex flex-col gap-[0.5rem] '>
+          <label 
+            htmlFor='people' 
+            className='text-black-fade text-[0.75rem] uppercase font-[600] '
+          >People</label>
+          <BaseInput 
+            id='people'
+            name='people'
+            type='number'
+            value={itemUpdate.people}
+            onChange={onChange}
+            placeholder='e.g 5'
+          />
+        </div>
+        <div className='flex flex-col gap-[0.5rem] '>
+          <label 
+            htmlFor='serveware' 
+            className='text-black-fade text-[0.75rem] uppercase font-[600] '
+          >Serve Wares</label>
+          <BaseInput 
+            id='serveware'
+            name='serveware'
+            type='number'
+            value={itemUpdate.serveware}
+            onChange={onChange}
+            placeholder='e.g 5'
+          />
+        </div>
+        <div className='flex flex-col gap-[0.5rem] '>
+          <label 
+            htmlFor='desc' 
+            className='text-black-fade text-[0.75rem] uppercase font-[600] '
+          >Description</label>
+          <textarea
+            id='desc'
+            name='desc'
+            value={itemUpdate.desc}
+            onChange={onChange}
+            placeholder='e.g This is exclusive for VIPs only'
+            className='w-full h-[5.875rem] p-[1rem] text-[0.875rem] font-[600] rounded-[12px] border-solid border-black-light/30 border-[2px] focus:border-black-light/80 ease-250 resize-none overflow-hidden '
+          ></textarea>
+        </div>
       </div>
 
       {/* BUTTON */}
       <button
         type="submit"
-        className="flex items-center justify-center sm:justify-self-end h-[3.5rem] w-full rounded-[8px] bg-[#2C3BFA] text-white"
+        className="flex items-center justify-center sm:justify-self-end text-[0.875rem] h-[3rem] w-full rounded-[12px] bg-secondary hover:bg-secondary-hover ease-250 text-white"
         onClick={onSubmit}
       >
         Create Seat
