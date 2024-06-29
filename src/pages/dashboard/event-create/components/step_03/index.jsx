@@ -4,7 +4,6 @@ import UploadImage from 'components/image_input';
 import BaseInput from 'components/input';
 import SwitchWithLabel from 'components/switch';
 import { Modal } from '@mui/material';
-import { RiCloseLine } from 'react-icons/ri';
 import TextForm from 'pages/dashboard/components/floor_seat_input';
 import ItemAppendForm from 'pages/dashboard/components/item_append_form';
 
@@ -41,9 +40,9 @@ const Step3Form = () => {
     setCurrentStep(1); // Move to next step
   }
 
-  const handleBack = () => {
-    setCurrentStep(0); // Go back to the first step
-  }
+  // const handleBack = () => {
+  //   setCurrentStep(0);
+  // }
 
   return (
     <div className='flex flex-col gap-[2rem] '>
