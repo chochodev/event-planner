@@ -1,6 +1,7 @@
 import React from 'react';
 import useCreateFormStore from '../../../../../zustand/store';
 import dayjs from 'dayjs';
+import { Skeleton } from '@mui/material';
 
 const Preview = () => {
   const { formValues } = useCreateFormStore();
@@ -14,11 +15,14 @@ const Preview = () => {
       className='max-xlg:hidden sticky top-[8.5rem] flex flex-col gap-[1rem] w-[22rem] h-max p-[2rem] rounded-[12px] overflow-hidden shadow-[0_2px_40px_8px_rgba(0,0,0,0.1)] '
     >
       <p className='text-[1.25rem] text-black font-[600] '>Preview</p>
+      {formValues.source_image? 
       <img 
         src={formValues.source_image? URL.createObjectURL(formValues.source_image) : "/assets/images/dp.png"} 
         alt="Event"
         className='w-full h-[20rem] object-cover rounded-[12px] '
-      />
+      /> : 
+      <Skeleton variant='rectangular' width={'100%'} sx={{ height: '20rem', borderRadius: '12px' }} />
+      }
       <div className='flex gap-[0.5rem] items-center justify-between'>
         <p className='text-[0.875rem] text-black-dim '>{formValues.name || 'No name value'}</p>
         <p
