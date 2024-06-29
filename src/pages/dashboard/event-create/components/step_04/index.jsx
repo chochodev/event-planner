@@ -140,7 +140,7 @@ const Step4Form = () => {
             <SwitchWithLabel
               checked={formValues.is_floor}
               onChange={()=>{}}
-              label="Custom seating arrangement"
+              label="Custom seating arrangement "
             />  
             <div className='flex items-center gap-[0.5rem] py-[1rem] '>
               <p className='text-[1rem] text-black-light '>URL:</p>
