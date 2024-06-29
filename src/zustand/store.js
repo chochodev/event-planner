@@ -3,23 +3,8 @@
 
 // const useCreateFormStore = create((set) => ({
 //   formValues: {
-//     start_date: new Date(), // done
-//     end_date: new Date(), // done
-//     start_time: '', // done
-//     end_time: '', // done
-
-//     organizer_company_name: '', // done
-//     for_contact_phone: '', // done
-//     for_contact_email: '', // done
 //     source_image: null, // done
-//     // location: '', // done
 
-//     address: '', // done
-//     city: '', // done
-//     state: '', // done
-//     zipcode: '', // done
-//     lat: 41.8527, // done
-//     lng: 87.6158, // done
 //     is_floor: 0,  // done
 //     domain_url: '', // done
 

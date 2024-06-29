@@ -1,6 +1,7 @@
 import React from 'react';
 import useCreateFormStore from '../../../../../zustand/store';
 import dayjs from 'dayjs';
+import SwitchWithLabel from 'components/switch';
 
 const Step4Form = () => {
   const { formValues } = useCreateFormStore();
@@ -132,6 +133,20 @@ const Step4Form = () => {
               </li>
             </ul>
           </div>
+
+          {/* ::::::::::::::::::::::: LAST DETAILS */}
+          <div classNmae='flex flex-col '>
+            <SwitchWithLabel
+              checked={formValues.is_floor}
+              onChange={()=>{}}
+              label="Custom seating arrangement"
+            />  
+            <div className='flex items-center gap-[0.5rem] '>
+              <p className='text-[1rem] text-black-light '>URL:</p>
+              <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.zipcode || 'No Zip code'}</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

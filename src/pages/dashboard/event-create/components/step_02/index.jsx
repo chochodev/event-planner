@@ -29,6 +29,20 @@ const Step2Form = () => {
         <label 
           htmlFor='name' 
           className='text-black-fade text-[0.75rem] uppercase font-[600] '
+        >Company name</label>
+        <BaseInput 
+          id='organizer_company_name'
+          name='organizer_company_name'
+          type='text'
+          value={formValues.organizer_company_name}
+          onChange={handleChange}
+          placeholder='e.g No 24. Street 134'
+        />
+      </div>
+      <div className='flex flex-col gap-[0.5rem] '>
+        <label 
+          htmlFor='name' 
+          className='text-black-fade text-[0.75rem] uppercase font-[600] '
         >Phone</label>
         <BaseInput 
           id='for_contact_phone'
@@ -160,8 +174,8 @@ const Step2Form = () => {
           className='text-black-fade text-[0.75rem] uppercase font-[600] '
         >Address</label>
         <BaseInput 
-          id='organizer_company_name'
-          name='organizer_company_name'
+          id='address'
+          name='address'
           type='text'
           value={formValues.address}
           onChange={handleChange}
