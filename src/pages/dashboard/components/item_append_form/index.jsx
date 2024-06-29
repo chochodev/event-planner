@@ -76,7 +76,7 @@ const ItemAppendForm = () => {
               <TableRow
                 key={index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                className={`group relative ${index%2 === 0 && 'bg-base-light/20'}`}
+                className={`group relative ${index%2 === 1 && 'bg-black-light/5'}`}
               >
                 <TableCell component="th" scope="row">
                   {item.name}

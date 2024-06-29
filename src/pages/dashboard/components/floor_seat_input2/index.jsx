@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { RiAddLine } from "react-icons/ri";
+import { RiAddLine, RiArmchairLine } from "react-icons/ri";
 import useCreateFormStore from '../../../../zustand/store';
 import BaseInput from 'components/input';
+import { TableIcon, TableIconHover } from 'components/icons/table_icon';
 
 const TextForm2 = () => {
   const { formValues, setFormValues } = useCreateFormStore();
   const { categoryplanLayout } = formValues;
 
   const [itemUpdate, setItemUpdate] = useState({ 
-    name: "VIP 2", price: "50", number: "5", desc: "This is for vip only."
+    name: "VIP 2", price: "50", number: "5", type: 'seat', desc: "This is for vip only."
   });
 
   const onChange = (e) => {
@@ -16,12 +17,15 @@ const TextForm2 = () => {
     setItemUpdate((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const onRadioChange = (e) => {
+    setItemUpdate((prevState) => ({ ...prevState, type: e.target.value }));
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     setFormValues({ categoryplanLayout: [...categoryplanLayout, itemUpdate] });
-    setItemUpdate({ name: "VIP 2", price: "50", number: "5", desc: "This is for vip only." });
+    setItemUpdate({ name: "VIP 2", price: "50", number: "5", type: 'seat', desc: "This is for vip only." });
   };
-
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-[1rem] max-lg:px-[1rem] h-max w-full lg:max-w-[18rem] ">
@@ -59,7 +63,7 @@ const TextForm2 = () => {
           <label 
             htmlFor='number' 
             className='text-black-fade text-[0.75rem] uppercase font-[600] '
-          >Number of seats</label>
+          >Number of {itemUpdate.type}s</label>
           <BaseInput 
             id='number'
             name='number'
@@ -71,12 +75,59 @@ const TextForm2 = () => {
         </div>
         <div className='flex flex-col gap-[0.5rem] '>
           <label 
+            htmlFor='type' 
+            className='text-black-fade text-[0.75rem] uppercase font-[600] '
+          >Type</label>
+          <div className="flex gap-[0.5rem] w-full">
+            <label className='relative w-[48%] '>
+              <input 
+                type="radio"
+                name="type" 
+                value='seat'
+                checked={itemUpdate.type === 'seat'} 
+                onChange={onRadioChange}
+                className="peer absolute z-[2] top-0 left-0 h-full w-full opacity-0 cursor-pointer " 
+                required 
+              />
+              <div 
+                className="flex items-center justify-center gap-[0.5rem] w-full p-[0.5rem] text-gray-500 bg-white border-solid border-[2px] border-black-light/20 rounded-[8px] peer-checked:border-secondary/50 peer-checked:text-secondary hover:text-gray-600 hover:bg-gray-100"
+              >            
+                  <p className="w-full">Seat</p>
+                  <RiArmchairLine className='text-[1.25rem]' />
+              </div>
+            </label>
+            <label className='relative w-[48%] '>
+              <input 
+                type="radio"
+                name='type'
+                value="table" 
+                checked={itemUpdate.type === 'table'} 
+                onChange={onRadioChange}
+                className="peer absolute z-[2] top-0 left-0 h-full w-full opacity-0 cursor-pointer" 
+                required 
+              />
+              <div 
+                className="flex items-center justify-center gap-[0.5rem] w-full p-[0.5rem] text-gray-500 bg-white border-solid border-[2px] border-black-light/20 rounded-[8px] peer-checked:border-secondary/50 peer-checked:text-secondary hover:text-gray-600 hover:bg-gray-100"
+              >            
+                  <p className="w-full">Table</p>
+                  {/* <img 
+                    src='/assets/images/table.png'
+                    alt='Table'
+                    className='h-[1.25rem] object-contain opacity-[80%]'
+                  /> */}
+                  {itemUpdate.type==='seat'? <TableIcon /> : <TableIconHover />}
+              </div>
+            </label>
+          </div>
+        </div>
+        <div className='flex flex-col gap-[0.5rem] '>
+          <label 
             htmlFor='desc' 
             className='text-black-fade text-[0.75rem] uppercase font-[600] '
           >Description</label>
           <textarea
             id='desc'
-            name='desc'
+            name='desc' 
             value={itemUpdate.desc}
             onChange={onChange}
             placeholder='e.g This section is exclusive for VIPs only'

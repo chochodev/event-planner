@@ -64,7 +64,7 @@ const ItemAppendForm2 = () => {
                 <h2 className='text-secondary-dark font-[600] text-[0.75rem] uppercase'>Number</h2>
               </TableCell>
               <TableCell align="right">
-                <h2 className='text-secondary-dark font-[600] text-[0.75rem] uppercase'>Description</h2>
+                <h2 className='text-secondary-dark font-[600] text-[0.75rem] uppercase'>Type</h2>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -73,14 +73,14 @@ const ItemAppendForm2 = () => {
               <TableRow
                 key={index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                className={`group relative ${index%2 === 0 && 'bg-base-light/20'}`}
+                className={`group relative ${index%2 === 1 && 'bg-black-light/5'}`}
               >
                 <TableCell component="th" scope="row">
                   {item.name}
                 </TableCell>
                 <TableCell align="right">{item.price}</TableCell>
                 <TableCell align="right">{item.number}</TableCell>
-                <TableCell align="right overflow-hidden w-max text-ellipsis ">{item.desc}</TableCell>
+                <TableCell align="right">{item.type}</TableCell>
                 <button
                   type="button"
                   className="absolute top-[0.5rem] right-[-1rem] z-[30] flex items-center justify-center sm:justify-self-end h-[2rem] w-[2rem] rounded-[4px] group-hover:bg-slate-500 group-hover:hover:bg-orange-700 text-white group-hover:right-[0.5rem] invisible group-hover:visible ease-250 shadow-[0_0_5px_1px_rgba(255,255,255,0.15)] "

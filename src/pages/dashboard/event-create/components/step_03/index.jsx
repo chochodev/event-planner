@@ -35,16 +35,14 @@ const Step3Form = () => {
 
   const localFloorMode = formValues.floorplanMode;
   const [editFloorPlan, setEditFloorPlan] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0); // Stepper state
+  const [currentStep, setCurrentStep] = useState(0);
 
   const handleFloorMode = (mode) => {
     setFormValues({ ...formValues, floorplanMode: mode });
-    setCurrentStep(1); // Move to next step
+    setCurrentStep(1);
+    console.log('local floor mode:', localFloorMode);
   }
 
-  // const handleBack = () => {
-  //   setCurrentStep(0);
-  // }
 
   return (
     <div className='flex flex-col gap-[2rem] '>
@@ -104,15 +102,15 @@ const Step3Form = () => {
             {/* ::::::::::::::::::: SWITCH BUTTONS */}
             {currentStep === 1 &&
             <>
-            {localFloorMode !== 1 && 
+            {formValues.floorplanMode !== 1 && 
             <button
-              onClick={()=>handleFloorMode(0)}
+              onClick={()=>handleFloorMode(1)}
               className={`flex items-center justify-center text-[0.875rem] font-[600] text-black-dim px-[1.5rem] h-[2.5rem] border-solid border-[2px] border-black-light/20 hover:bg-secondary-hover hover:text-primary ease-250 rounded-[3rem] `}
             >Switch to Multiple</button>
             }
-            {localFloorMode !== 0 &&
+            {formValues.floorplanMode !== 0 &&
             <button
-              onClick={()=>handleFloorMode(1)}
+              onClick={()=>handleFloorMode(0)}
               className={`flex items-center justify-center text-[0.875rem] font-[600] text-black-dim px-[1.5rem] h-[2.5rem] border-solid border-[2px] border-black-light/20 hover:bg-secondary-hover hover:text-primary ease-250 rounded-[3rem] `}
             >Switch to Single</button>
             }
