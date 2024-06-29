@@ -11,7 +11,7 @@ import Preview from './components/preview';
 import Step4Form from './components/step_04';
 
 const CreateEventPage = () => {
-  const [activeStep, setActiveStep] = useState(3);
+  const [activeStep, setActiveStep] = useState(0);
   const { formValues } = useCreateFormStore();
 
   const steps = [
@@ -23,10 +23,12 @@ const CreateEventPage = () => {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
   };
 
   const handleSubmit = () => {
