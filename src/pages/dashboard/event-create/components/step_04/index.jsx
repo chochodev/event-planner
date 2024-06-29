@@ -127,7 +127,7 @@ const Step4Form = () => {
                 <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.state || 'No State'}</span>
               </li>
               <li className='flex items-center gap-[0.5rem] '>
-                <p className='text-[1rem] text-black-light '>Zipcode:</p>
+                <p className='text-[1rem] text-black-light '>Zip code:</p>
                 <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.zipcode || 'No Zipcode'}</span>
               </li>
             </ul>
