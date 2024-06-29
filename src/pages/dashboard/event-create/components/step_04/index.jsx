@@ -1,9 +1,14 @@
 import React from 'react';
 import useCreateFormStore from '../../../../../zustand/store';
-
+import dayjs from 'dayjs';
 
 const Step4Form = () => {
   const { formValues } = useCreateFormStore();
+  
+  // :::::::::::::::::: format date
+  const formatDate = (date) => {
+    return date ? dayjs(date).format('YYYY-MM-DD HH:mm') : 'No date value';
+  };
 
   return (
     <div className='w-full'>
@@ -88,20 +93,20 @@ const Step4Form = () => {
             <p className='text-[1rem] text-black-light font-[600] mt-[2rem] underline underline-offset-[2px] '>Contact Details</p>
             <ul className='flex flex-col gap-[0.5rem] py-[1rem] '>
               <li className='flex items-center gap-[0.5rem] '>
-                <p className='text-[1rem] text-black-light '>Event name:</p>
-                <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.name || 'No Event name'}</span>
+                <p className='text-[1rem] text-black-light '>Phone:</p>
+                <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.for_contact_phone || 'No Phone number'}</span>
               </li>
               <li className='flex items-center gap-[0.5rem] '>
                 <p className='text-[1rem] text-black-light '>Event Description:</p>
-                <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.description || 'No Description name'}</span>
+                <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.for_contact_email || 'No Email'}</span>
               </li>
               <li className='flex items-center gap-[0.5rem] '>
-                <p className='text-[1rem] text-black-light '>Ticket Quantity:</p>
-                <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.ticket_qty || 'No Ticket Quantity'}</span>
+                <p className='text-[1rem] text-black-light '>Start date:</p>
+                <span className='text-[1rem] text-slate-700 font-[600]'>{formatDate(formValues.start_date)}</span>
               </li>
               <li className='flex items-center gap-[0.5rem] '>
-                <p className='text-[1rem] text-black-light '>Ticket price:</p>
-                <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.ticket_price || 'No Ticket price'}</span>
+                <p className='text-[1rem] text-black-light '>End date:</p>
+                <span className='text-[1rem] text-slate-700 font-[600]'>{formatDate(formValues.start_date)}</span>
               </li>
             </ul>
           </div>
