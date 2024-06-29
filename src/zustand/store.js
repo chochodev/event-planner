@@ -71,6 +71,7 @@ const useCreateFormStore = create(
         floorplanMode: 0,
         floorplanImage: null,
         floorplanLayout: [],
+        categoryplanLayout: [],
         ticket_variants: [
           {
             ticket_name: '',

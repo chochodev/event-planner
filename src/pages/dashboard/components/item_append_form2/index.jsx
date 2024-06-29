@@ -13,14 +13,14 @@ import useCreateFormStore from '../../../../zustand/store';
 
 
 // Component for individual item inputs
-const ItemAppendForm = () => {
+const ItemAppendForm2 = () => {
   const [openDrawer, setOpenDrawer] = useState(false)
 
   const { formValues, setFormValues } = useCreateFormStore();
 
   const onDelete = (index) => {
-    const updatedItems = formValues.floorplanLayout.filter((_, i) => i !== index);
-    setFormValues({...formValues, floorplanLayout: updatedItems});
+    const updatedItems = formValues.categoryplanLayout.filter((_, i) => i !== index);
+    setFormValues({...formValues, categoryplanLayout: updatedItems});
   };
 
   return (
@@ -47,7 +47,7 @@ const ItemAppendForm = () => {
             <RiMenuFoldLine /> :
             <RiCloseFill />}
           </button>
-          <p className='text-[0.875rem] uppercase text-secondary-dark font-[600] '>List of Seats</p>
+          <p className='text-[0.875rem] uppercase text-secondary-dark font-[600] '>List of Categories</p>
         </div>
         <Table sx={{ minWidth: 650 }} style={{borderRadius: '4px'}} aria-label="simple table"
           className='relative border-[1px] border-solid border-secondary-light/20 border-collapse rounded-[4px] '
@@ -58,21 +58,18 @@ const ItemAppendForm = () => {
                 <h2 className='text-secondary-dark font-[600] text-[0.75rem] uppercase'>Name</h2>
               </TableCell>
               <TableCell align="right">
-                <h2 className='text-secondary-dark font-[600] text-[0.75rem] uppercase'>Alias</h2>
-              </TableCell>
-              <TableCell align="right">
                 <h2 className='text-secondary-dark font-[600] text-[0.75rem] uppercase'>Price ($)</h2>
               </TableCell>
               <TableCell align="right">
-                <h2 className='text-secondary-dark font-[600] text-[0.75rem] uppercase'>People</h2>
+                <h2 className='text-secondary-dark font-[600] text-[0.75rem] uppercase'>Number</h2>
               </TableCell>
               <TableCell align="right">
-                <h2 className='text-secondary-dark font-[600] text-[0.75rem] uppercase'>Wares</h2>
+                <h2 className='text-secondary-dark font-[600] text-[0.75rem] uppercase'>Description</h2>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody className='bg-base/20'>
-            {formValues.floorplanLayout.map((item, index) => (
+            {formValues.categoryplanLayout.map((item, index) => (
               <TableRow
                 key={index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -81,10 +78,9 @@ const ItemAppendForm = () => {
                 <TableCell component="th" scope="row">
                   {item.name}
                 </TableCell>
-                <TableCell align="right">{item.alias}</TableCell>
                 <TableCell align="right">{item.price}</TableCell>
-                <TableCell align="right">{item.people}</TableCell>
-                <TableCell align="right">{item.serveware}</TableCell>
+                <TableCell align="right">{item.number}</TableCell>
+                <TableCell align="right overflow-hidden w-max text-ellipsis ">{item.desc}</TableCell>
                 <button
                   type="button"
                   className="absolute top-[0.5rem] right-[-1rem] z-[30] flex items-center justify-center sm:justify-self-end h-[2rem] w-[2rem] rounded-[4px] group-hover:bg-slate-500 group-hover:hover:bg-orange-700 text-white group-hover:right-[0.5rem] invisible group-hover:visible ease-250 shadow-[0_0_5px_1px_rgba(255,255,255,0.15)] "
@@ -101,4 +97,4 @@ const ItemAppendForm = () => {
   );
 };
 
-export default ItemAppendForm;
+export default ItemAppendForm2;

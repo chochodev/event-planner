@@ -6,6 +6,8 @@ import SwitchWithLabel from 'components/switch';
 import { Modal } from '@mui/material';
 import TextForm from 'pages/dashboard/components/floor_seat_input';
 import ItemAppendForm from 'pages/dashboard/components/item_append_form';
+import TextForm2 from 'pages/dashboard/components/floor_seat_input2';
+import ItemAppendForm2 from 'pages/dashboard/components/item_append_form2';
 
 const Step3Form = () => {
   const { formValues, setFormValues } = useCreateFormStore();
@@ -161,50 +163,40 @@ const Step3Form = () => {
               </div>
             ) : (
               <>
-              {localFloorMode === 0 && (
-                <div 
-                  className={`flex flex-col lg:flex-row gap-x-[1rem] gap-y-[2rem] w-full h-max`}
-                >
-                  {/* ::::::::::::::::::::::::::::: IMAGE */}
-                  <div className='w-full lg:w-[50%] h-full'>
-                    <UploadImage 
-                      name="floor_image"
-                      onChange={handleImageChange}
-                      errorMessage={formValues.floorplanImage ? '' : 'Image is required'}
-                    />
-                  </div>
-
+              <div 
+                className={`flex flex-col lg:flex-row gap-x-[1rem] gap-y-[2rem] w-full h-max`}
+              >
+                {/* ::::::::::::::::::::::::::::: IMAGE */}
+                <div className='flex flex-col gap-[1rem] w-full lg:w-[50%] h-full pt-[1rem]'>
+                  <h2>Upload Floor-plan Image</h2>
+                  <UploadImage 
+                    name="floor_image"
+                    onChange={handleImageChange}
+                    errorMessage={formValues.floorplanImage ? '' : 'Image is required'}
+                  />
+                </div>
+                
+                {localFloorMode === 0?
+                  <>
                   {/* ::::::::::::::::::::::::::::: FORM */}
-                  <div className='flex-1 pt-[1rem]'>
+                  <div className='flex-1'>
                     <TextForm />
                   </div>
 
                   {/* ::::::::::::::::::::::::::::: TABLE */}
                   <ItemAppendForm />
-                </div>
-              )}
-              {localFloorMode === 1 && (
-                <div 
-                  className={`flex flex-col lg:flex-row gap-x-[1rem] gap-y-[2rem] w-full h-max`}
-                >
-                  {/* ::::::::::::::::::::::::::::: IMAGE */}
-                  <div className='w-full lg:w-[50%] h-full'>
-                    <UploadImage
-                      name="category_image"
-                      onChange={handleImageChange}
-                      errorMessage={formValues.floorplanImage ? '' : 'Image is required'}
-                    />
-                  </div>
-
+                  </> : 
+                  <>
                   {/* ::::::::::::::::::::::::::::: FORM */}
-                  {/* <div className='flex-1 pt-[1rem]'>
+                  <div className='flex-1'>
                     <TextForm2 />
                   </div>
 
                   {/* ::::::::::::::::::::::::::::: TABLE */}
-                  {/* <ItemAppendForm2 /> */}
-                </div>
-              )}
+                  <ItemAppendForm2 />
+                  </>
+                }
+              </div>
               </>
             )}
           </div>
