@@ -11,7 +11,10 @@ const Step4Form = () => {
     return date ? dayjs(date).format('YYYY-MM-DD HH:mm') : 'No date value';
   };
 
+  
+
   return (
+    <>
     <div className='w-full'>
       <div className='flex flex-col w-full'>
         {/* ::::::::::::::::::: IMAGE */}
@@ -47,7 +50,7 @@ const Step4Form = () => {
         }
 
         {/* :::::::::::::::::::::::: EVENT DETAILS */}
-        <div classNmae='flex flex-col '>
+        <div className='flex flex-col '>
           <p className='text-[1rem] text-black-light font-[600] mt-[2rem] underline underline-offset-[2px] '>Event Details</p>
           <ul className='flex flex-col gap-[0.5rem] py-[1rem] '>
             <li className='flex items-center gap-[0.5rem] '>
@@ -69,7 +72,7 @@ const Step4Form = () => {
 
           </ul>
         
-          <div classNmae='flex flex-col'>
+          <div className='flex flex-col'>
             <p className='text-[1rem] text-black-light font-[600] mt-[2rem] underline underline-offset-[2px] '>Ticket Variants</p>
             {formValues.ticket_variants.map((ticket, index) => (
             <div key={index} className='flex flex-col gap-[0.5rem] py-[1rem] '>
@@ -90,7 +93,7 @@ const Step4Form = () => {
           </div>
 
           {/* :::::::::::::::::::::::: MANAGER DETAILS */}
-          <div classNmae='flex flex-col '>
+          <div className='flex flex-col '>
             <p className='text-[1rem] text-black-light font-[600] mt-[2rem] underline underline-offset-[2px] '>Contact Details</p>
             <ul className='flex flex-col gap-[0.5rem] py-[1rem] '>
               <li className='flex items-center gap-[0.5rem] '>
@@ -112,7 +115,7 @@ const Step4Form = () => {
             </ul>
           </div>
           
-          <div classNmae='flex flex-col '>
+          <div className='flex flex-col '>
             <p className='text-[1rem] text-black-light font-[600] mt-[2rem] underline underline-offset-[2px] '>Location Details</p>
             <ul className='flex flex-col gap-[0.5rem] py-[1rem] '>
               <li className='flex items-center gap-[0.5rem] '>
@@ -135,7 +138,7 @@ const Step4Form = () => {
           </div>
 
           {/* ::::::::::::::::::::::: LAST DETAILS */}
-          <div classNmae='flex flex-col '>
+          <div className='flex flex-col '>
             <p className='text-[1rem] text-black-light font-[600] mt-[2rem] mb-[1rem] underline underline-offset-[2px] '>Seat Details</p>
             <SwitchWithLabel
               checked={formValues.is_floor}
@@ -151,6 +154,7 @@ const Step4Form = () => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

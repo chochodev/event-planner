@@ -1,20 +1,3 @@
-// // useCreateFormStore.js
-// import { create } from 'zustand';
-
-// const useCreateFormStore = create((set) => ({
-//   formValues: {
-//     source_image: null, // done
-
-//     is_floor: 0,  // done
-//     domain_url: '', // done
-
-//     // ::::::::::: floor plan mode
-//     floorplanMode: '',
-//     floorplanImage: null,
-//     floorplanLayout: [],
-
-//   },
-
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 

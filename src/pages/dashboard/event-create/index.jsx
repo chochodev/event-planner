@@ -9,6 +9,8 @@ import PrimaryLink from 'components/link/primary';
 import { RiArrowRightLine } from 'react-icons/ri';
 import Preview from './components/preview';
 import Step4Form from './components/step_04';
+import FlashMessage from 'components/alert';
+import axiosInstance from 'utils/axios';
 
 const CreateEventPage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -31,9 +33,43 @@ const CreateEventPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' }); 
   };
 
-  const handleSubmit = () => {
-    // Handle form submission
-    console.log('Form Submitted:', formValues);
+  // ::::::::::::::::::: SUBMIT FUNCTION
+  const [openFlashMessage, setOpenFlashMessage] = useState(false);
+  const [flashMessage, setFlashMessage] = useState('');
+  const [flashSeverity, setFlashSeverity] = useState('success');
+  const [loading, setLoading] = useState(false);
+
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await axiosInstance.post('/events/create-event/', formValues);
+      setFlashMessage(response.data?.message || 'Event created successfully');
+      setFlashSeverity('success');
+      setOpenFlashMessage(true);
+
+      // :::::::: closes the flash message and redirect
+      setTimeout(() => {
+        setOpenFlashMessage(false);
+        // window.location.href = '/';
+      }, 3000);
+    } catch (error) {
+      console.error('Error:', error.response ? error.response.data : error.message);
+      const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
+      setFlashMessage(errorMessage);
+      setFlashSeverity('error');
+      setOpenFlashMessage(true);
+      
+      // closes the flash message
+      setTimeout(() => {
+        setOpenFlashMessage(false);
+      }, 3000);
+    } finally {
+      setLoading(false);
+      console.log('loading: ', loading);
+    }
   };
 
   const renderStepContent = (step) => {
@@ -45,22 +81,20 @@ const CreateEventPage = () => {
       case 2:
         return <Step3Form />;
       case 3:
-        return (
-          // <Box>
-          //   <Typography variant="h6">Review your details:</Typography>
-          //   <Typography>Name: {formValues.name}</Typography>
-          //   <Typography>Email: {formValues.email}</Typography>
-          //   <Typography>Address: {formValues.address}</Typography>
-          //   <Typography>City: {formValues.city}</Typography>
-          // </Box>
-          <Step4Form />
-        );
+        return <Step4Form />;
       default:
         return 'Unknown step';
     }
   };
 
   return (
+    <>
+    <FlashMessage
+      openFlashMessage={openFlashMessage}
+      setOpenFlashMessage={setOpenFlashMessage}
+      flashMessage={flashMessage}
+      flashSeverity={flashSeverity}
+    />
     <HomeLayout>
       <div className='flex flex-col w-full h-max px-[1rem] md:px-[2rem]'>
         <div className='flex flex-col gap-[2rem] max-w-[75rem] w-full mx-auto h-max py-[2.875rem] md:py-[3rem]'>
@@ -116,6 +150,7 @@ const CreateEventPage = () => {
         </div>
       </div>
     </HomeLayout>
+    </>
   );
 };
 
