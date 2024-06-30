@@ -54,7 +54,8 @@ const CreateEventPage = () => {
     // Handle file inputs separately
     formData.append('source_image', formValues.source_image);
     formData.append('floorplanImage', formValues.floorplanImage);
-  
+
+    console.log('data sent: ', formData);
     try {
       const response = await axiosInstance.post('/events/create/', formData, {
         headers: {
@@ -139,8 +140,8 @@ const CreateEventPage = () => {
                 </Button>
                 {activeStep === steps.length - 1 ? (
                   <PrimaryLink width='max-content' onClick={handleSubmit}>
-                    <div className='flex items-center gap-[0.5rem]'>
-                      <p>Submit</p>
+                    <div className='flex items-center justify-center gap-[0.5rem] w-[4.5rem] '>
+                      {loading? <div className="loader"></div> : "Submit"}
                     </div>
                   </PrimaryLink>
                 ) : (

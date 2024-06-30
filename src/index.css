@@ -84,7 +84,7 @@ html {
 
 /* HTML: <div className="loader"></div> */
 .loader {
-  width: 30px;
+  width: 25px;
   aspect-ratio: 1;
   border-radius: 50%;
   border: 2px solid;

@@ -11,32 +11,34 @@ const FlashMessage = ({
 }) => {
 
   return (
-    <Collapse in={openFlashMessage}>
-      <Alert
-        severity={flashSeverity}
-        icon={flashSeverity === 'success' ? 
-          <RiCheckLine className='text-green-500 text-[1rem]' /> : 
-          <RiErrorWarningLine className='text-red-500 text-[1.25rem]' />
-        }
-        action={
-          <Button
-            color="inherit"
-            size="small"
-            onClick={() => {
-              setOpenFlashMessage(false);
-            }}
-            sx={{
-              paddingX: '0',
-              borderRadius: '50rem'
-            }}
-          >
-            <RiCloseLine className='text-[1rem] ' />
-          </Button>
-        }
-      >
-        <span className={`${flashSeverity === 'success'? 'text-green-500' : 'text-red-700'} `}>{flashMessage}</span>
-      </Alert>
-    </Collapse>
+    <div className='fixed top-0 z-[600] left-0 w-full'>
+      <Collapse in={openFlashMessage}>
+        <Alert
+          severity={flashSeverity}
+          icon={flashSeverity === 'success' ? 
+            <RiCheckLine className='text-green-500 text-[1rem]' /> : 
+            <RiErrorWarningLine className='text-red-500 text-[1.25rem]' />
+          }
+          action={
+            <Button
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setOpenFlashMessage(false);
+              }}
+              sx={{
+                paddingX: '0',
+                borderRadius: '50rem'
+              }}
+            >
+              <RiCloseLine className='text-[1rem] ' />
+            </Button>
+          }
+        >
+          <span className={`${flashSeverity === 'success'? 'text-green-500' : 'text-red-700'} `}>{flashMessage}</span>
+        </Alert>
+      </Collapse>
+    </div>
   );
 };
 

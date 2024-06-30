@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }) => {
       setImage(user?.image);
     } catch (error) {
       setIsAuthenticated(false);
+      localStorage.removeItem('token');
     } finally {
       setLoading(false);
     }
