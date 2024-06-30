@@ -13,7 +13,7 @@ import FlashMessage from 'components/alert';
 import axiosInstance from 'utils/axios';
 
 const CreateEventPage = () => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(3);
   const { formValues } = useCreateFormStore();
 
   const steps = [
@@ -43,13 +43,28 @@ const CreateEventPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
+    const formData = new FormData();
+  
+    // Append all form values to formData
+    Object.keys(formValues).forEach(key => {
+      formData.append(key, formValues[key]);
+    });
+  
+    // Handle file inputs separately
+    formData.append('source_image', formValues.source_image);
+    formData.append('floorplanImage', formValues.floorplanImage);
+  
     try {
-      const response = await axiosInstance.post('/events/create-event/', formValues);
+      const response = await axiosInstance.post('/events/create/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       setFlashMessage(response.data?.message || 'Event created successfully');
       setFlashSeverity('success');
       setOpenFlashMessage(true);
-
+  
       // :::::::: closes the flash message and redirect
       setTimeout(() => {
         setOpenFlashMessage(false);
