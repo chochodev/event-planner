@@ -32,8 +32,7 @@ This would be a cliche signing in method.
 
 
 <!-- :::::::::::::::::::::::::::::::::::::::: -->
-session logged in state not working
-new token are fetched every response
+csrf token thought I take care of it
 <!-- :::::::::::::::::::::::::::::::::::::::: -->
 
 
