@@ -64,7 +64,7 @@ const Step4Form = () => {
             </li>
             <li className='flex items-center gap-[0.5rem] '>
               <p className='text-[1rem] text-black-light '>Ticket price:</p>
-              <span className='text-[1rem] text-slate-700 font-[600]'>{formValues.ticket_price || 'No Ticket price'}</span>
+              <span className='text-[1rem] text-slate-700 font-[600]'>${formValues.ticket_price || 'No Ticket price'}</span>
             </li>
 
           </ul>
@@ -79,7 +79,7 @@ const Step4Form = () => {
               </div>
               <div className='flex items-center gap-[0.5rem] '>
                 <p className='text-[1rem] text-black-light '>Ticket price:</p>
-                <span className='text-[1rem] text-slate-700 font-[600]'>{ticket.ticket_price || 'No Ticket price'}</span>
+                <span className='text-[1rem] text-slate-700 font-[600]'>${ticket.ticket_price || 'No Ticket price'}</span>
               </div>
               <div className='flex items-center gap-[0.5rem] '>
                 <p className='text-[1rem] text-black-light '>Ticket Description:</p>
