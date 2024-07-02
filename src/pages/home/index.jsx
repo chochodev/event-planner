@@ -57,7 +57,7 @@ const HomePage = () => {
           <Discover events={events} loading={loading} />
           
           {/* ::::::::::::::::: RECENT SECTION */}
-          {/* <Recent events={events} loading={loading} /> */}
+          <Recent events={events} loading={loading} />
 
           {/* ::::::::::::::::: NEWSLETTER */}
           <Newsletter />

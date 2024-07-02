@@ -64,7 +64,7 @@ const Discover = ({ loading, events }) => {
             <RiArrowLeftLine className='text-[1.25rem] text-secondary ease-250' />
           </button>
 
-          {true? 
+          {loading? 
           <div className='w-full overflow-hidden'>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xxl:grid-cols-4 gap-[2rem] lg:gap-[3rem] gap-y-[3rem] w-full '>
               {[1,2].map((_, index) => (
