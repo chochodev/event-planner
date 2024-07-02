@@ -1,6 +1,6 @@
 import { RiArrowRightLine } from "react-icons/ri";
 
-const cloud_name = process.env('REACT_APP_CLOUDINARY_CLOUD_NAME');
+const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
 console.log(cloud_name);
 
 const EventCard = ({ event }) => {
