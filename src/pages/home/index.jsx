@@ -14,7 +14,7 @@ const HomePage = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    const FetchEvents = () => {
+    const FetchEvents = async () => {
       const token = localStorage.getItem('token');
 
       if (!token) {
@@ -24,13 +24,13 @@ const HomePage = () => {
 
       try {
         setLoading(true);
-        const response = axiosInstance.get('/events/list/', {
+        const response = await axiosInstance.get('/events/list/', {
           headers: {
             'Authorization': `Token ${token}`,
           },
         });
-        setEvents(response.data?.events);
-        console.log(response.data?.events);
+        setEvents(response.data);
+        console.log(response.data);
       } catch (error) {
         console.log('error: ', error);
         localStorage.removeItem('token');
