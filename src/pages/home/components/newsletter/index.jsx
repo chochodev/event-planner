@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import SubHeader from 'components/typography/sub_header';
 import BaseInput from 'components/input';
-import PrimaryLink from 'components/link/primary';
 import { Button } from '@mui/material';
 
 const Newsletter = () => {
