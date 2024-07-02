@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosInstance from 'utils/axios';
 import SeatPicker from './components/seat_picker';
+import seat from './components/data';
 import { RiZoomInLine, RiZoomOutLine } from "react-icons/ri";
 
 
@@ -25,7 +26,7 @@ const EventPage = () => {
 
     // :::::::::::::::::::::::: FLOOR PLAN
     floorplanMode: 0,
-    floorplanImage: "/assets/images/mode_0_event_plan.jpg",
+    floorplanImage: "/assets/images/lady-with-glass.webp",
     floorplanLayout: [...seat?.seats] || [], //
   });
   const [loading, setLoading] = useState(true);
@@ -56,45 +57,49 @@ const EventPage = () => {
   // ::::::::::::::::::::::::::: IMAGE STATE
   const [openImage, setOpenImage] = useState(false);
 
+  // :::::::::::::::::::::: IMAGE 
+  const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+  const imageUrl = `https://res.cloudinary.com/${cloud_name}/${event.source_image}`;
+  console.log(cloud_name);
 
   return (
-    <div className='w-full min-h-screen text-white py-[4rem] font-poppins '>
+    <div className='w-full min-h-screen text-gray-800 py-[4rem] font-poppins '>
       
       {/* :::::::::::::::::::::: SEAT ARRANGEMENT */}
-      // {event.floorplanLayout? 
-      //   <SeatPicker 
-      //     open={openSeats} 
-      //     toggleDrawer={toggleDrawer} 
-      //     seats={event.floorplanLayout} 
-      //   /> :
-      //   (event.categoryplanLayout?
-      //   <SeatPicker 
-      //     open={openSeats} 
-      //     toggleDrawer={toggleDrawer} 
-      //     seats={event.floorplanLayout} 
-      //   /> : 
-      //   null)
-      // }
+      {/* {event.floorplanLayout? 
+        <SeatPicker 
+          open={openSeats} 
+          toggleDrawer={toggleDrawer} 
+          seats={event.floorplanLayout} 
+        /> :
+        (event.categoryplanLayout?
+        <SeatPicker 
+          open={openSeats} 
+          toggleDrawer={toggleDrawer} 
+          seats={event.floorplanLayout} 
+        /> : 
+        null)
+      } */}
 
       <div className='relative flex max-lg:flex-col gap-y-[3rem] max-w-[75rem] mx-auto p-[2rem] md:max-lg:px-[4rem]'>
         {/* :::::::::::::::::::::::: IMAGE INFO */}
         <div className='lg:sticky top-[2rem] left-0 flex flex-col w-full lg:w-[50%] lg:h-[40rem] rounded-[16px] overflow-hidden shadow-[0_0_4px_2px_rgba(150,150,255,0.2)] '>
           <img
-            src={event?.image || '/assets/images/mode_0_event_plan.jpg'}
+            src={imageUrl || '/assets/images/lady-with-glass.webp'}
             alt='Event'
             className='relative z-1 w-full h-full object-contain '
           />
 
           <div className='relative w-full h-0 '>
             <img
-              src={event?.image || '/assets/images/mode_0_event_plan.jpg'}
+              src={imageUrl || '/assets/images/lady-with-glass.webp'}
               alt='Event'
               className='absolute z-[-1] bottom-0 left-0 blur-[5px] w-full h-full object-cover '
             />
 
             <button
               onClick={()=>setOpenImage(!openImage)}
-              className='absolute z-[100] bottom-[1rem] right-[1rem] flex items-center justify-center w-[3rem] h-[3rem] rounded-[8px] bg-white text-primary hover:bg-base hover:text-white ease-250 border-solid border-primary border-[1px] '
+              className='absolute z-[100] bottom-[1rem] right-[1rem] flex items-center justify-center w-[3rem] h-[3rem] rounded-[8px] bg-white text-secondary hover:bg-secondary hover:text-gray-800 ease-250 border-solid border-secondary border-[1px] '
             >
               {openImage? 
               <RiZoomOutLine className='text-[1.5rem]' /> : 
@@ -107,19 +112,19 @@ const EventPage = () => {
         <div className='flex justify-center w-full lg:w-[50%] lg:px-[2rem] '>
           <div className='flex flex-col gap-[1rem] w-full lg:max-w-[30rem] '>
             {/* :::::::::::::::: EVENT TITLE */}
-            <h2 className='text-white font-[700] text-[2.5rem] md:text-[3rem] '>{event?.name}</h2>
+            <h2 className='text-gray-800 font-[700] text-[2.5rem] md:text-[3rem] '>{event?.name}</h2>
             
             {/* :::::::::::::::: EVENT PRICE */}
             <div className='flex items-center gap-[1rem] '>
-              <p className='text-[1rem] font-[700] border-solid border-base border-[2px] rounded-[4px] text-base px-[0.5rem] py-[0.125rem] hover:scale-[1.03] hover:shadow-[0_0_5px_2px_rgba(255,255,255,0.2)] ease-250 cursor-pointer '>${event?.ticket_price}</p>
-              <p className='text-gray text-[1.05rem] font-[700] '>{Number(event?.ticket_qty) - Number(event?.ticketSold)} seats available </p>
+              <p className='text-[1rem] font-[700] border-solid border-secondary border-[2px] rounded-[4px] text-secondary px-[0.5rem] py-[0.125rem] hover:scale-[1.03] hover:shadow-[0_0_5px_2px_rgba(255,255,255,0.2)] ease-250 cursor-pointer '>${event?.ticket_price}</p>
+              <p className='text-gray text-[1.05rem] font-[700] '>{Number(event?.ticket_qty) - Number(event?.ticket_sold)} seats available </p>
             </div>
 
             {/* :::::::::::::::: EVENT DESCRIPTION */}
             <p className='text-[1rem] text-gray font-[400] '>{event?.description}</p>
             <a 
               href={`${window.location.origin}/event/${event?.domain_url}`}
-              className='underline text-base font-[400] text-[1rem] '
+              className='underline text-secondary font-[400] text-[1rem] '
             
             >{window.location.origin}/events/{event?.domaim_url}</a>
 
@@ -136,8 +141,8 @@ const EventPage = () => {
                   <p className='text-gray-light text-[0.875rem] md:text-[1rem]'>{event?.name || 'Luthor'}</p>
                 </div>
               </div>
-              <p className='text-gray text-[0.875rem] md:text-[1rem]'>Contact: <span className='text-gray-light'>{event?.contactPhone}</span></p>
-              <p className='text-gray text-[0.875rem] md:text-[1rem]'>Email: <span className='text-gray-light'> {event?.contactEmail}</span></p>
+              <p className='text-gray text-[0.875rem] md:text-[1rem]'>Contact: <span className='text-gray-light'>{event?.for_contact_phone}</span></p>
+              <p className='text-gray text-[0.875rem] md:text-[1rem]'>Email: <span className='text-gray-light'> {event?.for_contact_email}</span></p>
             </div>
 
             {/* :::::::::::::::::: TIME & LOCATION */}
@@ -166,10 +171,10 @@ const EventPage = () => {
               <p className='text-gray text-[0.875rem] md:text-[1rem] font-[600] '>Don&apos;t have a ticket? Get your tickets with ease now.</p>
               <button
                 onClick={()=>setOpenSeats(!openSeats)}
-                className='flex items-center justify-center text-center w-full max-w-[22rem] h-[3rem] text-[0.875rem] md:text-[1rem] font-[600] rounded-[32px] bg-primary text-white hover:text-black hover:bg-gray-light border-solid border-[1px] border-white/20 active:bg-opacity-[70%] ease-200'
+                className='flex items-center justify-center text-center w-full max-w-[22rem] h-[3rem] text-[0.875rem] md:text-[1rem] font-[600] rounded-[32px] bg-secondary text-gray-800 hover:text-black hover:bg-gray-light border-solid border-[1px] border-white/20 active:bg-opacity-[70%] ease-200'
               >Buy Seat Ticket</button>
               <button
-                className='flex items-center justify-center text-center w-full max-w-[22rem] h-[3rem] text-[0.875rem] md:text-[1rem] font-[600] rounded-[32px] bg-base text-white hover:bg-base-hover border-solid border-[1px] border-white/20 active:bg-opacity-[70%] ease-200'
+                className='flex items-center justify-center text-center w-full max-w-[22rem] h-[3rem] text-[0.875rem] md:text-[1rem] font-[600] rounded-[32px] bg-secondary text-gray-800 hover:bg-secondary-hover border-solid border-[1px] border-white/20 active:bg-opacity-[70%] ease-200'
               >Quick Buy</button>
             </div>
           </div>
