@@ -19,14 +19,14 @@ const EventCard = () => {
   const formattedDate = formatDate(date);
   
   return (
-    <div className='group flex flex-col w-[90%] rounded-[16px] overflow-hidden font-poppins cursor-pointer '>
+    <div className='group flex flex-col w-full sm:w-[48%] lg:min-w-[16rem] lg:w-[30%] xxl:w-[22.5%] rounded-[16px] overflow-hidden font-poppins cursor-pointer '>
       <div className='relative w-full flex justify-center overflow-hidden'>
         <img
           src='/assets/images/lady-dancing.jpg'
           alt='Event'
           className='w-full min-w-full h-[54vw] lg:h-[34vw] xxl:h-[20rem] object-cover rounded-[16px] '
         />
-
+        
         {/* :::::::::::::::::: OVERLAY */}
         <div className='absolute z-[5] left-0 top-0 w-full h-full rounded-[16px] group-hover:bg-gray-900/30 ease-250'/>
         <p className='absolute z-[5] right-0 top-0 flex items-center text-center justify-center h-[2.875rem] w-[2.875rem] bg-secondary-dark text-primary text-[0.875rem] rounded-bl-[16px] px-[0.5rem] py-[0.1rem]'>$34</p>
