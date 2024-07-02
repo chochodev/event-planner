@@ -26,11 +26,11 @@ const EventCard = ({ event }) => {
   }
 
   return (
-    <div className='group relative flex flex-col w-full h-[35rem] lg:h-[40rem] rounded-[16px] overflow-hidden font-poppins cursor-pointer '>
+    <div className='group relative flex flex-col w-full h-[35rem] lg:h-[40rem] rounded-[24px] overflow-hidden font-poppins cursor-pointer '>
         
       {/* ::::::::::::::::::::: IMAGE OVERLAY */}
       <img
-        src={imageUrl}
+        src={imageUrl || '/assets/images/lady-dancing.jpg'}
         alt='Event'
         className='absolute top-0 left-0 w-full h-full object-cover rounded-[16px] '
       />

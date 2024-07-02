@@ -54,10 +54,10 @@ const HomePage = () => {
           <Hot events={events} loading={loading} />
 
           {/* ::::::::::::::::: DISCOVER SECTION */}
-          <Discover />
+          <Discover events={events} loading={loading} />
           
           {/* ::::::::::::::::: RECENT SECTION */}
-          <Recent />
+          {/* <Recent events={events} loading={loading} /> */}
 
           {/* ::::::::::::::::: NEWSLETTER */}
           <Newsletter />
