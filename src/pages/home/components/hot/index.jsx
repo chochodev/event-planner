@@ -3,6 +3,7 @@ import PrimaryButton from 'components/button/primary';
 import EventCard from 'components/event_card/variant/large';
 import SubHeader from 'components/typography/sub_header';
 import { Skeleton } from '@mui/material';
+import { MdEventBusy } from "react-icons/md";
 
 const Hot = ({ loading, events }) => {
   return (
@@ -13,7 +14,11 @@ const Hot = ({ loading, events }) => {
         <div className='grid grid-cols-1 xlg:grid-cols-2 gap-[2rem] lg:gap-[3rem] gap-y-[3rem] w-full '>
           {[1,2].map((_, index) => (
             <div>
-              <Skeleton variant='rectangle' width='100%' height='15rem' sx={{borderRadius: '4px'}}/>
+              <Skeleton variant='rectangle' width='100%' height='30rem' sx={{borderRadius: '16px'}}/>
+              <Skeleton variant='rectangle' width='70%' height='3rem' sx={{borderRadius: '8px'}}/>
+              <Skeleton variant='rectangle' width='50%' height='1.25rem' sx={{borderRadius: '8px'}}/>
+              <Skeleton variant='rectangle' width='90%' height='1.25rem' sx={{borderRadius: '8px'}}/>
+
             </div>
           ))}
         </div>
@@ -31,7 +36,8 @@ const Hot = ({ loading, events }) => {
       <div className='relative flex items-center justify-center w-full'>
         <Skeleton variant='rectangle' width='100%' height='15rem' sx={{borderRadius: '4px'}} >
         </Skeleton>
-        <div className='absolute w-max text-[1.25rem] text-gray-400 font-[600] mx-auto'>No events to show at the moment!</div>
+        <div className='absolute flex items-center gap-[0.25rem] w-max text-[1.25rem] text-gray-400 font-[600] mx-auto'>
+          <MdEventBusy className='text-[1.5rem]' />No events to show at the moment!</div>
       </div>
       }
       </>}
