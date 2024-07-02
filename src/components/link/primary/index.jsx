@@ -1,7 +1,9 @@
-import { Button } from '@mui/material';
+import { Button, useTheme } from '@mui/material';
 import React from 'react';
 
 const PrimaryLink = ({ to, width='100%', onClick=()=>{}, children }) => {
+  const theme = useTheme();
+
   return (
     <Button
       href={to}
@@ -16,7 +18,10 @@ const PrimaryLink = ({ to, width='100%', onClick=()=>{}, children }) => {
         },
         '&:active': {
           backgroundColor: '#323d76',
-        }
+        },
+        // [theme.breakpoints.up('md')]: {
+        //   padding: '0.5rem 1.5rem',
+        // },
       }}
     >
       <div className='text-[0.875rem] font-[600] text-primary capitalize'>{children}</div>

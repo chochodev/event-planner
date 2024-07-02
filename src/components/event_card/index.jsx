@@ -19,12 +19,12 @@ const EventCard = () => {
   const formattedDate = formatDate(date);
   
   return (
-    <div className='group flex flex-col w-[90%] rounded-[16px] overflow-hidden font-poppins cursor-pointer '>
+    <div className='group flex flex-col min-w-[12rem] w-[90%] mx-auto rounded-[16px] overflow-hidden font-poppins cursor-pointer '>
       <div className='relative w-full flex justify-center overflow-hidden'>
         <img
           src='/assets/images/lady-dancing.jpg'
           alt='Event'
-          className='w-full min-w-full h-[54vw] lg:h-[34vw] xxl:h-[20rem] object-cover rounded-[16px] '
+          className='w-full min-w-full h-[80vw] sm:h-[54vw] lg:h-[34vw] xxl:h-[20rem] object-cover rounded-[16px] '
         />
 
         {/* :::::::::::::::::: OVERLAY */}
@@ -37,8 +37,8 @@ const EventCard = () => {
         >
           <div className='w-max rounded-[5rem] '>
             <PrimaryLink to='/'>
-              <div className='flex items-center gap-[0.5rem] '>
-                Buy Ticket <RiPriceTagLine className='text-white text-[1rem] ' />
+              <div className='flex items-center gap-[0.5rem] text-[0.75rem] md:text-[1rem] '>
+                Buy Ticket <RiPriceTagLine className='text-white ' />
               </div>
             </PrimaryLink>
           </div>
