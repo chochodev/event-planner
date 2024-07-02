@@ -1,3 +1,4 @@
+import Loader from 'components/loader';
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
@@ -12,13 +13,7 @@ const EventPage = lazy(() => import('pages/events/event'));
 
 const MyRoute = () => {
   return (
-    <Suspense fallback={
-      <div className='fixed z-[100] inset-0 w-screen h-screen flex justify-center bg-secondary items-center'>
-        <div id="spinner-loader">
-            <div id="spinnerin-loader"></div>
-        </div>
-      </div>
-      }
+    <Suspense fallback={<Loader />}
     >
       <Routes>
         <Route path="/" element={<HomePage />} />
