@@ -25,6 +25,8 @@ const MyRoute = () => {
 
         <Route path='/events/:id' element={<EventPage />} />
 
+        <Route path='/lorem' element={<Loader />} />
+
       </Routes>
     </Suspense>
   );
