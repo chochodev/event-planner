@@ -5,6 +5,7 @@ import PrimaryButton from 'components/button/primary';
 import HomeLayout from 'components/layout';
 import Discover from './components/discover';
 import Hot from './components/hot';
+import Newsletter from './components/newsletter';
 
 const HomePage = () => {
 
@@ -24,6 +25,9 @@ const HomePage = () => {
           
           {/* ::::::::::::::::: HOT SECTION */}
           <Hot />
+
+          {/* ::::::::::::::::: NEWSLETTER */}
+          <Newsletter />
 
         </div>
       </div>
