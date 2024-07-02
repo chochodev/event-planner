@@ -17,6 +17,7 @@ module.exports = {
       fontFamily: {
         primary: ['var(--primary-font)', 'sans-serif'],
         secondary: ['var(--secondary-font)', 'sans-serif'],
+        dance: ['var(--dancing-font)', 'cursive'],
       },
       colors: {
         primary: {
