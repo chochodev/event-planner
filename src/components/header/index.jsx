@@ -139,7 +139,7 @@ const Header = () => {
             
             <div className='flex items-center gap-[1rem] md:gap-[2rem] h-full '>
               <Link 
-                to='/events'
+                to='/dashboard/events'
                 className='text-black/50 text-[0.75rem] sm:text-[0.875rem] font-[600] hover:text-secondary-hover ease-250'
               >Discover</Link>
               <Link 
@@ -150,7 +150,7 @@ const Header = () => {
           </div>
             
             <div className='hidden md:flex gap-[0.5rem] items-center'>
-              <PrimaryLink to='/events/create'>
+              <PrimaryLink to='/dashboard/events/create'>
                 <p className='flex items-center gap-[0.25rem]'><RiAddLine className='text-[1.25rem] text-white' />Create</p>
               </PrimaryLink>
               <button

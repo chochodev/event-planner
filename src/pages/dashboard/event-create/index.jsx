@@ -14,7 +14,7 @@ import axiosInstance from 'utils/axios';
 
 const CreateEventPage = () => {
   const [activeStep, setActiveStep] = useState(3);
-  const { formValues } = useCreateFormStore();
+  const { formValues, resetFormValues } = useCreateFormStore();
 
   const steps = [
     {name: '', icon: <RiArrowRightLine />},
@@ -69,6 +69,7 @@ const CreateEventPage = () => {
       // :::::::: closes the flash message and redirect
       setTimeout(() => {
         setOpenFlashMessage(false);
+        // resetFormValues()
         window.location.href = '/';
       }, 3000);
     } catch (error) {

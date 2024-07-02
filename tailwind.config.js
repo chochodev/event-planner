@@ -14,6 +14,10 @@ module.exports = {
       'xl': '1440px'
     },
     extend: {
+      fontFamily: {
+        primary: ['var(--primary-font)', 'sans-serif'],
+        secondary: ['var(--secondary-font)', 'sans-serif'],
+      },
       colors: {
         primary: {
           DEFAULT: '#FFFFFF'
