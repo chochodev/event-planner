@@ -1,4 +1,5 @@
 import { RiArrowRightLine } from "react-icons/ri";
+import { useNavigate } from 'react-router-dom';
 
 
 const EventCard = ({ event }) => {
@@ -21,9 +22,11 @@ const EventCard = ({ event }) => {
   console.log(cloud_name);
 
   // ::::::::::::::::::::::: GO TO EVENT
-  const handleEventClick = (id) => {
-    window.location.href = `/events/event/${id}`;
-  }
+  const navigate = useNavigate();
+
+  const handleEventClick = () => {
+    navigate(`/events/${event.id}`);
+  };
 
   return (
     <div className='group relative flex flex-col w-full h-[35rem] lg:h-[40rem] rounded-[24px] overflow-hidden font-poppins cursor-pointer '>
@@ -53,7 +56,7 @@ const EventCard = ({ event }) => {
         </div>
         
         <button 
-          onClick={()=>handleEventClick(event.id)}
+          onClick={handleEventClick}
           className='flex items-center justify-center gap-[0.5rem] h-[2.5rem] w-max px-[1.5rem] bg-secondary-hover text-[0.75rem] md:text-[0.875rem] text-primary hover:bg-gray-100 hover:text-secondary-hover ease-250 rounded-[5rem]'
         >
           See Details <RiArrowRightLine className='text-[1rem] ' />

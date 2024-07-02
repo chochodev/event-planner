@@ -1,5 +1,6 @@
 import PrimaryLink from 'components/link/primary';
 import { RiPriceTagLine } from "react-icons/ri";
+import { useNavigate } from 'react-router-dom';
 
 const EventCard = ({ event }) => {
   function formatDate(date) {
@@ -21,9 +22,12 @@ const EventCard = ({ event }) => {
   console.log(cloud_name);
 
   // ::::::::::::::::::::::: GO TO EVENT
-  const handleEventClick = (id) => {
-    window.location.href = `/events/event/${id}`;
-  }
+  const navigate = useNavigate();
+
+  const handleEventClick = () => {
+    navigate(`/events/${event.id}`);
+  };
+
   
   return (
     <div className='group flex flex-col min-w-[12rem] w-[90%] mx-auto rounded-[16px] overflow-hidden font-poppins cursor-pointer '>
@@ -43,7 +47,7 @@ const EventCard = ({ event }) => {
           className='absolute z-[5] bottom-[-3rem] group-hover:bottom-[1rem] flex flex-col items-center justify-end h-full w-full transition-all ease-in-out duration-500 '
         >
           <div className='w-max rounded-[5rem] '>
-            <PrimaryLink onClick={()=>handleEventClick(event.id)}>
+            <PrimaryLink onClick={handleEventClick}>
               <div className='flex items-center gap-[0.5rem] text-[0.75rem] md:text-[1rem] '>
                 Buy Ticket <RiPriceTagLine className='text-white ' />
               </div>
