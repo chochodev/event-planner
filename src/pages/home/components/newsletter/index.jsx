@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SubHeader from 'components/typography/sub_header';
 import BaseInput from 'components/input';
 import PrimaryLink from 'components/link/primary';
+import { Button } from '@mui/material';
 
 const Newsletter = () => {
   const [value, setValue] = useState('');
@@ -22,9 +23,23 @@ const Newsletter = () => {
               onChange={(e)=>setValue(e.target.value)}
               required
             />
-            <PrimaryLink
+            <Button
               onClick={()=>{}}
-            >Subscribe</PrimaryLink>
+              sx={{
+                width: '100%',
+                backgroundColor: '#3F51B5',
+                borderRadius: '0.5rem',
+                padding: '0.5rem 1.5rem',
+                '&:hover': {
+                  backgroundColor: '#4963c7',
+                },
+                '&:active': {
+                  backgroundColor: '#323d76',
+                },
+              }}
+            >
+              <p className='text-[0.875rem] font-[600] text-primary capitalize'>Subscribe</p>
+            </Button>
           </div>
 
         </form>
