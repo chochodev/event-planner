@@ -1,5 +1,8 @@
 import { RiArrowRightLine } from "react-icons/ri";
 
+const cloud_name = process.env('REACT_APP_CLOUDINARY_CLOUD_NAME');
+console.log(cloud_name);
+
 const EventCard = ({ event }) => {
   function formatDate(date) {
     const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -15,7 +18,7 @@ const EventCard = ({ event }) => {
   const formattedDate = formatDate(date);
 
   // :::::::::::::::::::::: IMAGE 
-  const imageUrl = `https://res.cloudinary.com/<your-cloud-name>/${event.source_image}`;
+  const imageUrl = `https://res.cloudinary.com/${cloud_name}/${event.source_image}`;
 
   // ::::::::::::::::::::::: GO TO EVENT
   const handleEventClick = (id) => {
