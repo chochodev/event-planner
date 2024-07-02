@@ -10,7 +10,8 @@ const Hot = ({ loading, events }) => {
     <div className='flex flex-col items-start gap-[2rem] w-full'>
       <SubHeader>Hot-Events</SubHeader>
       <p className='text-[1.15rem] text-gray-500 font-[600]'> Don't Miss Out on These Must-See Experiences!</p>
-      {loading? <div className='w-full overflow-hidden'>
+      {loading? 
+      <div className='w-full overflow-hidden'>
         <div className='grid grid-cols-1 xlg:grid-cols-2 gap-[2rem] lg:gap-[3rem] gap-y-[3rem] w-full '>
           {[1,2].map((_, index) => (
             <div className='flex flex-col gap-[1rem]' key={index}>
