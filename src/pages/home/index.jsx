@@ -51,7 +51,7 @@ const HomePage = () => {
           <About />
           
           {/* ::::::::::::::::: RECENT SECTION */}
-          <Hot />
+          <Hot events={events} loading={loading} />
 
           {/* ::::::::::::::::: DISCOVER SECTION */}
           <Discover />

@@ -1,6 +1,6 @@
 import { RiArrowRightLine } from "react-icons/ri";
 
-const EventCard = () => {
+const EventCard = ({ event }) => {
   function formatDate(date) {
     const weekdays = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
   
@@ -13,8 +13,7 @@ const EventCard = () => {
     return `${dayOfWeek}, ${day}/${month}/${year}`;
   }
   
-  // Example usage:
-  const date = new Date();
+  const date = event.start_date || new Date();
   const formattedDate = formatDate(date);
   
   return (
@@ -22,7 +21,7 @@ const EventCard = () => {
         
       {/* ::::::::::::::::::::: IMAGE OVERLAY */}
       <img
-        src='/assets/images/lady-dancing.jpg'
+        src={event.source_image}
         alt='Event'
         className='absolute top-0 left-0 w-full h-full object-cover rounded-[16px] '
       />
