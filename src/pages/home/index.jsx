@@ -4,8 +4,9 @@ import 'slick-carousel/slick/slick-theme.css';
 import HomeLayout from 'components/layout';
 import About from './components/about';
 import Discover from './components/discover';
-import Hot from './components/hot';
+import Recent from './components/recent';
 import Newsletter from './components/newsletter';
+import Hot from './components/hot';
 
 const HomePage = () => {
 
@@ -16,12 +17,15 @@ const HomePage = () => {
 
           {/* :::::::::::::::::: HEAD SECTION */}
           <About />
+          
+          {/* ::::::::::::::::: RECENT SECTION */}
+          <Hot />
 
           {/* ::::::::::::::::: DISCOVER SECTION */}
           <Discover />
           
-          {/* ::::::::::::::::: HOT SECTION */}
-          <Hot />
+          {/* ::::::::::::::::: RECENT SECTION */}
+          <Recent />
 
           {/* ::::::::::::::::: NEWSLETTER */}
           <Newsletter />
