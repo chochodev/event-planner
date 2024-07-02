@@ -5,7 +5,7 @@ import SubHeader from 'components/typography/sub_header';
 
 const Hot = () => {
   return (
-    <div className='flex flex-col items-start gap-[1rem] w-full'>
+    <div className='flex flex-col items-start gap-[2rem] w-full'>
       <SubHeader>Hot-Events</SubHeader>
       <p className='text-[1.15rem] text-gray-500 font-[600]'> Don't Miss Out on These Must-See Experiences!</p>
       <div className='w-full overflow-hidden'>
