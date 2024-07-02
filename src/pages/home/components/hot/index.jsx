@@ -9,7 +9,7 @@ const Hot = () => {
       <SubHeader>Hot</SubHeader>
 
       <div className='w-full overflow-hidden'>
-        <div className='grid grid-cols-1 xlg:grid-cols-2 gap-[1rem] w-full '>
+        <div className='grid grid-cols-1 xlg:grid-cols-2 gap-[1rem] gap-y-[3rem] w-full '>
           {[...Array(4).keys()].map((_, index) => (
             <EventCard key={index} />
           ))}
