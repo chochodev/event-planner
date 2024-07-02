@@ -7,7 +7,7 @@ import EventCard from 'components/event_card';
 import SubHeader from 'components/typography/sub_header';
 import { RiArrowRightLine, RiArrowLeftLine } from "react-icons/ri";
 
-const Discover = () => {
+const Hot = () => {
   const settings = {
     dots: true,
     infinite: true,
@@ -51,7 +51,7 @@ const Discover = () => {
 
   return (
     <div className='flex flex-col items-start gap-[1rem] w-full'>
-      <SubHeader>Discover</SubHeader>
+      <SubHeader>Hot</SubHeader>
 
       <div className='w-full overflow-hidden'>
         <div className='relative flex items-center w-full'>
@@ -80,10 +80,10 @@ const Discover = () => {
       </div>
       
       <div className='flex justify-center w-full'>
-        <PrimaryButton onClick={() => { window.location.href = '/events'; }}>Discover more</PrimaryButton>
+        <PrimaryButton onClick={() => { window.location.href = '/events'; }}>Load more</PrimaryButton>
       </div>
     </div>
   );
 };
 
-export default Discover
+export default Hot
