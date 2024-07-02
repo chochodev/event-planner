@@ -4,6 +4,8 @@ import { Routes, Route } from 'react-router-dom';
 const SignIn = lazy(() => import('pages/signin'));
 const SignUp = lazy(() => import('pages/signup'));
 const HomePage = lazy(() => import('pages/home'));
+
+const EventList = lazy(() => import('pages/dashboard/event-list'));
 const CreateEventPage = lazy(() => import('pages/dashboard/event-create'));
 
 
@@ -22,7 +24,8 @@ const MyRoute = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
 
-        <Route path='/events/create' element={<CreateEventPage />} />
+        <Route path='/dashboard/events' element={<EventList />} />
+        <Route path='/dashboard/events/create' element={<CreateEventPage />} />
       </Routes>
     </Suspense>
   );

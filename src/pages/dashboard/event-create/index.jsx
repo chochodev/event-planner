@@ -69,7 +69,7 @@ const CreateEventPage = () => {
       // :::::::: closes the flash message and redirect
       setTimeout(() => {
         setOpenFlashMessage(false);
-        // window.location.href = '/';
+        window.location.href = '/';
       }, 3000);
     } catch (error) {
       console.error('Error:', error.response ? error.response.data : error.message);
