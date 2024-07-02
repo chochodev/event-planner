@@ -43,7 +43,7 @@ const EventCard = ({ event }) => {
           className='absolute z-[5] bottom-[-3rem] group-hover:bottom-[1rem] flex flex-col items-center justify-end h-full w-full transition-all ease-in-out duration-500 '
         >
           <div className='w-max rounded-[5rem] '>
-            <PrimaryLink onClick={handleEventClick(event.id)}>
+            <PrimaryLink onClick={()=>handleEventClick(event.id)}>
               <div className='flex items-center gap-[0.5rem] text-[0.75rem] md:text-[1rem] '>
                 Buy Ticket <RiPriceTagLine className='text-white ' />
               </div>

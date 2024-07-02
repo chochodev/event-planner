@@ -13,7 +13,7 @@ const Hot = ({ loading, events }) => {
       {loading? <div className='w-full overflow-hidden'>
         <div className='grid grid-cols-1 xlg:grid-cols-2 gap-[2rem] lg:gap-[3rem] gap-y-[3rem] w-full '>
           {[1,2].map((_, index) => (
-            <div>
+            <div className='flex flex-col gap-[1rem]' key={index}>
               <Skeleton variant='rectangle' width='100%' height='30rem' sx={{borderRadius: '16px'}}/>
               <Skeleton variant='rectangle' width='70%' height='3rem' sx={{borderRadius: '8px'}}/>
               <Skeleton variant='rectangle' width='50%' height='1.25rem' sx={{borderRadius: '8px'}}/>
