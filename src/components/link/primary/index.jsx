@@ -1,8 +1,8 @@
-import { Button, useTheme } from '@mui/material';
+import { Button } from '@mui/material';
 import React from 'react';
 
 const PrimaryLink = ({ to, width='100%', onClick=()=>{}, children }) => {
-  const theme = useTheme();
+  // const theme = useTheme();
 
   return (
     <Button

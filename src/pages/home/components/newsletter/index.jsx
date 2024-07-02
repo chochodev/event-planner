@@ -14,9 +14,11 @@ const Newsletter = () => {
 
         <form>
           <div className='flex flex-col gap-[0.5rem] w-[20rem] mx-auto '>
+            <label className='text-gray-500 text-[0.875rem] font-[600] w-full text-start'>Email:</label>
             <BaseInput 
               type='email'
               value={value}
+              placeholder='johndoe@gmail.com'
               onChange={(e)=>setValue(e.target.value)}
               required
             />
