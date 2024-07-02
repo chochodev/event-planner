@@ -1,4 +1,3 @@
-import PrimaryLink from 'components/link/primary';
 import { RiArrowRightLine } from "react-icons/ri";
 
 const EventCard = () => {
