@@ -1,3 +1,4 @@
+import PageNotFound from 'components/error_page/404';
 import Loader from 'components/loader';
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
@@ -25,7 +26,7 @@ const MyRoute = () => {
 
         <Route path='/events/:id' element={<EventPage />} />
 
-        <Route path='/lorem' element={<Loader />} />
+        <Route path='/lorem' element={<PageNotFound />} />
 
       </Routes>
     </Suspense>
