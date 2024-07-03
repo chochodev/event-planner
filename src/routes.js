@@ -11,6 +11,7 @@ const MyEventList = lazy(() => import('pages/dashboard/event-list'));
 const CreateEventPage = lazy(() => import('pages/dashboard/event-create'));
 const EventPage = lazy(() => import('pages/events/event'));
 const EventList = lazy(() => import('pages/events'));
+const Dashboard = lazy(() => import('pages/dashboard'));
 
 
 const MyRoute = () => {
@@ -28,8 +29,10 @@ const MyRoute = () => {
         <Route path='/events' element={<EventList />} />
         <Route path='/events/:id' element={<EventPage />} />
 
-        <Route path='/lorem' element={<PageNotFound />} />
+        <Route path='/dashboard' element={<Dashboard />} />
 
+        {/* ::::::::::::::: for undefined paths */}
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Suspense>
   );
