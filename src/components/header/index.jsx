@@ -41,10 +41,10 @@ const Header = () => {
   }, []);
 
   const links = [
-    {name: 'Home', link: '/', icon: <RiHome3Line className='text-white/50 group-hover:text-white ease-250 text-[1.15rem] ' />},
-    {name: 'Dashboard', link: '/dashboard', icon: <RiDashboardLine className='text-white/50 group-hover:text-white ease-250 text-[1.15rem] ' />},
-    {name: 'Account', link: '/', icon: <RiUser3Line className='text-white/50 group-hover:text-white ease-250 text-[1.15rem] ' />},
-    {name: 'Sign Out', link: '/', icon: <RiLogoutBoxLine className='text-white/50 group-hover:text-white ease-250 text-[1.15rem] ' />},
+    {name: 'Home', link: '/', icon: <RiHome3Line className='text-black/50 group-hover:text-black ease-250 text-[1.15rem] ' />},
+    {name: 'Dashboard', link: '/dashboard', icon: <RiDashboardLine className='text-black/50 group-hover:text-black ease-250 text-[1.15rem] ' />},
+    {name: 'Account', link: '/', icon: <RiUser3Line className='text-black/50 group-hover:text-black ease-250 text-[1.15rem] ' />},
+    {name: 'Sign Out', link: '/', icon: <RiLogoutBoxLine className='text-black/50 group-hover:text-black ease-250 text-[1.15rem] ' />},
   ]
 
   // for popover
@@ -245,28 +245,34 @@ const Header = () => {
             open={openNav}
             onClose={()=>setOpenNav(false)}
           >
-            <div className='relative flex items-end flex-col w-screen h-screen bg-gradient-to-b from-secondary-light to-secondary-dark p-[2rem]  '>
+            <div className='relative flex items-end flex-col w-screen h-screen bg-primary p-[2rem]  '>
               {/* ::::::::::::::::::: CLOSE BUTTON */}
               <button 
                 onClick={()=>setOpenNav(false)}
-                className='flex justify-self-end items-center justify-center h-[2.5rem] w-[2.5rem] bg-white/10 rounded-[8px] hover:bg-white/20 border-solid border-white/40 border-0 active:border-1px ease-250 '
+                className='flex justify-self-end items-center justify-center h-[2.5rem] w-[2.5rem] bg-black/5 rounded-[8px] hover:bg-black/10 ease-250 '
               >
-                <RiCloseLine className='text-[1.25rem] text-white ' />
+                <RiCloseLine className='text-[1.25rem] text-gray-500 ' />
               </button>
               <button className='flex gap-[1rem] items-center w-full px-[1rem]'>
                 <img
                   src={image || '/assets/images/dp.png'}
                   alt='Profile'
-                  className='h-[5rem] w-[5rem] min-w-[5rem] rounded-[8px] object-cover border-solid border-[1px] border-white/50 shadow-[0_0_2px_4px_rgba(255,255,255,0.1)] '
+                  className='h-[3.5rem] w-[3.5rem] min-w-[3.5rem] rounded-[8px] object-cover shadow-[0_0_12px_4px_rgba(0,0,0,0.1)] '
                 />
-                <p className='text-[1rem] font-[600] text-white'>{firstname}</p>
+                <div className='flex flex-col items-start'>
+                  <h2 className='text-gray-400 font-[600] text-[0.75rem] uppercase'>Name:</h2>
+                  <p className='text-[1rem] font-[600] text-gray-600'>{firstname}</p>
+                </div>
               </button>
-              <div className='flex flex-col gap-[1.875rem] mt-[2rem] w-full px-[1rem] '>
+
+              {/* ::::::::::::::::::::::: HORIZONTAL LINE */}
+              <hr className='w-full h-[1px] bg-gray-200 mt-[2rem] ' />
+              <div className='flex flex-col gap-[1.5rem] mt-[2rem] w-full '>
                 {links.map((link, index) => (
                   <Link 
                     to={link.link}
                     key={index}
-                    className={`group flex gap-[0.5rem] items-center text-primary text-[0.875rem] font-[600] w-full uppercase bg-[#cccccc]/5 hover:bg-white/10 px-[1rem] py-[0.875rem] rounded-[4px] transition-all duration-[200ms] ease-in-out hover:scale-[1.02] `}
+                    className={`group flex gap-[0.5rem] items-center text-gray-800 text-[0.75rem] font-[600] w-full uppercase bg-gray-100 hover:bg-gray-200 px-[1rem] py-[0.875rem] rounded-[4px] transition-all duration-[200ms] ease-in-out hover:scale-[1.02] `}
                   >
                     {link.icon} {link.name}
                   </Link>
