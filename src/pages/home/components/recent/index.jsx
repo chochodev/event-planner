@@ -104,7 +104,7 @@ const Recent = ({ loading, events }) => {
       </div>
       
       <div className='flex justify-center w-full'>
-        <PrimaryButton onClick={() => { window.location.href = '/events'; }}>Discover more</PrimaryButton>
+        <PrimaryButton onClick={() => { window.location.href = '/events'; }}>show more</PrimaryButton>
       </div>
     </div>
   );
