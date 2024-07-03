@@ -42,7 +42,7 @@ const Header = () => {
 
   const links = [
     {name: 'Home', link: '/', icon: <RiHome3Line className='text-white/50 group-hover:text-white ease-250 text-[1.15rem] ' />},
-    {name: 'Dashboard', link: '/', icon: <RiDashboardLine className='text-white/50 group-hover:text-white ease-250 text-[1.15rem] ' />},
+    {name: 'Dashboard', link: '/dashboard', icon: <RiDashboardLine className='text-white/50 group-hover:text-white ease-250 text-[1.15rem] ' />},
     {name: 'Account', link: '/', icon: <RiUser3Line className='text-white/50 group-hover:text-white ease-250 text-[1.15rem] ' />},
     {name: 'Sign Out', link: '/', icon: <RiLogoutBoxLine className='text-white/50 group-hover:text-white ease-250 text-[1.15rem] ' />},
   ]
@@ -139,7 +139,7 @@ const Header = () => {
             
             <div className='flex items-center gap-[1rem] md:gap-[2rem] h-full '>
               <Link 
-                to='/dashboard/events'
+                to='/events'
                 className='text-black/50 text-[0.75rem] sm:text-[0.875rem] font-[600] hover:text-secondary-hover ease-250'
               >Discover</Link>
               <Link 

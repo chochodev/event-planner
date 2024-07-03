@@ -1,9 +1,9 @@
 import React from 'react'
 
-const EventList = () => {
+const MyEventList = () => {
   return (
-    <div>EventList</div>
+    <div>MyEventList</div>
   )
 }
 
-export default EventList
+export default MyEventList
