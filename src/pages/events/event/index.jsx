@@ -74,9 +74,9 @@ const EventPage = () => {
   };
 
   // :::::::::::::::::::::: PAGE NOT FOUND
-  // if (is404) {
-  //   return <PageNotFound />
-  // }
+  if (is404) {
+    return <PageNotFound />
+  }
 
   return (
     <HomeLayout>
