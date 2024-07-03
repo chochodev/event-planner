@@ -27,7 +27,7 @@ const DashboardLayout = ({ children }) => {
     {name: 'Events', link: '/dashboard/events', icon: <RiCalendarEventLine className='' />},
     {name: 'Cart', link: '/dashboard', icon: <RiShoppingCartLine className='' />},
     {name: 'History', link: '/dashboard', icon: <RiHistoryLine className='' />},
-    {name: 'Exit', link: '/dashboard', icon: <RiHome3Line className='' />},
+    {name: 'Exit', link: '/', icon: <RiHome3Line className='' />},
   ]
 
   // :::::::::::::::::::::: SEARCH
