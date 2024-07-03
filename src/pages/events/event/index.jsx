@@ -7,6 +7,7 @@ import { RiPriceTagFill, RiZoomInLine, RiZoomOutLine } from "react-icons/ri";
 import { Skeleton } from '@mui/material';
 import HomeLayout from 'components/layout';
 import dayjs from 'dayjs';
+import PageNotFound from 'components/error_page/404';
 
 
 const EventPage = () => {
@@ -33,6 +34,7 @@ const EventPage = () => {
     floorplanLayout: [...seat?.seats] || [], //
   });
   const [loading, setLoading] = useState(true);
+  const [is404, set404] = useState(false);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -44,6 +46,7 @@ const EventPage = () => {
         console.log(response.data);
       } catch (error) {
         console.error('Error fetching event details:', error);
+        set404(true);
       } finally {
         setLoading(false);
       }
@@ -70,12 +73,17 @@ const EventPage = () => {
     return date ? dayjs(date).format('YYYY-MM-DD HH:mm') : 'No date value';
   };
 
+  // :::::::::::::::::::::: PAGE NOT FOUND
+  // if (is404) {
+  //   return <PageNotFound />
+  // }
+
   return (
     <HomeLayout>
       <div className='w-full min-h-screen text-gray-800 py-[4rem] font-poppins '>
         
         {/* :::::::::::::::::::::: SEAT ARRANGEMENT */}
-        {/* {event.floorplanLayout? 
+        {event.floorplanLayout? 
           <SeatPicker 
             open={openSeats} 
             toggleDrawer={toggleDrawer} 
@@ -88,7 +96,7 @@ const EventPage = () => {
             seats={event.floorplanLayout} 
           /> : 
           null)
-        } */}
+        }
 
         <div className='relative flex justify-between max-lg:flex-col gap-y-[3rem] max-w-[75rem] mx-auto p-[2rem] lg:px-[4rem]'>
           {/* :::::::::::::::::::::::: IMAGE INFO */}
