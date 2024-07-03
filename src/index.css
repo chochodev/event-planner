@@ -114,3 +114,8 @@ html {
 @keyframes l27 {
   100% {transform: rotate(1turn)}
 }
+
+
+.lorem {
+  color: #0059ff53;
+}
