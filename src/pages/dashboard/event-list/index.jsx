@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,10 +9,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DashboardLayout from '../components/layout';
 import axiosInstance from 'utils/axios';
+import { AuthContext } from 'context/authStatusContext';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#00000005',
     color: '#000000',
   },
   [`&.${tableCellClasses.body}`]: {
@@ -42,42 +43,60 @@ export default function MyEventList() {
       });
   }, []);
 
+  // :::::::::::::::::::::: USER 
+  const { firstname }= useContext(AuthContext);
   
   // :::::::::::::::::::::: IMAGE 
   const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
 
   return (
     <DashboardLayout>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Image</StyledTableCell>
-              <StyledTableCell align="right">Name</StyledTableCell>
-              <StyledTableCell align="right">Price ($)</StyledTableCell>
-              <StyledTableCell align="right">Address</StyledTableCell>
-              <StyledTableCell align="right">Date</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {events.map((event) => (
-              <StyledTableRow key={event.id}>
-                <StyledTableCell component="th" scope="row">
-                  <img 
-                    src={`https://res.cloudinary.com/${cloud_name}/${event.source_image}`} 
-                    alt={event.name} 
-                    className='w-[4rem] min-w-[4rem] h-[4rem] object-cover rounded-[8px] '
-                  />
+      <div className='flex flex-col gap-[2rem] px-[1rem] md:px-[2rem] py-[2rem]'>
+        <div className=''>
+          <h2 className='text-[1.5rem] text-gray-600 font-[600]'>My Events</h2>
+          <p className='text-[0.875rem] text-gray-500 '>This is all the events created by you, {firstname}!</p>
+        </div>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 600 }} aria-label="my events table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>
+                  <span className='text-black-light text-[1rem] '>Image</span>
                 </StyledTableCell>
-                <StyledTableCell align="right">{event.name}</StyledTableCell>
-                <StyledTableCell align="right">{event.price}</StyledTableCell>
-                <StyledTableCell align="right">{event.address}</StyledTableCell>
-                <StyledTableCell align="right">{new Date(event.date).toLocaleDateString()}</StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                <StyledTableCell>
+                  <span className='text-black-light text-[1rem] '>Name</span>
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  <span className='text-black-light text-[1rem] '>Price ($)</span>
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  <span className='text-black-light text-[1rem] '>Address</span>
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  <span className='text-black-light text-[1rem] '>Date</span>
+                </StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {events.map((event) => (
+                <StyledTableRow key={event.id}>
+                  <StyledTableCell>
+                    <img 
+                      src={`https://res.cloudinary.com/${cloud_name}/${event.source_image}`} 
+                      alt={event.name} 
+                      className='w-[3rem] min-w-[3rem] h-[3rem] object-cover rounded-[8px] '
+                    />
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">{event.name}</StyledTableCell>
+                  <StyledTableCell align="right">{event.ticket_price}</StyledTableCell>
+                  <StyledTableCell align="right">{event.address}</StyledTableCell>
+                  <StyledTableCell align="right">{new Date(event.start_date).toLocaleDateString()}</StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
     </DashboardLayout>
   );
 }
