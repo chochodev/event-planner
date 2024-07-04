@@ -23,13 +23,12 @@ const MyRoute = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
 
+        <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/dashboard/events' element={<MyEventList />} />
         <Route path='/dashboard/events/create' element={<CreateEventPage />} />
 
         <Route path='/events' element={<EventList />} />
         <Route path='/events/:id' element={<EventPage />} />
-
-        <Route path='/dashboard' element={<Dashboard />} />
 
         {/* ::::::::::::::: for undefined paths */}
         <Route path="*" element={<PageNotFound />} />

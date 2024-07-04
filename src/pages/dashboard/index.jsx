@@ -21,7 +21,7 @@ const Dashboard = () => {
           </div>
 
           <Button
-            href={'/'}
+            href={'/dashboard/events/create'}
             sx={{
               width: 'width',
               backgroundColor: '#0059ff15',

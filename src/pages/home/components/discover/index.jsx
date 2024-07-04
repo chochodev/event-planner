@@ -51,6 +51,8 @@ const Discover = ({ loading, events }) => {
     sliderRef.current.slickPrev();
   };
 
+  console.log(events);
+
   return (
     <div className='flex flex-col items-start gap-[1rem] w-full'>
       <SubHeader>Discover</SubHeader>

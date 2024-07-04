@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,11 +8,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DashboardLayout from '../components/layout';
+import axiosInstance from 'utils/axios';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+    backgroundColor: '#ffffff',
+    color: '#000000',
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -23,48 +24,55 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   '&:last-child td, &:last-child th': {
     border: 0,
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
 export default function MyEventList() {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    axiosInstance.post('/events/list/', {'request': 'post'})
+      .then(response => {
+        setEvents(response.data?.events);
+      })
+      .catch(error => {
+        console.error('There was an error fetching the events!', error);
+      });
+  }, []);
+
+  
+  // :::::::::::::::::::::: IMAGE 
+  const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+
   return (
     <DashboardLayout>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-              <StyledTableCell align="right">Calories</StyledTableCell>
-              <StyledTableCell align="right">Fat (g)</StyledTableCell>
-              <StyledTableCell align="right">Carbs (g)</StyledTableCell>
-              <StyledTableCell align="right">Protein (g)</StyledTableCell>
+              <StyledTableCell>Image</StyledTableCell>
+              <StyledTableCell align="right">Name</StyledTableCell>
+              <StyledTableCell align="right">Price ($)</StyledTableCell>
+              <StyledTableCell align="right">Address</StyledTableCell>
+              <StyledTableCell align="right">Date</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <StyledTableRow key={row.name}>
+            {events.map((event) => (
+              <StyledTableRow key={event.id}>
                 <StyledTableCell component="th" scope="row">
-                  {row.name}
+                  <img 
+                    src={`https://res.cloudinary.com/${cloud_name}/${event.source_image}`} 
+                    alt={event.name} 
+                    className='w-[4rem] min-w-[4rem] h-[4rem] object-cover rounded-[8px] '
+                  />
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                <StyledTableCell align="right">{row.protein}</StyledTableCell>
+                <StyledTableCell align="right">{event.name}</StyledTableCell>
+                <StyledTableCell align="right">{event.price}</StyledTableCell>
+                <StyledTableCell align="right">{event.address}</StyledTableCell>
+                <StyledTableCell align="right">{new Date(event.date).toLocaleDateString()}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

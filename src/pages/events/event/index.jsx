@@ -66,7 +66,6 @@ const EventPage = () => {
   // :::::::::::::::::::::: IMAGE 
   const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
   const imageUrl = `https://res.cloudinary.com/${cloud_name}/${event.source_image}`;
-  console.log(cloud_name);
   
   // :::::::::::::::::: format date
   const formatDate = (date) => {
