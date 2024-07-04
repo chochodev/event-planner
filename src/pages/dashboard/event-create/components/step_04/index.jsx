@@ -35,14 +35,14 @@ const Step4Form = () => {
         </div> : 
         <div className='relative flex flex-col gap-[1rem] w-full overflow-hidden rounded-[8px] '>
           <img
-            src={'/assets/images/dp.png'}
+            src={'/assets/images/dp.jpg'}
             alt='Floor plan'
             className='relative z-[2] w-full h-[30rem] object-contain'
           />
 
           {/* :::::::::::::::::: Background blur */}
           <img
-            src={'/assets/images/dp.png'}
+            src={'/assets/images/dp.jpg'}
             alt='Floor plan'
             className='absolute top-0 left-0 w-full h-[30rem] object-cover blur-[10px]'
           />

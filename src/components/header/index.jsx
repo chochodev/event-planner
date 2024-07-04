@@ -255,7 +255,7 @@ const Header = () => {
               </button>
               <button className='flex gap-[1rem] items-center w-full px-[1rem]'>
                 <img
-                  src={image || '/assets/images/dp.png'}
+                  src={image || '/assets/images/dp.jpg'}
                   alt='Profile'
                   className='h-[3.5rem] w-[3.5rem] min-w-[3.5rem] rounded-[8px] object-cover shadow-[0_0_12px_4px_rgba(0,0,0,0.1)] '
                 />

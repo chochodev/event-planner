@@ -33,7 +33,7 @@ const TextForm = () => {
       return;
     }
     setFormValues({ floorplanLayout: [...floorplanLayout, itemUpdate] });
-    setItemUpdate({ name: "VIP", alias: "V11", price: "45", people: "2", serveware: "2", desc: "This is a vip seat" });
+    setItemUpdate({ name: "", alias: "", price: "", people: "", serveware: "", desc: "" });
   };
 
   return (

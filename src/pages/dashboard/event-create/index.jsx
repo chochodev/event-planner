@@ -13,7 +13,7 @@ import FlashMessage from 'components/alert';
 import axiosInstance from 'utils/axios';
 
 const CreateEventPage = () => {
-  const [activeStep, setActiveStep] = useState(3);
+  const [activeStep, setActiveStep] = useState(0);
   const { formValues, resetFormValues } = useCreateFormStore();
 
   const steps = [
