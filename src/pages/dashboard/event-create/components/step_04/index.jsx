@@ -18,7 +18,7 @@ const Step4Form = () => {
     <div className='w-full'>
       <div className='flex flex-col w-full'>
         {/* ::::::::::::::::::: IMAGE */}
-       {formValues.floorplanImage || formValues.floorplanImage instanceof File?
+       {formValues.floorplanImage instanceof File?
         <div className='relative flex flex-col gap-[1rem] w-full overflow-hidden rounded-[8px] '>
           <img
             src={URL.createObjectURL(formValues.source_image)}

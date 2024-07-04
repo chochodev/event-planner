@@ -39,7 +39,7 @@ const EventCard = ({ event }) => {
 
         {/* :::::::::::::::::: OVERLAY */}
         <div className='absolute z-[5] left-0 top-0 w-full h-full rounded-[16px] group-hover:bg-gray-900/30 ease-250'/>
-        <p className='absolute z-[5] right-0 top-0 flex items-center text-center justify-center h-[2.875rem] w-[2.875rem] bg-secondary-dark text-primary text-[0.875rem] rounded-bl-[16px] px-[0.5rem] py-[0.1rem]'>${event.ticket_price}</p>
+        <p className='absolute z-[5] right-0 top-0 flex items-center text-center justify-center h-[2.875rem] bg-secondary-dark text-primary text-[0.75rem] rounded-bl-[16px] px-[0.5rem] py-[0.1rem]'>${event.ticket_price}</p>
 
         {/* ::::::::::::::::::::: CTAs */}
         <div

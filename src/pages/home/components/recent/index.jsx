@@ -86,7 +86,7 @@ const Recent = ({ loading, events }) => {
             >
               <RiArrowLeftLine className='text-[1.25rem] text-secondary ease-250' />
             </button>
-            <Slider {...settings} className='flex gap-[1rem] ' ref={sliderRef}>
+            <Slider {...settings} className='flex gap-[1rem] w-full ' ref={sliderRef}>
               {events?.map((event, index) => (
                 <EventCard key={index} event={event} />
               ))}
