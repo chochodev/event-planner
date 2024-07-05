@@ -12,7 +12,7 @@ const SeatModal = ({ open, onClose, seat }) => {
       BackdropProps={{
         sx: { 
           backgroundColor: 'rgba(0,0,0,0.4)',
-          backdropFilter: 'blur(15px)', // corrected attribute name
+          backdropFilter: 'blur(15px)', 
          }, 
       }}
     >
@@ -32,11 +32,11 @@ const SeatModal = ({ open, onClose, seat }) => {
           
           <div className=''>
             <div className='flex gap-[0.5rem] items-center '>
-              <p className='text-[11px] font-[600] uppercase text-secondary'>People</p> 
+              <p className='text-[11px] font-[600] uppercase text-secondary'>People:</p> 
               <span className='text-[14px] text-black-dim font-[600] capitalize '>{seat.people}</span>
             </div>
             <div className='flex gap-[0.5rem] items-center '>
-              <p className='text-[11px] font-[600] uppercase text-secondary'>Serveware</p> 
+              <p className='text-[11px] font-[600] uppercase text-secondary'>Serveware:</p> 
               <span className='text-[14px] text-black-dim font-[600] capitalize '>{seat.serveware}</span>
             </div>
           </div>
@@ -66,36 +66,6 @@ const drawerBleeding = 56;
 const SeatPicker = ({ open, toggleDrawer, seats, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const [modalData, setModalData] = useState(null);
-  const [seatObjects, setSeatObjects] = useState([]);
-
-  useEffect(() => {
-    if (typeof seats === 'string') {
-      // Split the string by commas to separate each object
-      let objectArray = seats.split(",");
-
-      // Parse each object string into a JavaScript object
-      let arrayOfObjects = objectArray.map(objStr => {
-        // Remove any leading or trailing whitespace
-        objStr = objStr.trim();
-
-        // Parse the object string into an actual object
-        try {
-          return JSON.parse(objStr);
-        } catch (e) {
-          console.error("Error parsing JSON:", e);
-          return null; // Handle parsing error as needed
-        }
-      });
-
-      // Filter out null entries (parsing errors)
-      arrayOfObjects = arrayOfObjects.filter(obj => obj !== null);
-
-      // Update state with parsed objects
-      setSeatObjects(arrayOfObjects);
-    } else {
-      setSeatObjects(seats); // Assuming seats is already an array
-    }
-  }, [seats]);
 
   const handleOnClick = (seat) => {
     setModalData(seat);
@@ -127,7 +97,7 @@ const SeatPicker = ({ open, toggleDrawer, seats, loading }) => {
             <h2 className='text-secondary uppercase font-[600]'>List of available seats</h2>
             <div className='grid grid-cols-[repeat(auto-fill,minmax(3rem,1fr))] gap-[0.875rem] md:gap-[1rem]'>
               {!loading && 
-              (seatObjects?.map((seat, index) => (
+              (seats?.map((seat, index) => (
                 <button
                   key={index}
                   onClick={() => handleOnClick(seat)}

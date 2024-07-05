@@ -58,6 +58,10 @@ const CreateEventPage = () => {
     // Handle file inputs separately
     formData.append('source_image', formValues.source_image);
     formData.append('floorplanImage', formValues.floorplanImage);
+  
+    // Handle plan layouts separately
+    formData.append('floorplanLayout', JSON.stringify(formValues.floorplanLayout));
+    formData.append('categoryplanLayout', JSON.stringify(formValues.categoryplanLayout));
 
     try {
       const response = await axiosInstance.post('/events/create/', formData, {

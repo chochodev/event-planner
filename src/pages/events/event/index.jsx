@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosInstance from 'utils/axios';
 import SeatPicker from './components/seat_picker';
-import seat from './components/data';
+// import seat from './components/data';
 import { RiPriceTagFill, RiZoomInLine, RiZoomOutLine } from "react-icons/ri";
 import { Skeleton } from '@mui/material';
 import HomeLayout from 'components/layout';
 import dayjs from 'dayjs';
 import PageNotFound from 'components/error_page/404';
+import Loader from 'components/loader';
 
 
 const EventPage = () => {
@@ -43,8 +44,9 @@ const EventPage = () => {
         const response = await axiosInstance.post(`/events/event/`, {
           id: id
         });
+
         setEvent(response?.data);
-        console.log('floorplan: ', response?.data?.floorplanLayout, '\ntype: ', typeof(response?.data?.floorplanLayout));
+        console.log('event data: ', response?.data?.floorplanLayout, '\n seats type: ', typeof(response?.data?.floorplanLayout));
       } catch (error) {
         console.error('Error fetching event details:', error);
         set404(true);
@@ -76,6 +78,10 @@ const EventPage = () => {
   // :::::::::::::::::::::: PAGE NOT FOUND
   if (is404) {
     return <PageNotFound />
+  }
+
+  if (loading) {
+    return <Loader />
   }
 
   return (
