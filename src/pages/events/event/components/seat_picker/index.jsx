@@ -3,7 +3,7 @@ import { Modal, SwipeableDrawer, Backdrop } from '@mui/material';
 
 const cl = console.log.bind(console);
 
-const SeatModal = ({ open, onClose, seat }) => {
+const SeatModal = ({ open, onClose, seat, mode }) => {
   return (
     <Modal
       open={open}
@@ -30,6 +30,7 @@ const SeatModal = ({ open, onClose, seat }) => {
             </div>
           </div>
           
+          {mode === 0?
           <div className=''>
             <div className='flex gap-[0.5rem] items-center '>
               <p className='text-[11px] font-[600] uppercase text-secondary'>People:</p> 
@@ -39,7 +40,18 @@ const SeatModal = ({ open, onClose, seat }) => {
               <p className='text-[11px] font-[600] uppercase text-secondary'>Serveware:</p> 
               <span className='text-[14px] text-black-dim font-[600] capitalize '>{seat.serveware}</span>
             </div>
+          </div> :
+          <div className=''>
+            <div className='flex gap-[0.5rem] items-center '>
+              <p className='text-[11px] font-[600] uppercase text-secondary'>Type:</p> 
+              <span className='text-[14px] text-black-dim font-[600] capitalize '>{seat.type}</span>
+            </div>
+            <div className='flex gap-[0.5rem] items-center '>
+              <p className='text-[11px] font-[600] uppercase text-secondary'>Total:</p> 
+              <span className='text-[14px] text-black-dim font-[600] capitalize '>{seat.number}</span>
+            </div>
           </div>
+          }
         </div>
       
         <div className='flex flex-col gap-[0.5rem] '>
@@ -63,15 +75,13 @@ const SeatModal = ({ open, onClose, seat }) => {
 
 const drawerBleeding = 56;
 
-const SeatPicker = ({ open, toggleDrawer, seats, loading }) => {
+const SeatPicker = ({ open, toggleDrawer, seats, loading, mode }) => {
   const [openModal, setOpenModal] = useState(false);
   const [modalData, setModalData] = useState(null);
 
   const handleOnClick = (seat) => {
     setModalData(seat);
     setOpenModal(true);
-    cl('new seat:', modalData);
-    cl('seat:', seat);
   };
 
   const handleCloseModal = () => {
@@ -111,7 +121,7 @@ const SeatPicker = ({ open, toggleDrawer, seats, loading }) => {
         </div>
       </SwipeableDrawer>
       {modalData && (
-        <SeatModal open={openModal} onClose={handleCloseModal} seat={modalData} />
+        <SeatModal open={openModal} onClose={handleCloseModal} seat={modalData} mode={mode} />
       )}
     </div>
   );

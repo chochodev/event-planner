@@ -46,7 +46,7 @@ const EventPage = () => {
         });
 
         setEvent(response?.data);
-        console.log('event data: ', response?.data?.floorplanLayout, '\n seats type: ', typeof(response?.data?.floorplanLayout));
+        // console.log('event data: ', response?.data?.floorplanLayout, '\n seats type: ', typeof(response?.data?.floorplanLayout));
       } catch (error) {
         console.error('Error fetching event details:', error);
         set404(true);
@@ -95,6 +95,7 @@ const EventPage = () => {
             toggleDrawer={toggleDrawer} 
             seats={event.floorplanLayout}
             loading={loading}
+            mode={event.floorplanMode}
           /> :
           (event.categoryplanLayout?
           <SeatPicker 
@@ -102,6 +103,7 @@ const EventPage = () => {
             toggleDrawer={toggleDrawer} 
             seats={event.categoryplanLayout}
             loading={loading}
+            mode={event.floorplanMode}
           /> : 
           null)
         }

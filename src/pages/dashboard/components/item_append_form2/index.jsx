@@ -57,6 +57,9 @@ const ItemAppendForm2 = () => {
               <TableCell>
                 <h2 className='text-secondary-dark font-[600] text-[0.75rem] uppercase'>Name</h2>
               </TableCell>
+              <TableCell>
+                <h2 className='text-secondary-dark font-[600] text-[0.75rem] uppercase'>Alias</h2>
+              </TableCell>
               <TableCell align="right">
                 <h2 className='text-secondary-dark font-[600] text-[0.75rem] uppercase'>Price ($)</h2>
               </TableCell>
@@ -78,6 +81,7 @@ const ItemAppendForm2 = () => {
                 <TableCell component="th" scope="row">
                   {item.name}
                 </TableCell>
+                <TableCell align="right">{item.alias}</TableCell>
                 <TableCell align="right">{item.price}</TableCell>
                 <TableCell align="right">{item.number}</TableCell>
                 <TableCell align="right">{item.type}</TableCell>

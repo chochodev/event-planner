@@ -9,7 +9,7 @@ const TextForm2 = () => {
   const { categoryplanLayout } = formValues;
 
   const [itemUpdate, setItemUpdate] = useState({ 
-    name: "VIP 2", price: "50", number: "5", type: 'seat', desc: "This is for vip only."
+    name: "VIP 2", alias: 'V1', price: "50", number: "5", type: 'seat', desc: "This is for vip only."
   });
 
   const onChange = (e) => {
@@ -33,7 +33,7 @@ const TextForm2 = () => {
       return;
     }
     setFormValues({ categoryplanLayout: [...categoryplanLayout, itemUpdate] });
-    setItemUpdate({ name: "VIP 2", price: "50", number: "5", type: 'seat', desc: "This is for vip only." });
+    setItemUpdate({ name: "VIP 2", alias: 'V1', price: "50", number: "5", type: 'table', desc: "This is for vip only." });
   };
 
   return (
@@ -55,6 +55,21 @@ const TextForm2 = () => {
       </div>
           
       <div className='flex flex-col gap-[1rem] w-full '>
+        <div className='flex flex-col gap-[0.5rem] '>
+          <label 
+            htmlFor='alias' 
+            className='text-black-fade text-[0.75rem] uppercase font-[600] '
+          >Category Alias</label>
+          <BaseInput 
+            id='alias'
+            name='alias'
+            type='text'
+            value={itemUpdate.alias}
+            onChange={onChange}
+            placeholder='e.g V1'
+            required={true}
+          />
+        </div>
         <div className='flex flex-col gap-[0.5rem] '>
           <label 
             htmlFor='price' 
