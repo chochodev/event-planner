@@ -44,7 +44,7 @@ const EventPage = () => {
           id: id
         });
         setEvent(response?.data);
-        console.log(response?.data);
+        console.log(response?.data?.floorplanLayout);
       } catch (error) {
         console.error('Error fetching event details:', error);
         set404(true);
@@ -80,7 +80,7 @@ const EventPage = () => {
 
   return (
     <HomeLayout>
-      <div className='w-full min-h-screen text-gray-800 py-[4rem] font-poppins '>
+      <div className='w-full min-h-screen text-gray-800 py-[2rem] lg:py-[4rem] font-poppins '>
         
         {/* :::::::::::::::::::::: SEAT ARRANGEMENT */}
         {event.floorplanMode === 0? 

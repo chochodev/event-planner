@@ -12,6 +12,8 @@ import Step4Form from './components/step_04';
 import FlashMessage from 'components/alert';
 import axiosInstance from 'utils/axios';
 
+const cl = console.log.bind(console);
+
 const CreateEventPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const { formValues, resetFormValues } = useCreateFormStore();
@@ -44,6 +46,8 @@ const CreateEventPage = () => {
     e.preventDefault();
     setLoading(true);
   
+    cl('form values:', formValues);
+
     const formData = new FormData();
   
     // Append all form values to formData
@@ -55,7 +59,6 @@ const CreateEventPage = () => {
     formData.append('source_image', formValues.source_image);
     formData.append('floorplanImage', formValues.floorplanImage);
 
-    console.log('data sent: ', formData);
     try {
       const response = await axiosInstance.post('/events/create/', formData, {
         headers: {
@@ -85,7 +88,6 @@ const CreateEventPage = () => {
       }, 3000);
     } finally {
       setLoading(false);
-      console.log('loading: ', loading);
     }
   };
 

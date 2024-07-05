@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, SwipeableDrawer, Backdrop } from '@mui/material';
 
 const cl = console.log.bind(console);
@@ -12,12 +12,12 @@ const SeatModal = ({ open, onClose, seat }) => {
       BackdropProps={{
         sx: { 
           backgroundColor: 'rgba(0,0,0,0.4)',
-          backgroundBlur: '15px',
+          backdropFilter: 'blur(15px)', // corrected attribute name
          }, 
       }}
     >
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-[25rem] bg-primary p-[1rem] md:p-[2rem] rounded-[8px] ">
-        <h2 className="font-[700] text-[2rem] text-black mx-auto w-max mb-[1rem] ">/{seat.alias}</h2>
+        <h2 className="font-[700] text-[2rem] text-black mx-auto w-max mb-[1rem] ">{seat.alias}</h2>
         <div className="grid grid-cols-2 gap-[1rem] w-full mb-[1rem]">
           <div>
             <div className='flex gap-[0.5rem] items-center '>
@@ -63,24 +63,40 @@ const SeatModal = ({ open, onClose, seat }) => {
 
 const drawerBleeding = 56;
 
-// :::::::::::::::::::::::: MAIN COMPONENT
 const SeatPicker = ({ open, toggleDrawer, seats, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const [seatObjects, setSeatObjects] = useState([]);
 
-  cl('floor seats:', seats, typeof(seats));
+  useEffect(() => {
+    if (typeof seats === 'string') {
+      // Split the string by commas to separate each object
+      let objectArray = seats.split(",");
 
-  let seatArray = Array.isArray(seats) ? seats : [];
-  // let seatArray = [];
-  if (typeof seats === 'string') {
-    try {
-      seatArray = JSON.parse([seats]);
-      cl('seatArray: ', seatArray);
-    } catch (e) {
-      cl('Error parsing seats:', e);
+      // Parse each object string into a JavaScript object
+      let arrayOfObjects = objectArray.map(objStr => {
+        // Remove any leading or trailing whitespace
+        objStr = objStr.trim();
+
+        // Parse the object string into an actual object
+        try {
+          return JSON.parse(objStr);
+        } catch (e) {
+          console.error("Error parsing JSON:", e);
+          return null; // Handle parsing error as needed
+        }
+      });
+
+      // Filter out null entries (parsing errors)
+      arrayOfObjects = arrayOfObjects.filter(obj => obj !== null);
+
+      // Update state with parsed objects
+      setSeatObjects(arrayOfObjects);
+    } else {
+      setSeatObjects(seats); // Assuming seats is already an array
     }
-  }
-  
+  }, [seats]);
+
   const handleOnClick = (seat) => {
     setModalData(seat);
     setOpenModal(true);
@@ -111,7 +127,7 @@ const SeatPicker = ({ open, toggleDrawer, seats, loading }) => {
             <h2 className='text-secondary uppercase font-[600]'>List of available seats</h2>
             <div className='grid grid-cols-[repeat(auto-fill,minmax(3rem,1fr))] gap-[0.875rem] md:gap-[1rem]'>
               {!loading && 
-              (seatArray?.map((seat, index) => (
+              (seatObjects?.map((seat, index) => (
                 <button
                   key={index}
                   onClick={() => handleOnClick(seat)}
