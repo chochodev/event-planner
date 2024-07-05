@@ -64,11 +64,23 @@ const SeatModal = ({ open, onClose, seat }) => {
 const drawerBleeding = 56;
 
 // :::::::::::::::::::::::: MAIN COMPONENT
-const SeatPicker = ({ open, toggleDrawer, seats }) => {
+const SeatPicker = ({ open, toggleDrawer, seats, loading }) => {
   const [openModal, setOpenModal] = useState(false);
   const [modalData, setModalData] = useState(null);
 
-  cl('seats: ', seats, typeof(seats))
+  cl('floor seats:', seats, typeof(seats));
+
+  let seatArray = Array.isArray(seats) ? seats : [];
+  // let seatArray = [];
+  if (typeof seats === 'string') {
+    try {
+      seatArray = JSON.parse([seats]);
+      cl('seatArray: ', seatArray);
+    } catch (e) {
+      cl('Error parsing seats:', e);
+    }
+  }
+  
   const handleOnClick = (seat) => {
     setModalData(seat);
     setOpenModal(true);
@@ -98,7 +110,8 @@ const SeatPicker = ({ open, toggleDrawer, seats }) => {
           <div className='flex flex-col gap-[2rem] p-[2rem] mx-auto max-w-[60rem]'>
             <h2 className='text-secondary uppercase font-[600]'>List of available seats</h2>
             <div className='grid grid-cols-[repeat(auto-fill,minmax(3rem,1fr))] gap-[0.875rem] md:gap-[1rem]'>
-              {seats.map((seat, index) => (
+              {!loading && 
+              (seatArray?.map((seat, index) => (
                 <button
                   key={index}
                   onClick={() => handleOnClick(seat)}
@@ -106,7 +119,7 @@ const SeatPicker = ({ open, toggleDrawer, seats }) => {
                 >
                   <p className='font-[600] text-gray-600 text-[0.875rem] group-hover:text-secondary ease-250'>{seat.alias}</p>
                 </button>
-              ))}
+              )))}
             </div>
           </div>
         </div>
