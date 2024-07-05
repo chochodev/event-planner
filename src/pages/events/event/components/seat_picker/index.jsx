@@ -68,6 +68,7 @@ const SeatPicker = ({ open, toggleDrawer, seats }) => {
   const [openModal, setOpenModal] = useState(false);
   const [modalData, setModalData] = useState(null);
 
+  cl('seats: ', seats, typeof(seats))
   const handleOnClick = (seat) => {
     setModalData(seat);
     setOpenModal(true);

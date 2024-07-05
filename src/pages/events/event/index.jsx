@@ -82,7 +82,7 @@ const EventPage = () => {
       <div className='w-full min-h-screen text-gray-800 py-[4rem] font-poppins '>
         
         {/* :::::::::::::::::::::: SEAT ARRANGEMENT */}
-        {event.floorplanLayout? 
+        {event.floorplanMode === 0? 
           <SeatPicker 
             open={openSeats} 
             toggleDrawer={toggleDrawer} 

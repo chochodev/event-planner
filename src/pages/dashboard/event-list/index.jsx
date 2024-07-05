@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import DashboardLayout from '../components/layout';
 import axiosInstance from 'utils/axios';
 import { AuthContext } from 'context/authStatusContext';
+import { Skeleton } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -32,14 +33,20 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function MyEventList() {
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
+
     axiosInstance.post('/events/list/', {'request': 'post'})
       .then(response => {
         setEvents(response.data?.events);
       })
       .catch(error => {
         console.error('There was an error fetching the events!', error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -66,36 +73,85 @@ export default function MyEventList() {
                 <StyledTableCell>
                   <span className='text-black-light text-[1rem] '>Name</span>
                 </StyledTableCell>
-                <StyledTableCell align="right">
+                <StyledTableCell>
                   <span className='text-black-light text-[1rem] '>Price ($)</span>
                 </StyledTableCell>
-                <StyledTableCell align="right">
+                <StyledTableCell>
                   <span className='text-black-light text-[1rem] '>Address</span>
                 </StyledTableCell>
-                <StyledTableCell align="right">
+                <StyledTableCell>
                   <span className='text-black-light text-[1rem] '>Date</span>
                 </StyledTableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
-              {events.map((event) => (
-                <StyledTableRow key={event.id}>
+            {loading? 
+              <TableBody>
+              {[...Array(4).keys()].map((_, index) => (
+                <StyledTableRow 
+                  key={index} 
+                  sx={{
+                    cursor: 'pointer'
+                  }}
+                >
                   <StyledTableCell>
-                    <img 
-                      src={`https://res.cloudinary.com/${cloud_name}/${event.source_image}`} 
-                      alt={event.name} 
-                      className='w-[3rem] min-w-[3rem] h-[3rem] object-cover rounded-[8px] '
-                    />
+                    <Skeleton variant='rectangle' height='3rem' width='3rem' minWidth='3rem' sx={{borderRadius: '8px'}} />
                   </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">{event.name}</StyledTableCell>
-                  <StyledTableCell align="right">{event.ticket_price}</StyledTableCell>
-                  <StyledTableCell align="right">{event.address}</StyledTableCell>
-                  <StyledTableCell align="right">{new Date(event.start_date).toLocaleDateString()}</StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    <Skeleton variant='Typography' size='1rem' width='5rem' />
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <Skeleton variant='Typography' size='1rem' width='2rem' />
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <Skeleton variant='Typography' size='1rem' width='4rem' />
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <Skeleton variant='Typography' size='1rem' width='3rem' />
+                  </StyledTableCell>
                 </StyledTableRow>
-              ))}
-            </TableBody>
+                ))}
+              </TableBody> : 
+              <>        
+              {(events || events.length !== 0) &&
+              <TableBody>
+                {events?.map((event, index) => (
+                  <StyledTableRow 
+                    key={index} 
+                    sx={{
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <StyledTableCell>
+                      <img 
+                        src={`https://res.cloudinary.com/${cloud_name}/${event.source_image}`} 
+                        alt={event.name} 
+                        className='w-[3rem] min-w-[3rem] h-[3rem] object-cover rounded-[8px] '
+                      />
+                    </StyledTableCell>
+                    <StyledTableCell component="th" scope="row">{event.name}</StyledTableCell>
+                    <StyledTableCell>{event.ticket_price}</StyledTableCell>
+                    <StyledTableCell>{event.address}</StyledTableCell>
+                    <StyledTableCell>{new Date(event.start_date).toLocaleDateString()}</StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>}
+              </>
+            }
           </Table>
         </TableContainer>
+        
+        {(!loading && !(events || events.length !== 0)) &&
+        <div className='w-full'>
+          <div className='relative flex justify-center items-center w-full'>
+            <Skeleton 
+              variant='rectangle' 
+              height='6rem'
+              width='100%'
+              sx={{borderRadius: '16px'}} 
+            />
+            <p className='absolute z-[2] text-gray-500 text-[1rem] '>You don't have any active event</p>
+          </div>
+        </div>}
       </div>
     </DashboardLayout>
   );
