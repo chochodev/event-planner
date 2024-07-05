@@ -44,7 +44,7 @@ const EventPage = () => {
           id: id
         });
         setEvent(response?.data);
-        console.log(response?.data?.floorplanLayout);
+        console.log('floorplan: ', response?.data?.floorplanLayout, '\ntype: ', typeof(response?.data?.floorplanLayout));
       } catch (error) {
         console.error('Error fetching event details:', error);
         set404(true);
