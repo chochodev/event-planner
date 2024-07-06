@@ -127,6 +127,7 @@ export default function MyEventList() {
                     sx={{
                       cursor: 'pointer'
                     }}
+                    onClick={()=>handleEventClick(event.id)}
                   >
                     <StyledTableCell>
                       <img 
