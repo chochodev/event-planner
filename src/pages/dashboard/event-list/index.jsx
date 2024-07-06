@@ -11,6 +11,7 @@ import DashboardLayout from '../components/layout';
 import axiosInstance from 'utils/axios';
 import { AuthContext } from 'context/authStatusContext';
 import { Skeleton } from '@mui/material';
+import { Router } from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -56,6 +57,12 @@ export default function MyEventList() {
   // :::::::::::::::::::::: IMAGE 
   const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
 
+  // :::::::::::::::::::::: HANDLE ONCLICK
+  const router = Router();
+  const handleEventClick = (id) => {
+    router(`/events/event/edit/${id}`)
+  }
+
   return (
     <DashboardLayout>
       <div className='flex flex-col gap-[2rem] px-[1rem] md:px-[2rem] py-[2rem]'>
@@ -94,7 +101,7 @@ export default function MyEventList() {
                   }}
                 >
                   <StyledTableCell>
-                    <Skeleton variant='rectangle' height='3rem' width='3rem' minWidth='3rem' sx={{borderRadius: '8px'}} />
+                    <Skeleton variant='rectangle' height='3rem' width='3rem' sx={{borderRadius: '8px'}} />
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
                     <Skeleton variant='Typography' size='1rem' width='5rem' />
