@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, SwipeableDrawer, Backdrop } from '@mui/material';
 
-const cl = console.log.bind(console);
 
 const SeatModal = ({ open, onClose, seat, mode }) => {
   return (

@@ -2,6 +2,7 @@ import PageNotFound from 'components/error_page/404';
 import Loader from 'components/loader';
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
 
 const SignIn = lazy(() => import('pages/signin'));
 const SignUp = lazy(() => import('pages/signup'));
@@ -23,7 +24,7 @@ const MyRoute = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
 
-        <Route path='/dashboard' element={<Dashboard />} />
+        <PrivateRoute path='/dashboard' element={<Dashboard />} />
         <Route path='/dashboard/events' element={<MyEventList />} />
         <Route path='/dashboard/events/create' element={<CreateEventPage />} />
 
