@@ -1,11 +1,12 @@
-import React from 'react'
-import { Route } from 'react-router-dom'
+import { Navigate, Outlet } from "react-router-dom";
+import { AuthContext } from 'context/authStatusContext';
+import { useContext } from 'react';
 
-const PrivateRoute = ({ children, ...rest }) => {
-  console.log('private');
-  return (
-    <Route {...rest}>{children}</Route>
-  )
-}
+const Protected = () => {
+  const { isAuthenticated } = useContext(AuthContext);
+  // const token = localStorage.getItem("token");
 
-export default PrivateRoute;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/unauthenticated" />;
+};
+
+export default Protected;

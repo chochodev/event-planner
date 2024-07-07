@@ -2,7 +2,8 @@ import PageNotFound from 'components/error_page/404';
 import Loader from 'components/loader';
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import PrivateRoute from './PrivateRoute';
+import Protected from './PrivateRoute';
+import AccessDenied from 'components/error_page/unauthenticated';
 
 const SignIn = lazy(() => import('pages/signin'));
 const SignUp = lazy(() => import('pages/signup'));
@@ -24,15 +25,22 @@ const MyRoute = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
 
-        <PrivateRoute path='/dashboard' element={<Dashboard />} />
-        <Route path='/dashboard/events' element={<MyEventList />} />
-        <Route path='/dashboard/events/create' element={<CreateEventPage />} />
 
         <Route path='/events' element={<EventList />} />
         <Route path='/events/:id' element={<EventPage />} />
 
+        {/* ::::::::::::::: Protected Routes */}
+        <Route element={<Protected />}>
+          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/dashboard/events' element={<MyEventList />} />
+          <Route path='/dashboard/events/create' element={<CreateEventPage />} />
+        </Route>
+
         {/* ::::::::::::::: for undefined paths */}
         <Route path="*" element={<PageNotFound />} />
+
+        {/* ::::::::::::::: for protected routes */}
+        <Route path='/unauthenticated' element={<AccessDenied />} />
       </Routes>
     </Suspense>
   );
