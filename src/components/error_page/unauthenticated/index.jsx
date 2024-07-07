@@ -4,7 +4,7 @@ import HomeLayout from 'components/layout';
 import PrimaryLink from 'components/link/primary/variant/outlined';
 
 const AccessDenied = () => {
-  const [seconds, setSeconds] = useState(6);
+  const [seconds, setSeconds] = useState(10);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const AccessDenied = () => {
       const timer = setTimeout(() => setSeconds(seconds - 1), 1000);
       return () => clearTimeout(timer);
     } else {
-      // navigate('/signin');
+      navigate('/signin');
     }
   }, [seconds, navigate]);
 
