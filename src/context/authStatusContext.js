@@ -10,36 +10,12 @@ export const AuthProvider = ({ children }) => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const checkAuthStatus = async () => {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      setLoading(false);
-      return false;
-    }
-
-    try {
-      const response = await axiosInstance.get('/auth/status/', {
-        headers: {
-          'Authorization': `Token ${token}`,
-        },
-      });
-      setIsAuthenticated(response.data?.authenticated);
-      const user = response.data?.user
-      setFirstname(user?.firstname);
-      setImage(user?.image);
-    } catch (error) {
-      setIsAuthenticated(false);
-      localStorage.removeItem('token');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const getSessionStatus = async () => {
     const token = localStorage.getItem('accessToken');
   
     if (!token) {
+      setLoading(false);
       return false;
     }
   
