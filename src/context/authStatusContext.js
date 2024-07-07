@@ -1,5 +1,6 @@
 import React, { useEffect, useState, createContext } from 'react';
 import axiosInstance from 'utils/axios';
+import { jwtDecode } from 'jwt-decode';
 
 export const AuthContext = createContext();
 
@@ -35,8 +36,31 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const getSessionStatus = async () => {
+    const token = localStorage.getItem('accessToken');
+  
+    if (!token) {
+      return false;
+    }
+  
+    try {
+      const response = jwtDecode(token);
+      console.log('status', response.authenticated);
+      
+      setFirstname(response.firstname);
+      setImage(response.profile_image);
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error('Error checking session status:', error);
+      setIsAuthenticated(false);
+      localStorage.removeItem('accessToken');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    checkAuthStatus();
+    getSessionStatus();
   }, []);
 
   return (
