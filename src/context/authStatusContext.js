@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('authToken');
       setTimeout(() => {
         setOpenFlashMessage(false);
-        // window.location.href = '/';
+        window.location.href = '/';
       }, 1000);
     }
   };
@@ -133,7 +133,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     // ::::::::::::::: calling and interval 
-    if (authToken) { handleRefreshToken() }
+    // if (authToken) { handleRefreshToken() }
 
     const interval = setInterval(() => {
       if (authToken) {
