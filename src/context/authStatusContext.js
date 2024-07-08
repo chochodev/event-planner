@@ -110,8 +110,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const handleRefreshToken = async () => {
-      // console.log('refresh func called!');
-      // console.log('refresh token: ', authToken.refresh);
       try {
         const userData = {
           'firstname': authToken.firstname,
