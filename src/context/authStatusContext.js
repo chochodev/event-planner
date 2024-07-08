@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem('authToken');
       setTimeout(() => {
         setOpenFlashMessage(false);
-        window.location.href = '/';
+        // window.location.href = '/';
       }, 1000);
     }
   };
@@ -107,29 +107,42 @@ export const AuthProvider = ({ children }) => {
   // Refresh function
   const [refreshLoading, setRefreshLoading] = useState(true);
 
-  const handleRefreshToken = async () => {
-    console.log('refresh func called!');
-    console.log('refresh token: ', authToken.refresh);
-    try {
-      // const authToken = localStorage.getItem('authToken');
-      const response = await axiosInstance.post('/auth/token/refresh/', { 'refresh': authToken.refresh });
-      console.log('refresh token: ', authToken.refresh);
-
-      setAuthToken(response.data);
-      localStorage.setItem('authToken', JSON.stringify(response.data));
-      console.log('Refresh-token success:', response.data);
-    } catch (error) {
-      console.error('Refresh-token failed:', error);
-    }
-  }
 
   useEffect(() => {
+    const handleRefreshToken = async () => {
+      console.log('refresh func called!');
+      console.log('refresh token: ', authToken.refresh);
+      try {
+        const userData = {
+          'firstname': authToken.firstname,
+          'profile_image': authToken.profile_image, 
+          'is_active': authToken.is_active
+        }
+        const response = await axiosInstance.post('/auth/token/refresh/', { 'refresh': authToken.refresh });
+        const newAuthToken = {
+          ...response.data,
+          ...userData,
+        };
+        console.log('new data token: ', newAuthToken);
+        setAuthToken(newAuthToken);
+        localStorage.setItem('authToken', JSON.stringify(newAuthToken));
+        console.log('Refresh-token success:', response.data);
+      } catch (error) {
+        console.error('Refresh-token failed:', error);
+      } finally {
+        setRefreshLoading(false);
+      }
+    }
+
     const interval = setInterval(() => {
       if (authToken) {
+        setRefreshLoading(true);
         handleRefreshToken();
       }
     }, (8 * 60 * 1000))
+
     return () => clearInterval(interval);
+
   }, [authToken, refreshLoading]);
 
   // :::::::::::::::::: data
