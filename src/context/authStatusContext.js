@@ -1,5 +1,6 @@
 import React, { useEffect, useState, createContext } from 'react';
-// import { jwtDecode } from 'jwt-decode';
+import axiosInstance from 'utils/axios';
+import FlashMessage from 'components/alert';
 
 export const AuthContext = createContext();
 
@@ -12,26 +13,24 @@ export const AuthProvider = ({ children }) => {
 
   const getSessionStatus = async () => {
     const token = localStorage.getItem('refreshToken');
+    const access = localStorage.getItem('accessToken');
     const user = localStorage.getItem('user');
   
-    if (!token) {
+    if (!token || !access) {
       setLoading(false);
       return false;
-    }
-  
-    try {
-      // const response = jwtDecode(token);
+    } else {
       const user_data = JSON.parse(user);
       
       setFirstname(user_data.firstname);
       setImage(user_data.profile_image);
       setIsAuthenticated(true);
-    } catch (error) {
-      console.error('Error checking session status:', error);
-      setIsAuthenticated(false);
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('accessToken');
-    } finally {
+    // }  {
+    //   console.error('Error checking session status:', error);
+    //   setIsAuthenticated(false);
+    //   localStorage.removeItem('refreshToken');
+    //   localStorage.removeItem('accessToken');
+
       setLoading(false);
     }
   };
@@ -40,8 +39,70 @@ export const AuthProvider = ({ children }) => {
     getSessionStatus();
   }, []);
 
+  // ::::::::::::::::::::::: LOG IN FUNCTION
+  const [openFlashMessage, setOpenFlashMessage] = useState(false);
+  const [flashMessage, setFlashMessage] = useState('');
+  const [flashSeverity, setFlashSeverity] = useState('success');
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+  
+    const logInForm = {
+      email: e.target.email.value,
+      password: e.target.password.value
+    }
+  
+    try {
+      const response = await axiosInstance.post('/auth/signin/', logInForm);
+      setFlashMessage(response.data?.message || 'User logged in successfully');
+      setFlashSeverity('success');
+      setOpenFlashMessage(true);
+  
+      // :::::::: store tokens to local storage
+      localStorage.setItem('accessToken', response.data?.access);
+      localStorage.setItem('refreshToken', response.data?.refresh);
+      localStorage.setItem('user', JSON.stringify(response.data?.user));
+      console.log('response', response.data?.user)
+  
+      // :::::::: closes the flash message and redirect
+      setTimeout(() => {
+        setOpenFlashMessage(false);
+        window.location.href = '/';
+      }, 3000);
+    } catch (error) {
+      console.error('Error:', error.response ? error.response.data : error.message);
+      const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
+      setFlashMessage(errorMessage);
+      setFlashSeverity('error');
+      setOpenFlashMessage(true);
+      
+      // closes the flash message
+      setTimeout(() => {
+        setOpenFlashMessage(false);
+      }, 3000);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, firstname, image, loading }}>
+    <AuthContext.Provider 
+      value={{ 
+        isAuthenticated, 
+        firstname, 
+        image, 
+        loading,
+        handleLogin: handleLogin
+      }}
+    >
+      <FlashMessage
+        openFlashMessage={openFlashMessage}
+        setOpenFlashMessage={setOpenFlashMessage}
+        flashMessage={flashMessage}
+        flashSeverity={flashSeverity}
+      />
       {children}
     </AuthContext.Provider>
   );
