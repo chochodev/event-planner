@@ -188,7 +188,7 @@ const Header = () => {
                       <span className='text-[0.875rem] '>Settings</span>
                     </Link>
                     <button
-                      onClick={handleLogout}
+                      onClick={()=>{ handlePopoverClose(); handleLogout();}}
                       className='flex gap-[0.5rem] items-center text-black-light hover:text-secondary w-full pb-[0.5rem] ease-250  '
                     >
                       <RiLogoutBoxLine className='text-[1.25rem] ' />
@@ -241,12 +241,20 @@ const Header = () => {
                 {links.map((link, index) => (
                   <Link 
                     to={link.link}
+                    onClick={()=>setOpenNav(false)}
                     key={index}
                     className={`group flex gap-[0.5rem] items-center text-gray-800 text-[0.75rem] font-[600] w-full uppercase bg-gray-100 hover:bg-gray-200 px-[1rem] py-[0.875rem] rounded-[4px] transition-all duration-[200ms] ease-in-out hover:scale-[1.02] `}
                   >
                     {link.icon} {link.name}
                   </Link>
                 ))}
+                <button 
+                    onClick={()=>{setOpenNav(false); handleLogout();}}
+                    className={`group flex gap-[0.5rem] items-center text-gray-800 text-[0.75rem] font-[600] w-full uppercase bg-gray-100 hover:bg-gray-200 px-[1rem] py-[0.875rem] rounded-[4px] transition-all duration-[200ms] ease-in-out hover:scale-[1.02] `}
+                  >
+                    <RiLogoutBoxLine className='text-black/50 group-hover:text-black ease-250 text-[1.15rem] ' /> 
+                    Sign Out
+                  </button>
               </div>
             </div>  
           </Modal>
