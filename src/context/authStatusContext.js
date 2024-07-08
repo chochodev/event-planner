@@ -104,6 +104,34 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Refresh function
+  const [refreshLoading, setRefreshLoading] = useState(true);
+
+  const handleRefreshToken = async () => {
+    console.log('refresh func called!');
+    console.log('refresh token: ', authToken.refresh);
+    try {
+      // const authToken = localStorage.getItem('authToken');
+      const response = await axiosInstance.post('/auth/token/refresh/', { 'refresh': authToken.refresh });
+      console.log('refresh token: ', authToken.refresh);
+
+      setAuthToken(response.data);
+      localStorage.setItem('authToken', JSON.stringify(response.data));
+      console.log('Refresh-token success:', response.data);
+    } catch (error) {
+      console.error('Refresh-token failed:', error);
+    }
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (authToken) {
+        handleRefreshToken();
+      }
+    }, (8 * 60 * 1000))
+    return () => clearInterval(interval);
+  }, [authToken, refreshLoading]);
+
   // :::::::::::::::::: data
   let contextData = {
     isAuthenticated: isAuthenticated, 
