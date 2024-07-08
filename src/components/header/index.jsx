@@ -15,8 +15,6 @@ import {
 } from 'react-icons/ri';
 import { Modal, Skeleton, Popover } from '@mui/material';
 import { AuthContext } from 'context/authStatusContext';
-import { logout } from 'utils/axios';
-import FlashMessage from 'components/alert';
 
 
 const Header = () => {
