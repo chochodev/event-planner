@@ -47,7 +47,6 @@ export const AuthProvider = ({ children }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-
   
     const logInForm = {
       email: e.target.email.value,
@@ -69,7 +68,7 @@ export const AuthProvider = ({ children }) => {
       // :::::::: closes the flash message and redirect
       setTimeout(() => {
         setOpenFlashMessage(false);
-        window.location.href = '/';
+        // window.location.href = '/';
       }, 3000);
     } catch (error) {
       console.error('Error:', error.response ? error.response.data : error.message);
@@ -87,16 +86,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // :::::::::::::::::: data
+  let contextData = {
+    isAuthenticated: isAuthenticated, 
+    firstname: firstname, 
+    image: image, 
+    loading: loading,
+    handleLogin: handleLogin
+  }
+
   return (
-    <AuthContext.Provider 
-      value={{ 
-        isAuthenticated, 
-        firstname, 
-        image, 
-        loading,
-        handleLogin: handleLogin
-      }}
-    >
+    <AuthContext.Provider value={contextData}>
       <FlashMessage
         openFlashMessage={openFlashMessage}
         setOpenFlashMessage={setOpenFlashMessage}

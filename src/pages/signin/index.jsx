@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Button, 
@@ -9,6 +9,7 @@ import {
 import Logo from 'components/logo';
 import axiosInstance from 'utils/axios';
 import FlashMessage from 'components/alert';
+import { AuthContext } from 'context/authStatusContext';
 
 const SignIn = () => {
   const [openFlashMessage, setOpenFlashMessage] = useState(false);
@@ -65,39 +66,8 @@ const SignIn = () => {
       setLoading(false);
     }
   };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
 
-  //   try {
-  //     const response = await axiosInstance.post('/auth/signin/', form);
-  //     setFlashMessage(response.data?.message || 'User logged in successfully');
-  //     setFlashSeverity('success');
-  //     setOpenFlashMessage(true);
-
-  //     // :::::::: store token to local storage
-  //     localStorage.setItem('token', response.data?.token);
-
-  //     // :::::::: closes the flash message and redirect
-  //     setTimeout(() => {
-  //       setOpenFlashMessage(false);
-  //       window.location.href = '/';
-  //     }, 3000);
-  //   } catch (error) {
-  //     console.error('Error:', error.response ? error.response.data : error.message);
-  //     const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
-  //     setFlashMessage(errorMessage);
-  //     setFlashSeverity('error');
-  //     setOpenFlashMessage(true);
-      
-  //     // closes the flash message
-  //     setTimeout(() => {
-  //       setOpenFlashMessage(false);
-  //     }, 3000);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+  const { handleLogin } = useContext(AuthContext)
 
   return (
     <>
@@ -110,7 +80,7 @@ const SignIn = () => {
     <div className='grid grid-cols-1 md:grid-cols-2 justify-center items-center w-full min-h-screen'>
       <div className='flex flex-col gap-[1.875rem] px-[2rem] lg:px-[4rem] py-[2rem]'>
         <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Welcome</h2>
-        <form onSubmit={handleSubmit} className='grid grid-cols-1 gap-[1rem] gap-y-0 w-full'>
+        <form onSubmit={handleLogin} className='grid grid-cols-1 gap-[1rem] gap-y-0 w-full'>
           <FormControl fullWidth margin="normal">
             <TextField 
               label="Email"
