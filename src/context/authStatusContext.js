@@ -135,7 +135,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     // ::::::::::::::: calling and interval 
-    handleRefreshToken();
+    if (authToken) { handleRefreshToken() }
 
     const interval = setInterval(() => {
       if (authToken) {
