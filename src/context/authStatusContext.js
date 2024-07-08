@@ -86,8 +86,7 @@ export const AuthProvider = ({ children }) => {
   const handleLogout = async () => {
     try {
       const authToken = localStorage.getItem('authToken');
-      const response = await axiosInstance.post('/auth/logout/', JSON.stringify({ refresh_token: authToken.refresh }));
-      console.log('Logout success:', response.data);
+      await axiosInstance.post('/auth/logout/', JSON.stringify({ refresh_token: authToken.refresh }));
       setFlashMessage('User logged out successfully');
       setFlashSeverity('success');
     } catch (error) {
@@ -121,10 +120,8 @@ export const AuthProvider = ({ children }) => {
           ...response.data,
           ...userData,
         };
-        console.log('new data token: ', newAuthToken);
         setAuthToken(newAuthToken);
         localStorage.setItem('authToken', JSON.stringify(newAuthToken));
-        console.log('Refresh-token success:', response.data);
       } catch (error) {
         console.error('Refresh-token failed:', error);
       } finally {
