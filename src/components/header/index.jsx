@@ -238,7 +238,7 @@ const Header = () => {
               {/* ::::::::::::::::::::::: HORIZONTAL LINE */}
               <hr className='w-full h-[1px] bg-gray-200 mt-[2rem] ' />
               <div className='flex flex-col gap-[1.5rem] mt-[2rem] w-full '>
-                {links.map((link, index) => (
+                {links.slice(0,-1).map((link, index) => (
                   <Link 
                     to={link.link}
                     onClick={()=>setOpenNav(false)}
