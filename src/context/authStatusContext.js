@@ -134,6 +134,9 @@ export const AuthProvider = ({ children }) => {
       }
     }
 
+    // ::::::::::::::: calling and interval 
+    handleRefreshToken();
+
     const interval = setInterval(() => {
       if (authToken) {
         setRefreshLoading(true);
@@ -141,6 +144,7 @@ export const AuthProvider = ({ children }) => {
       }
     }, (8 * 60 * 1000))
 
+    // :::::::::::::::::: clear function
     return () => clearInterval(interval);
 
   }, [authToken, refreshLoading]);
