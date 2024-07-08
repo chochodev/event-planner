@@ -32,16 +32,19 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+  
     try {
       const response = await axiosInstance.post('/auth/signin/', form);
       setFlashMessage(response.data?.message || 'User logged in successfully');
       setFlashSeverity('success');
       setOpenFlashMessage(true);
-
-      // :::::::: store token to local storage
-      localStorage.setItem('token', response.data?.token);
-
+  
+      // :::::::: store tokens to local storage
+      localStorage.setItem('accessToken', response.data?.access);
+      localStorage.setItem('refreshToken', response.data?.refresh);
+      localStorage.setItem('user', JSON.stringify(response.data?.user));
+      console.log('response', response.data?.user)
+  
       // :::::::: closes the flash message and redirect
       setTimeout(() => {
         setOpenFlashMessage(false);
@@ -62,6 +65,39 @@ const SignIn = () => {
       setLoading(false);
     }
   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+
+  //   try {
+  //     const response = await axiosInstance.post('/auth/signin/', form);
+  //     setFlashMessage(response.data?.message || 'User logged in successfully');
+  //     setFlashSeverity('success');
+  //     setOpenFlashMessage(true);
+
+  //     // :::::::: store token to local storage
+  //     localStorage.setItem('token', response.data?.token);
+
+  //     // :::::::: closes the flash message and redirect
+  //     setTimeout(() => {
+  //       setOpenFlashMessage(false);
+  //       window.location.href = '/';
+  //     }, 3000);
+  //   } catch (error) {
+  //     console.error('Error:', error.response ? error.response.data : error.message);
+  //     const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
+  //     setFlashMessage(errorMessage);
+  //     setFlashSeverity('error');
+  //     setOpenFlashMessage(true);
+      
+  //     // closes the flash message
+  //     setTimeout(() => {
+  //       setOpenFlashMessage(false);
+  //     }, 3000);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <>

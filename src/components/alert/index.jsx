@@ -11,7 +11,7 @@ const FlashMessage = ({
 }) => {
 
   return (
-    <div className='fixed top-0 z-[600] left-0 w-full'>
+    <div className='fixed top-0 z-[900] left-0 w-full bg-primary '>
       <Collapse in={openFlashMessage}>
         <Alert
           severity={flashSeverity}

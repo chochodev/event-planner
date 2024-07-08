@@ -26,12 +26,13 @@ export const logout = async () => {
     const refreshToken = localStorage.getItem('refreshToken');
     const response = await axiosInstance.post('/auth/logout/', { refresh: refreshToken });
     console.log('Logout success:', response.data);
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
     return response.data;
   } catch (error) {
     console.error('Logout failed:', error);
     throw new Error('Logout failed');
+  } finally {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
   }
 };
 
