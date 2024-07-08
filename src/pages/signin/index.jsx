@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Button, 
@@ -7,76 +7,13 @@ import {
   TextField
 } from '@mui/material';
 import Logo from 'components/logo';
-import axiosInstance from 'utils/axios';
-import FlashMessage from 'components/alert';
 import { AuthContext } from 'context/authStatusContext';
 
 const SignIn = () => {
-  const [openFlashMessage, setOpenFlashMessage] = useState(false);
-  const [flashMessage, setFlashMessage] = useState('');
-  const [flashSeverity, setFlashSeverity] = useState('success');
-  const [loading, setLoading] = useState(false);
-
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-  
-    try {
-      const response = await axiosInstance.post('/auth/signin/', form);
-      setFlashMessage(response.data?.message || 'User logged in successfully');
-      setFlashSeverity('success');
-      setOpenFlashMessage(true);
-  
-      // :::::::: store tokens to local storage
-      localStorage.setItem('accessToken', response.data?.access);
-      localStorage.setItem('refreshToken', response.data?.refresh);
-      localStorage.setItem('user', JSON.stringify(response.data?.user));
-      console.log('response', response.data?.user)
-  
-      // :::::::: closes the flash message and redirect
-      setTimeout(() => {
-        setOpenFlashMessage(false);
-        window.location.href = '/';
-      }, 3000);
-    } catch (error) {
-      console.error('Error:', error.response ? error.response.data : error.message);
-      const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
-      setFlashMessage(errorMessage);
-      setFlashSeverity('error');
-      setOpenFlashMessage(true);
-      
-      // closes the flash message
-      setTimeout(() => {
-        setOpenFlashMessage(false);
-      }, 3000);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const { handleLogin } = useContext(AuthContext)
+  const { handleLogin, loginLoading } = useContext(AuthContext)
 
   return (
     <>
-    <FlashMessage
-      openFlashMessage={openFlashMessage}
-      setOpenFlashMessage={setOpenFlashMessage}
-      flashMessage={flashMessage}
-      flashSeverity={flashSeverity}
-    />
     <div className='grid grid-cols-1 md:grid-cols-2 justify-center items-center w-full min-h-screen'>
       <div className='flex flex-col gap-[1.875rem] px-[2rem] lg:px-[4rem] py-[2rem]'>
         <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Welcome</h2>
@@ -86,8 +23,6 @@ const SignIn = () => {
               label="Email"
               name="email"
               type="email"
-              value={form.email}
-              onChange={handleChange}
               InputProps={{
                 sx: {
                   height: '3rem',
@@ -104,8 +39,6 @@ const SignIn = () => {
               label="Password"
               name="password"
               type="password"
-              value={form.password}
-              onChange={handleChange}
               InputProps={{
                 sx: {
                   height: '3rem',
@@ -119,8 +52,8 @@ const SignIn = () => {
           </FormControl>
           <button type='submit' hidden ></button>
         </form>
-        <Button onClick={handleSubmit} variant="contained" color="primary" sx={{height: '3rem'}} fullWidth>
-          {loading? <div className="loader"></div> : "Sign In"}
+        <Button onClick={handleLogin} variant="contained" color="primary" sx={{height: '3rem'}} fullWidth>
+          {loginLoading? <div className="loader"></div> : "Sign In"}
         </Button>
         <div className='flex gap-[0.5rem] items-center'>
           <p className='text-[0.875rem]'>Don't have an account?</p>

@@ -5,48 +5,41 @@ import FlashMessage from 'components/alert';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const [authToken, setAuthToken] = useState(
+    () => localStorage.getItem('authToken')? 
+      JSON.parse(localStorage.getItem('authToken')) : null
+  );
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [firstname, setFirstname] = useState('Anonymous');
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(true);
 
 
-  const getSessionStatus = async () => {
-    const token = localStorage.getItem('refreshToken');
-    const access = localStorage.getItem('accessToken');
-    const user = localStorage.getItem('user');
-  
-    if (!token || !access) {
+  const getSessionStatus = async () => {  
+    if (!authToken) {
       setLoading(false);
       return false;
     } else {
-      const user_data = JSON.parse(user);
-      
-      setFirstname(user_data.firstname);
-      setImage(user_data.profile_image);
+      setFirstname(authToken.firstname);
+      setImage(authToken.profile_image);
       setIsAuthenticated(true);
-    // }  {
-    //   console.error('Error checking session status:', error);
-    //   setIsAuthenticated(false);
-    //   localStorage.removeItem('refreshToken');
-    //   localStorage.removeItem('accessToken');
-
       setLoading(false);
     }
   };
 
   useEffect(() => {
     getSessionStatus();
-  }, []);
+  });
 
-  // ::::::::::::::::::::::: LOG IN FUNCTION
+  // ::::::::::::::::::::::: LOGIN FUNCTION
   const [openFlashMessage, setOpenFlashMessage] = useState(false);
   const [flashMessage, setFlashMessage] = useState('');
   const [flashSeverity, setFlashSeverity] = useState('success');
+  const [loginLoading, setLoginLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoginLoading(true);
   
     const logInForm = {
       email: e.target.email.value,
@@ -58,31 +51,32 @@ export const AuthProvider = ({ children }) => {
       setFlashMessage(response.data?.message || 'User logged in successfully');
       setFlashSeverity('success');
       setOpenFlashMessage(true);
-  
-      // :::::::: store tokens to local storage
-      localStorage.setItem('accessToken', response.data?.access);
-      localStorage.setItem('refreshToken', response.data?.refresh);
-      localStorage.setItem('user', JSON.stringify(response.data?.user));
-      console.log('response', response.data?.user)
+      
+      // ::::::::::::::::: stores the response data
+      setAuthToken(response.data?.token);
+      localStorage.setItem('authToken', JSON.stringify(response.data?.token));
   
       // :::::::: closes the flash message and redirect
       setTimeout(() => {
         setOpenFlashMessage(false);
         window.location.href = '/';
-      }, 3000);
+      }, 1000);
     } catch (error) {
-      console.error('Error:', error.response ? error.response.data : error.message);
       const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
+      console.error('Error:', error.response ? error.response.data : error.message);
       setFlashMessage(errorMessage);
       setFlashSeverity('error');
       setOpenFlashMessage(true);
+
+      // ::::::::: removes credentials incase there is any
+      localStorage.removeItem('authToken');
       
       // closes the flash message
       setTimeout(() => {
         setOpenFlashMessage(false);
       }, 3000);
     } finally {
-      setLoading(false);
+      setLoginLoading(false);
     }
   };
 
@@ -92,7 +86,8 @@ export const AuthProvider = ({ children }) => {
     firstname: firstname, 
     image: image, 
     loading: loading,
-    handleLogin: handleLogin
+    handleLogin: handleLogin,
+    loginLoading: loginLoading
   }
 
   return (
