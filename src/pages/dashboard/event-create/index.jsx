@@ -76,7 +76,7 @@ const CreateEventPage = () => {
       // :::::::: closes the flash message and redirect
       setTimeout(() => {
         setOpenFlashMessage(false);
-        // resetFormValues()
+        resetFormValues()
         window.location.href = '/';
       }, 3000);
     } catch (error) {
