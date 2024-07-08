@@ -21,7 +21,7 @@ import FlashMessage from 'components/alert';
 
 const Header = () => {
   const [openNav, setOpenNav] = useState(false);
-  const { isAuthenticated, firstname, image, loading }= useContext(AuthContext);
+  const { isAuthenticated, firstname, image, loading, handleLogout }= useContext(AuthContext);
 
   useEffect(() => {
     const handleResize = () => {
@@ -60,28 +60,6 @@ const Header = () => {
   const openPopover = Boolean(anchorEl);
   const id = openPopover ? 'simple-popover' : undefined;
 
-  // For Flash message
-  const [openFlashMessage, setOpenFlashMessage] = useState(false);
-  const [flashMessage, setFlashMessage] = useState('');
-  const [flashSeverity, setFlashSeverity] = useState('success');
-
-  // Logout function
-  const handleLogout = async () => {
-    try {
-      await logout();
-      setFlashMessage('User logged out successfully');
-      setFlashSeverity('success');
-      window.location.reload();
-    } catch (error) {
-      setFlashMessage('User is not logged in');
-      setFlashSeverity('danger');
-      console.error('Logout failed:', error);
-    } finally {
-      handlePopoverClose();
-      setOpenFlashMessage(true);
-    }
-  };
-
   if (loading) {
     return (
       <header 
@@ -105,12 +83,6 @@ const Header = () => {
 
   return (
     <>
-    <FlashMessage
-      openFlashMessage={openFlashMessage}
-      setOpenFlashMessage={setOpenFlashMessage}
-      flashMessage={flashMessage}
-      flashSeverity={flashSeverity}
-    />
     <header 
       className={`sticky top-0 left-0 z-[10] w-full bg-primary border-solid border-black/20 border-x-0 border-t-0 border-b-[1px] `}
     >

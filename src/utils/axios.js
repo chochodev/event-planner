@@ -9,9 +9,10 @@ const axiosInstance = axios.create({
 // :::::::::::::::: axiosInstance default header
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('accessToken');
+    const token = JSON.parse(localStorage.getItem('authToken'));
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      console.log('access token: ', token.access);
+      config.headers.Authorization = `Bearer ${token.access}`;
     }
     return config;
   },
@@ -23,22 +24,21 @@ export default axiosInstance;
 // :::::::::::::::: logout function
 export const logout = async () => {
   try {
-    const refreshToken = localStorage.getItem('refreshToken');
-    const response = await axiosInstance.post('/auth/logout/', { refresh: refreshToken });
+    const authToken = JSON.parse(localStorage.getItem('authToken'));
+    const response = await axiosInstance.post('/auth/logout/', { refresh: authToken.refresh });
     console.log('Logout success:', response.data);
     return response.data;
   } catch (error) {
     console.error('Logout failed:', error);
     throw new Error('Logout failed');
   } finally {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('authToken');
   }
 };
 
 // :::::::::::::::::: get session status function
 export const getSessionStatus = async () => {
-  const token = localStorage.getItem('accessToken');
+  const token = localStorage.getItem('authToken');
 
   if (!token) {
     return false;

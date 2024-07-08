@@ -9,7 +9,9 @@ export const AuthProvider = ({ children }) => {
     () => localStorage.getItem('authToken')? 
       JSON.parse(localStorage.getItem('authToken')) : null
   );
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    localStorage.getItem('authToken')? true : false
+  );
   const [firstname, setFirstname] = useState('Anonymous');
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -80,14 +82,37 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Logout function
+  const handleLogout = async () => {
+    try {
+      const authToken = localStorage.getItem('authToken');
+      const response = await axiosInstance.post('/auth/logout/', JSON.stringify({ refresh_token: authToken.refresh }));
+      console.log('Logout success:', response.data);
+      setFlashMessage('User logged out successfully');
+      setFlashSeverity('success');
+    } catch (error) {
+      setFlashMessage('User is not logged in');
+      setFlashSeverity('danger');
+      console.error('Logout failed:', error);
+    } finally {
+      setOpenFlashMessage(true);
+      localStorage.removeItem('authToken');
+      setTimeout(() => {
+        setOpenFlashMessage(false);
+        window.location.href = '/';
+      }, 1000);
+    }
+  };
+
   // :::::::::::::::::: data
   let contextData = {
     isAuthenticated: isAuthenticated, 
     firstname: firstname, 
     image: image, 
     loading: loading,
+    loginLoading: loginLoading,
     handleLogin: handleLogin,
-    loginLoading: loginLoading
+    handleLogout: handleLogout,
   }
 
   return (
