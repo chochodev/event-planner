@@ -75,7 +75,7 @@ const Discover = ({ loading, events }) => {
           {(!events || events.length === 0) ? 
           <div className='relative flex items-center justify-center w-full'>
             <Skeleton variant='rectangle' width='100%' height='15rem' sx={{borderRadius: '4px'}} />
-            <div className='absolute flex items-center gap-[0.25rem] w-max text-[1.25rem] text-gray-400 font-[600] mx-auto'>
+            <div className='absolute flex items-center gap-[0.25rem] w-max text-[0.875rem] sm:text-[1.25rem] text-gray-400 font-[600] mx-auto'>
               <MdEventBusy className='text-[1.5rem]' />No events to show at the moment!</div>
           </div> :
           <div className='relative flex items-center w-full'>
