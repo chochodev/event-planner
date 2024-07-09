@@ -11,6 +11,7 @@ import {
 import Logo from 'components/logo';
 import axiosInstance from 'utils/axios';
 import FlashMessage from 'components/alert';
+import Message from 'components/message';
 
 const SignUp = () => {
   const [openFlashMessage, setOpenFlashMessage] = useState(false);
@@ -77,6 +78,7 @@ const SignUp = () => {
       flashMessage={flashMessage}
       flashSeverity={flashSeverity}
     />
+    <Message />
     <div className='grid grid-cols-1 md:grid-cols-2 justify-center items-center w-full min-h-screen'>
       <div className='flex flex-col gap-[1.875rem] px-[2rem] lg:px-[4rem] py-[2rem]'>
         <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Welcome</h2>
