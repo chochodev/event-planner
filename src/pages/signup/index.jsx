@@ -35,7 +35,8 @@ const SignUp = () => {
     gender: '',
     password: '',
     address: '',
-    zip_code: ''
+    zip_code: '',
+    domain: window.location.origin
   });
 
   const handleChange = (e) => {
