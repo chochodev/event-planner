@@ -56,8 +56,8 @@ const Message = ({
 
         <div className={`flex flex-col gap-[1rem] w-full`}>
           <h2 className={`text-[1.5rem] font-[600] w-max mx-auto ${styles.iconColor}`}>{title}</h2>
-          <p className={`text-[0.875rem] font-[400] ${styles.iconColor}`}>Dear <b>{message.first_name}</b>, please go to your email <b>{message.email}</b> inbox and click on the activation link to verify your registeration.</p>
-          <p className={`text-[0.875rem] font-[400] ${styles.iconColor}`}><b>Note:</b> Check your spam folder if email is not in inbox.</p>
+          {/* <p className={`text-[0.875rem] font-[400] ${styles.iconColor}`}>Dear <b>{message.first_name}</b>, please go to your email <b>{message.email}</b> inbox and click on the activation link to verify your registeration.</p>
+          <p className={`text-[0.875rem] font-[400] ${styles.iconColor}`}><b>Note:</b> Check your spam folder if email is not in inbox.</p> */}
           
 
           <div className='flex gap-[1rem] items-center '>
