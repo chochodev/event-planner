@@ -1,20 +1,47 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Modal } from '@mui/material';
 import { GiCheckMark } from "react-icons/gi";
 import PrimaryLink from 'components/link/primary/variant/outlined';
 import PrimaryLink2 from 'components/link/primary';
 
+const Message = ({ 
+  severity = 'success', 
+  title = 'Success!!', 
+  message = 'Operation completed successfully.', 
+  icon: Icon = GiCheckMark,
+  open,
+  onClose,
+  children 
+}) => {
+  const severityStyles = {
+    success: {
+      iconColor: 'text-secondary',
+      bgColor: 'bg-primary',
+      borderColor: 'border-secondary-light'
+    },
+    error: {
+      iconColor: 'text-red-500',
+      bgColor: 'bg-red-100',
+      borderColor: 'border-red-500'
+    },
+    warning: {
+      iconColor: 'text-yellow-500',
+      bgColor: 'bg-yellow-100',
+      borderColor: 'border-yellow-500'
+    },
+    info: {
+      iconColor: 'text-blue-500',
+      bgColor: 'bg-blue-100',
+      borderColor: 'border-blue-500'
+    },
+  };
 
-const Message = ({ severity, message, children }) => {
-  const [openModal, setOpenModal] = useState(true);
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  }
+  const styles = severityStyles[severity] || severityStyles.success;
 
   return (
     <Modal
-      open={openModal}
-      onClose={handleCloseModal}
+      open={open}
+      onClose={onClose}
       sx={{
         display: 'flex',
         justifyContent: 'center', 
@@ -22,29 +49,33 @@ const Message = ({ severity, message, children }) => {
         background: 'rgba(63,81,181,0.5)'
       }}
     >
-      <div className='relative flex flex-col gap-[1rem] items-center max-w-[30rem] w-[95%] bg-primary p-[2rem] pt-[6rem] rounded-[2rem] shadow-[0_0_50px_rgba(255,255,255,0.25)]'>
-        <div className='absolute top-[-6rem] flex items-center justify-center rounded-[20rem] h-[10rem] w-[10rem] bg-primary border-secondary-light border-solid border-[2px] shadow-[0_0_5px_10px_rgba(63,81,181,0.25)] '>
-          <GiCheckMark className='text-secondary text-[3.5rem]' />
+      <div className={`relative flex flex-col gap-[1rem] items-center max-w-[30rem] w-[95%] ${styles.bgColor} p-[2rem] pt-[6rem] rounded-[2rem] shadow-[0_0_50px_rgba(255,255,255,0.25)]`}>
+        <div className={`absolute top-[-6rem] flex items-center justify-center rounded-[20rem] h-[10rem] w-[10rem] ${styles.bgColor} border-solid border-[2px] shadow-[0_0_5px_10px_rgba(63,81,181,0.25)] ${styles.borderColor}`}>
+          <Icon className={`${styles.iconColor} text-[3.5rem]`} />
         </div>
 
-        <h2 className='text-[2.25rem] font-[600] text-secondary'>Success!!</h2>
-        <p className='text-[0.875rem] font-[400] text-secondary '>{message || 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos provident maxime veniam architecto illum recusandae, facilis laborum repudiandae.'}</p>
+        <div className={`flex flex-col gap-[1rem] w-full`}>
+          <h2 className={`text-[1.5rem] font-[600] w-max mx-auto ${styles.iconColor}`}>{title}</h2>
+          <p className={`text-[0.875rem] font-[400] ${styles.iconColor}`}>Dear <b>{message.first_name}</b>, please go to your email <b>{message.email}</b> inbox and click on the activation link to verify your registeration.</p>
+          <p className={`text-[0.875rem] font-[400] ${styles.iconColor}`}><b>Note:</b> Check your spam folder if email is not in inbox.</p>
+          
 
-        <div className='flex gap-[1rem] items-center '>
-          <PrimaryLink>
-            Home
-          </PrimaryLink>
-          <PrimaryLink2
-            onClick={handleCloseModal}
-          >
-            Close
-          </PrimaryLink2>
+          <div className='flex gap-[1rem] items-center '>
+            <PrimaryLink>
+              Home
+            </PrimaryLink>
+            <PrimaryLink2
+              onClick={onClose}
+            >
+              Close
+            </PrimaryLink2>
+          </div>
+          
+          {children}
         </div>
-        
-        {children && children}
       </div>
     </Modal>
-  )
+  );
 }
 
-export default Message
+export default Message;

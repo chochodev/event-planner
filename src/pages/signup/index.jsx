@@ -19,6 +19,15 @@ const SignUp = () => {
   const [flashSeverity, setFlashSeverity] = useState('success');
   const [loading, setLoading] = useState(false);
 
+  // :::::::::::::::::::::::: message
+  const [isMessageOpen, setIsMessageOpen] = useState(false);
+  const [messageContent, setMessageContent] = useState('Your operation was successful.');
+
+  const handleCloseMessage = () => {
+    setIsMessageOpen(false);
+  };
+
+
   const [form, setForm] = useState({
     first_name: '',
     last_name: '',
@@ -43,17 +52,19 @@ const SignUp = () => {
 
     try {
       const response = await axiosInstance.post('/auth/signup/', form);
-      console.log('Success:', response.data);
+      // console.log('Success:', response.data);
       setFlashMessage(response.data?.message || 'User created successfully');
       setFlashSeverity('success');
-      setLoading(false);
       setOpenFlashMessage(true);
-
+      setLoading(false);
+      
       // closes the flash message and redirect
       setTimeout(() => {
         setOpenFlashMessage(false);
-        window.location.href = '/signin';
-      }, 5000);
+        setMessageContent(response.data?.user)
+        setIsMessageOpen(true);
+        // window.location.href = '/signin';
+      }, 2000);
     } catch (error) {
       console.error('Error:', error.response ? error.response.data : error.message);
       const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
@@ -65,10 +76,9 @@ const SignUp = () => {
       // closes the flash message
       setTimeout(() => {
         setOpenFlashMessage(false);
-      }, 5000);
+      }, 7000);
     }
   };
-
 
   return (
     <>
@@ -78,7 +88,13 @@ const SignUp = () => {
       flashMessage={flashMessage}
       flashSeverity={flashSeverity}
     />
-    <Message />
+    <Message
+      severity={flashSeverity}
+      title={'Verification Status'}
+      message={messageContent}
+      open={isMessageOpen}
+      onClose={handleCloseMessage}
+    />
     <div className='grid grid-cols-1 md:grid-cols-2 justify-center items-center w-full min-h-screen'>
       <div className='flex flex-col gap-[1.875rem] px-[2rem] lg:px-[4rem] py-[2rem]'>
         <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Welcome</h2>
