@@ -25,7 +25,7 @@ const MyRoute = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path='/accounts/activate' element={<VerifyEmail />} />
+        <Route path='/accounts/activate/:token' element={<VerifyEmail />} />
 
 
         <Route path='/events' element={<EventList />} />
