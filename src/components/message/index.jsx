@@ -3,6 +3,7 @@ import { Modal } from '@mui/material';
 import { GiCheckMark } from "react-icons/gi";
 import PrimaryLink from 'components/link/primary/variant/outlined';
 import PrimaryLink2 from 'components/link/primary';
+import { RiCloseLine } from 'react-icons/ri';
 
 const Message = ({ 
   severity = 'success', 
@@ -17,22 +18,26 @@ const Message = ({
     success: {
       iconColor: 'text-secondary',
       bgColor: 'bg-primary',
-      borderColor: 'border-secondary-light'
+      borderColor: 'border-secondary-light',
+      backgroundShadow: 'shadow-[0_0_5px_10px_rgba(63,81,181,0.25)]'
     },
     error: {
       iconColor: 'text-red-500',
       bgColor: 'bg-red-100',
-      borderColor: 'border-red-500'
+      borderColor: 'border-red-500',
+      backgroundShadow: 'shadow-[0_0_5px_10px_rgba(239,68,68,0.5)]'
     },
     warning: {
       iconColor: 'text-yellow-500',
       bgColor: 'bg-yellow-100',
-      borderColor: 'border-yellow-500'
+      borderColor: 'border-yellow-500',
+      backgroundShadow: 'shadow-[0_0_5px_10px_rgba(255,255,0,0.5)]'
     },
     info: {
       iconColor: 'text-blue-500',
       bgColor: 'bg-blue-100',
-      borderColor: 'border-blue-500'
+      borderColor: 'border-blue-500',
+      backgroundShadow: 'shadow-[0_0_5px_10px_rgba(0,0,255,0.5)]'
     },
   };
 
@@ -50,14 +55,15 @@ const Message = ({
       }}
     >
       <div className={`relative flex flex-col gap-[1rem] items-center max-w-[30rem] w-[95%] ${styles.bgColor} p-[2rem] pt-[6rem] rounded-[2rem] shadow-[0_0_50px_rgba(255,255,255,0.25)]`}>
-        <div className={`absolute top-[-6rem] flex items-center justify-center rounded-[20rem] h-[10rem] w-[10rem] ${styles.bgColor} border-solid border-[2px] shadow-[0_0_5px_10px_rgba(63,81,181,0.25)] ${styles.borderColor}`}>
-          <Icon className={`${styles.iconColor} text-[3.5rem]`} />
+        <div className={`absolute top-[-6rem] flex items-center justify-center rounded-[20rem] h-[10rem] w-[10rem] ${styles.bgColor} border-solid border-[2px] ${styles.backgroundShadow} ${styles.borderColor}`}>
+          {severity === 'success'? 
+            <Icon className={`${styles.iconColor} text-[3.5rem]`} /> :
+            <RiCloseLine className={`${styles.iconColor} text-[4.5rem]`} />}
         </div>
 
         <div className={`flex flex-col gap-[1rem] w-full`}>
-          <h2 className={`text-[1.5rem] font-[600] w-max mx-auto ${styles.iconColor}`}>{title}</h2>
-          {/* <p className={`text-[0.875rem] font-[400] ${styles.iconColor}`}>Dear <b>{message.first_name}</b>, please go to your email <b>{message.email}</b> inbox and click on the activation link to verify your registeration.</p>
-          <p className={`text-[0.875rem] font-[400] ${styles.iconColor}`}><b>Note:</b> Check your spam folder if email is not in inbox.</p> */}
+          <div dangerouslySetInnerHTML={{ __html: title }} />
+          <div dangerouslySetInnerHTML={{ __html: message }} />
           
 
           <div className='flex gap-[1rem] items-center '>

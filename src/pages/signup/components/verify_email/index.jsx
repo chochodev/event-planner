@@ -27,15 +27,16 @@ const VerifyEmail = () => {
         
         if ([200,201].includes(response.status)) {
           setFlashSeverity('success');
-          setMessageContent(response.data?.user)
+          setMessageContent(response.data)
         } else {
-          setFlashSeverity('warning');
-          setMessageContent('Activation link is invalid!');
-          console.log('Response data: ', response.data);
+          setFlashSeverity('error');
+          setMessageContent(response.data);
         }
+        
+        console.log('Response data: ', response.data);
       } catch (error) {
         setFlashSeverity('error');
-        setMessageContent('An error occurred while verifying your email.');
+        setMessageContent(error.response.data);
         console.log('Error:', error);
       } finally {
         setLoading(false);
@@ -69,8 +70,8 @@ const VerifyEmail = () => {
     <HomeLayout>
       <Message
         severity={flashSeverity}
-        title={'Verification Status'}
-        message={messageContent}
+        title={messageContent.title}
+        message={messageContent.message}
         open={isMessageOpen}
         onClose={handleCloseMessage}
       />
