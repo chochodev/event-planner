@@ -58,6 +58,7 @@ const VerifyEmail = () => {
   }, [uid, token, history]);
 
   
+  // :::::::::::::::: for the count down
   const [seconds, setSeconds] = useState(12);
 
   useEffect(() => {

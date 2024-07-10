@@ -7,6 +7,7 @@ import AccessDenied from 'components/error_page/unauthenticated';
 
 const SignIn = lazy(() => import('pages/signin'));
 const SignUp = lazy(() => import('pages/signup'));
+const VerifyEmail = lazy(() => import('pages/signup/components/verify_email'));
 const HomePage = lazy(() => import('pages/home'));
 
 const MyEventList = lazy(() => import('pages/dashboard/event-list'));
@@ -24,6 +25,7 @@ const MyRoute = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path='/accounts/activate' element={<VerifyEmail />} />
 
 
         <Route path='/events' element={<EventList />} />
