@@ -76,6 +76,7 @@ export const AuthProvider = ({ children }) => {
       // closes the flash message
       setTimeout(() => {
         setOpenFlashMessage(false);
+        // window.location.reload();
       }, 3000);
     } finally {
       setLoginLoading(false);
@@ -110,6 +111,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const handleRefreshToken = async () => {
       try {
+        const authToken = JSON.parse(localStorage.getItem('authToken'));
         const userData = {
           'firstname': authToken.firstname,
           'profile_image': authToken.profile_image, 
@@ -121,6 +123,7 @@ export const AuthProvider = ({ children }) => {
           ...userData,
         };
         setAuthToken(newAuthToken);
+        console.log('refreshed token: ', newAuthToken);
         localStorage.setItem('authToken', JSON.stringify(newAuthToken));
       } catch (error) {
         console.error('Refresh-token failed:', error);
@@ -134,7 +137,7 @@ export const AuthProvider = ({ children }) => {
         setRefreshLoading(true);
         handleRefreshToken();
       }
-    }, (8 * 60 * 1000))
+    }, (15 * 1000))
 
     // :::::::::::::::::: clear function
     return () => clearInterval(interval);

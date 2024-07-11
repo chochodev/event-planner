@@ -101,7 +101,7 @@ const Header = () => {
             <Link to='/' className='flex items-center gap-[0.5]'>
               {/* :::::::::::::::::::::: LOGO */}
               <img 
-                src={image || '/assets/svgs/logo.svg'} 
+                src={'/assets/svgs/logo.svg'} 
                 alt='Logo' 
                 className='w-[3rem] md:w-[3.5rem] object-contain' 
               />
@@ -130,7 +130,7 @@ const Header = () => {
                 className='flex items-center gap-[0.5rem] p-[0.25rem] rounded-[5rem] border-solid border-[2px] border-black/20 hover:border-secondary-light ease-250 '
               >
                 <img
-                  src='/assets/images/dp.png'
+                  src={image || '/assets/images/dp.png'}
                   alt='Profile'
                   className='h-[2rem] w-[2rem] min-w-[2rem] rounded-[50rem] object-cover '
                 />

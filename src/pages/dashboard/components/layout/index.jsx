@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from 'context/authStatusContext';
 import { 
-  RiMenu5Line, 
-  // RiArrowRightSLine, 
-  // RiArrowLeftSLine, 
+  RiMenu5Line,
   RiCloseLine,
   RiDashboardHorizontalLine,
   RiHome3Line,
@@ -32,7 +30,7 @@ const DashboardLayout = ({ children }) => {
 
   // :::::::::::::::::::::: SEARCH
   const [searchModal, setSearchModal] = useState(false);
-  // console.log(searchModal);
+  console.log(searchModal);
 
   // :::::::::::::::::::::: SMALL NAV
   const [openMenu, setOpenMenu] = useState(false);
