@@ -123,7 +123,7 @@ export const AuthProvider = ({ children }) => {
           ...userData,
         };
         setAuthToken(newAuthToken);
-        console.log('refreshed token: ', newAuthToken);
+        // console.log('refreshed token: ', newAuthToken);
         localStorage.setItem('authToken', JSON.stringify(newAuthToken));
       } catch (error) {
         console.error('Refresh-token failed:', error);

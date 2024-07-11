@@ -26,7 +26,7 @@ export const logout = async () => {
   try {
     const authToken = JSON.parse(localStorage.getItem('authToken'));
     const response = await axiosInstance.post('/auth/logout/', { refresh: authToken.refresh });
-    console.log('Logout success:', response.data);
+    // console.log('Logout success:', response.data);
     return response.data;
   } catch (error) {
     console.error('Logout failed:', error);
