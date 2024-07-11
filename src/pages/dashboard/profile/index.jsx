@@ -9,7 +9,7 @@ import PrimaryLink from 'components/link/primary';
 import PrimaryLink2 from 'components/link/primary/variant/soft';
 
 const ProfileSetting = () => {
-  const initialFormState = {
+  const [initialFormState, setInitialFormState] = useState({
     first_name: '',
     last_name: '',
     email: '',
@@ -17,7 +17,7 @@ const ProfileSetting = () => {
     address: '',
     zip_code: '',
     profile_image: null
-  };
+  });
 
   const [form, setForm] = useState(initialFormState);
   const [loading, setLoading] = useState(false);
@@ -30,7 +30,7 @@ const ProfileSetting = () => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get('/auth/profile');
-        setForm(response.data);
+        setInitialFormState(response.data);
       } catch (error) {
         console.error('Error fetching profile data:', error);
       }
@@ -52,7 +52,7 @@ const ProfileSetting = () => {
     setLoading(true);
 
     try {
-      const response = await axiosInstance.put('/auth/profile', form);
+      const response = await axiosInstance.post('/auth/profile', form);
       setFlashMessage('Profile updated successfully');
       setFlashSeverity('success');
       setOpenFlashMessage(true);
