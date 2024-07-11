@@ -9,7 +9,8 @@ const TextForm2 = () => {
   const { categoryplanLayout } = formValues;
 
   const [itemUpdate, setItemUpdate] = useState({ 
-    name: "VIP 2", alias: 'V1', price: "50", number: "5", type: 'seat', desc: "This is for vip only."
+    name: '', alias: '', price: '', number: '', type: '', desc: ''
+    
   });
 
   const onChange = (e) => {
@@ -33,7 +34,10 @@ const TextForm2 = () => {
       return;
     }
     setFormValues({ categoryplanLayout: [...categoryplanLayout, itemUpdate] });
-    setItemUpdate({ name: "VIP 2", alias: 'V1', price: "50", number: "5", type: 'table', desc: "This is for vip only." });
+    setItemUpdate(
+      { name: '', alias: '', price: '', number: '', type: '', desc: '' }
+      // {name: 'VIP 2', alias: 'V1', price: '50', number: '5', type: 'seat', desc: 'This is for vip only.'}
+    );
   };
 
   return (

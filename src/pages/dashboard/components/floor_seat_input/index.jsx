@@ -33,7 +33,8 @@ const TextForm = () => {
       return;
     }
     setFormValues({ floorplanLayout: [...floorplanLayout, itemUpdate] });
-    setItemUpdate({ name: "MEDIUM", alias: "M1", price: "20", people: "2", serveware: "2", desc: "This is for the average people" });
+    // setItemUpdate({ name: "MEDIUM", alias: "M1", price: "20", people: "2", serveware: "2", desc: "This is for the average people" });
+    setItemUpdate({ name: "", alias: "", price: "", people: "", serveware: "", desc: "" });
   };
 
   return (

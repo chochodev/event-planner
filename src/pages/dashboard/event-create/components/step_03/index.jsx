@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import useCreateFormStore from '../../../../../zustand/store';
 import UploadImage, { UploadImageSmall } from 'components/image_input';
 import BaseInput from 'components/input';
