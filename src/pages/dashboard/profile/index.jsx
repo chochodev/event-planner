@@ -25,6 +25,7 @@ const ProfileSetting = () => {
   const [flashMessage, setFlashMessage] = useState('');
   const [flashSeverity, setFlashSeverity] = useState('success');
   const [openFlashMessage, setOpenFlashMessage] = useState(false);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState('');
 
   // ::::::::::::::::::::::::::: GET USER DATA
   useEffect(() => {
@@ -44,11 +45,15 @@ const ProfileSetting = () => {
     fetchData();
   }, []);
 
+  // ::::::::::::::::::::::: update initial state on render
   useEffect(() => {
-    console.log('initialFormState', initialFormState);
     setForm(initialFormState);
+    if (initialFormState.profile_image) {
+      setImagePreviewUrl(`https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/${initialFormState.profile_image}`);
+    }
   }, [initialFormState]);
 
+  // ::::::::::::::::::::::: handle form change state
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name !== 'profile_image') {
@@ -57,10 +62,12 @@ const ProfileSetting = () => {
         [name]: value,
       });
     } else {
+      const file = files[0];
       setForm({
         ...form,
-        [name]: files[0],
+        [name]: file,
       });
+      setImagePreviewUrl(URL.createObjectURL(file));
     }
   };
 
@@ -69,10 +76,13 @@ const ProfileSetting = () => {
     e.preventDefault();
     setLoading(true);
 
+    // :::::::::::::::::: form data
     const formData = new FormData();
     Object.keys(form).forEach((key) => {
       formData.append(key, form[key]);
     });
+    // ::::::::::::::::::: for image update
+    formData.append('profile_image', form.profile_image);
 
     try {
       const response = await axiosInstance.post('/auth/profile/', formData, {
@@ -105,11 +115,12 @@ const ProfileSetting = () => {
   // ::::::::::::::::::::: RESET FUNCTION
   const handleReset = () => {
     setForm(initialFormState);
+    if (initialFormState.profile_image) {
+      setImagePreviewUrl(`https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/${initialFormState.profile_image}`);
+    } else {
+      setImagePreviewUrl('');
+    }
   };
-
-  // :::::::::::::::::::::: IMAGE
-  const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
-  const imageUrl = initialFormState.profile_image ? `https://res.cloudinary.com/${cloud_name}/${initialFormState.profile_image}` : "/assets/images/dp.jpg";
 
   // :::::::::::::::::::::: LOADING STATE
   if (loading) {
@@ -129,7 +140,7 @@ const ProfileSetting = () => {
           <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Profile Information</h2>
           <div className='relative w-max rounded-[20rem] overflow-hidden'>
             <img
-              src={imageUrl}
+              src={imagePreviewUrl || "/assets/images/dp.jpg"}
               alt="Profile"
               className='h-[8rem] w-[8rem] min-w-[8rem] object-cover'
             />
