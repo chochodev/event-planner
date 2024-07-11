@@ -5,6 +5,7 @@ import useCreateFormStore from '../../../../../zustand/store';
 import BaseInput from 'components/input';
 import dayjs from 'dayjs';
 import LocationSelector from 'components/map';
+import SwitchWithLabel from 'components/switch';
 
 
 const Step2Form = () => {
@@ -19,6 +20,11 @@ const Step2Form = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ [name]: value });
+  };
+  
+  const handleSwitchChange = (newValue) => {
+    setFormValues({ ...formValues, use_map: newValue });
+    console.log(formValues.use_map)
   };
 
   return (
@@ -160,13 +166,21 @@ const Step2Form = () => {
 
       {/* ::::::::::::::::::::::::: LOCATION */}
       <p className='text-[1rem] text-black-light font-[600] underline underline-offset-[2px] '>Location Details</p>
-      <span className='text-[0.875rem] text-black-light my-[-1rem]'>Pinpoint on your event venue</span>
-      <LocationSelector 
-        lat={formValues.lat}
-        lng={formValues.lng}
-        setLat={(lat) => setFormValues({ lat })}
-        setLng={(lng) => setFormValues({ lng })}
-      />
+
+      <SwitchWithLabel
+        checked={formValues.use_map}
+        onChange={handleSwitchChange}
+        label="Add seating arrangement"
+      />  
+      <div className={`${!formValues.use_map && 'hidden'} w-full`}>
+        <span className='text-[0.875rem] text-black-light my-[-1rem]'>Pinpoint on your event venue</span>
+        <LocationSelector 
+          lat={formValues.lat}
+          lng={formValues.lng}
+          setLat={(lat) => setFormValues({ lat })}
+          setLng={(lng) => setFormValues({ lng })}
+        />
+      </div>
       
       <div className='flex flex-col gap-[0.5rem] '>
         <label 

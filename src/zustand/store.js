@@ -18,6 +18,7 @@ const initialFormValues = {
   city: '',
   state: '',
   zipcode: '',
+  use_map: false,
   lat: 41.8527,
   lng: 87.6158,
   is_floor: false,
