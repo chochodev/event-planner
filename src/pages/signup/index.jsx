@@ -54,7 +54,7 @@ const SignUp = () => {
     try {
       const response = await axiosInstance.post('/auth/signup/', form);
       // console.log('Success:', response.data);
-      setFlashMessage(response.data?.message || 'User created successfully');
+      setFlashMessage(response.data?.success || 'User created successfully');
       setFlashSeverity('success');
       setOpenFlashMessage(true);
       setLoading(false);
@@ -64,8 +64,11 @@ const SignUp = () => {
         setOpenFlashMessage(false);
         setMessageContent(response.data)
         setIsMessageOpen(true);
-        // window.location.href = '/signin';
       }, 2000);
+      
+      setTimeout(() => {
+        window.location.reload();
+      }, 10000);
     } catch (error) {
       console.error('Error:', error.response ? error.response.data : error.message);
       const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
@@ -91,8 +94,8 @@ const SignUp = () => {
     />
     <Message
       severity={flashSeverity}
-      title={'Verification Status'}
-      message={messageContent}
+      title={messageContent.title}
+      message={messageContent.message}
       open={isMessageOpen}
       onClose={handleCloseMessage}
     />
