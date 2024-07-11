@@ -11,7 +11,8 @@ import {
   RiUser3Line,
   RiLogoutBoxLine,
   RiUser6Line,
-  RiSettings6Line
+  RiSettings6Line,
+  RiArtboard2Line
 } from 'react-icons/ri';
 import { Modal, Skeleton, Popover } from '@mui/material';
 import { AuthContext } from 'context/authStatusContext';
@@ -40,8 +41,9 @@ const Header = () => {
 
   const links = [
     {name: 'Home', link: '/', icon: <RiHome3Line className='text-black/50 group-hover:text-black ease-250 text-[1.15rem] ' />},
-    {name: 'Dashboard', link: '/dashboard', icon: <RiDashboardLine className='text-black/50 group-hover:text-black ease-250 text-[1.15rem] ' />},
-    {name: 'Account', link: '/', icon: <RiUser3Line className='text-black/50 group-hover:text-black ease-250 text-[1.15rem] ' />},
+    {name: 'My Events', link: '/dashboard/events', icon: <RiDashboardLine className='text-black/50 group-hover:text-black ease-250 text-[1.15rem] ' />},
+    {name: 'Dashboard', link: '/dashboard', icon: <RiArtboard2Line className='text-black/50 group-hover:text-black ease-250 text-[1.15rem] ' />},
+    {name: 'Profile', link: '/dashboard/profile', icon: <RiUser3Line className='text-black/50 group-hover:text-black ease-250 text-[1.15rem] ' />},
     {name: 'Sign Out', link: '/', icon: <RiLogoutBoxLine className='text-black/50 group-hover:text-black ease-250 text-[1.15rem] ' />},
   ]
 

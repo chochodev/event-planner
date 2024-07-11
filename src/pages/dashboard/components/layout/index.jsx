@@ -23,7 +23,7 @@ const DashboardLayout = ({ children }) => {
   
   const navLinks = [
     {name: 'Dashboard', link: '/dashboard', icon: <RiDashboardHorizontalLine className='' />},
-    {name: 'Profile', link: '/dashboard', icon: <RiUser3Line className='' />},
+    {name: 'Profile', link: '/dashboard/profile', icon: <RiUser3Line className='' />},
     {name: 'Events', link: '/dashboard/events', icon: <RiCalendarEventLine className='' />},
     {name: 'Cart', link: '/dashboard', icon: <RiShoppingCartLine className='' />},
     {name: 'History', link: '/dashboard', icon: <RiHistoryLine className='' />},
