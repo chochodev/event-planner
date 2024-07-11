@@ -62,7 +62,7 @@ const SignUp = () => {
       // closes the flash message and redirect
       setTimeout(() => {
         setOpenFlashMessage(false);
-        setMessageContent(response.data?.user)
+        setMessageContent(response.data)
         setIsMessageOpen(true);
         // window.location.href = '/signin';
       }, 2000);

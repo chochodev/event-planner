@@ -59,6 +59,10 @@ const SignIn = () => {
           <p className='text-[0.875rem]'>Don't have an account?</p>
           <Link to="/signup" className='text-[0.875rem] text-secondary hover:underline ease-250'>Sign Up</Link>
         </div>
+        <div className='flex gap-[0.5rem] mt-[-1.5rem] items-center'>
+          <p className='text-[0.875rem]'>Unauthenticated?</p>
+          <Link to="/verify-email" className='text-[0.875rem] text-secondary hover:underline ease-250'>Verify your email</Link>
+        </div>
       </div>
 
       <div className='flex flex-col justify-center gap-[1rem] h-full bg-secondary px-[2rem] py-[2rem] '>

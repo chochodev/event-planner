@@ -49,7 +49,8 @@ const Message = ({
 
   }
   const variant = variantStyle(severity);
-  console.log('variant: ', variant);
+
+  
   return (
     <Modal
       open={open}

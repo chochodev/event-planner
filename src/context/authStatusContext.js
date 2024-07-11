@@ -129,9 +129,6 @@ export const AuthProvider = ({ children }) => {
       }
     }
 
-    // ::::::::::::::: calling and interval 
-    // if (authToken) { handleRefreshToken() }
-
     const interval = setInterval(() => {
       if (authToken) {
         setRefreshLoading(true);
