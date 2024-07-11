@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import React from 'react';
 
-const PrimaryLink = ({ to, width='100%', onClick=()=>{}, props, children }) => {
+const PrimaryLink = ({ to, width='100%', onClick=()=>{}, props, variant='success', children }) => {
   // const theme = useTheme();
 
   return (
@@ -10,15 +10,15 @@ const PrimaryLink = ({ to, width='100%', onClick=()=>{}, props, children }) => {
       onClick={onClick}
       sx={{
         width: width,
-        color: '#3F51B5',
+        color: variant === 'success'? '#3F51B5' : variant==='danger'? '#ef4444' : '#eab308',
         border: '1px solid #4963c7',
         borderRadius: '5rem',
         padding: '0.5rem 1.5rem',
         '&:hover': {
-          backgroundColor: '#4963c7',
+          backgroundColor: variant === 'success'? '#4963c7' : variant === 'danger'? '#db3a3a':'#d4a107',
         },
         '&:active': {
-          backgroundColor: '#323d76',
+          backgroundColor: variant === 'success'? '#323d76' : variant === 'danger'? '#db3a3a':'#ffc20b',
         },
         // [theme.breakpoints.up('md')]: {
         //   padding: '0.5rem 1.5rem',
@@ -27,7 +27,7 @@ const PrimaryLink = ({ to, width='100%', onClick=()=>{}, props, children }) => {
       className='group'
       {...props}
     >
-      <div className='text-[0.875rem] font-[600] text-secondary group-hover:text-primary capitalize'>{children}</div>
+      <div className={`text-[0.875rem] font-[600] ${variant==='success'? 'text-secondary' : variant==='danger'? 'text-red-500' : 'text-yellow-500'} group-hover:text-primary capitalize`}>{children}</div>
     </Button>
   );
 }

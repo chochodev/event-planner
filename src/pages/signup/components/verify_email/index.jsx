@@ -69,7 +69,7 @@ const VerifyEmail = () => {
   return (
     <HomeLayout>
       <Message
-        severity={flashSeverity}
+        severity={'error'}
         title={messageContent.title}
         message={messageContent.message}
         open={isMessageOpen}

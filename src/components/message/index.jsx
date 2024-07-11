@@ -32,17 +32,24 @@ const Message = ({
       bgColor: 'bg-yellow-100',
       borderColor: 'border-yellow-500',
       backgroundShadow: 'shadow-[0_0_5px_10px_rgba(255,255,0,0.5)]'
-    },
-    info: {
-      iconColor: 'text-blue-500',
-      bgColor: 'bg-blue-100',
-      borderColor: 'border-blue-500',
-      backgroundShadow: 'shadow-[0_0_5px_10px_rgba(0,0,255,0.5)]'
-    },
+    }
   };
 
   const styles = severityStyles[severity] || severityStyles.success;
+  const variantStyle = (styles) => {
+    
+    switch (styles) {
+      default:
+        return 'success';
+      case 'error':
+        return 'danger';
+      case 'warning':
+        return 'warning';
+    }
 
+  }
+  const variant = variantStyle(severity);
+  console.log('variant: ', variant);
   return (
     <Modal
       open={open}
@@ -71,6 +78,7 @@ const Message = ({
               Home
             </PrimaryLink>
             <PrimaryLink2
+              variant={variant}
               onClick={onClose}
             >
               Close
