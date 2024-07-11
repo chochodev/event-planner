@@ -8,7 +8,6 @@ import BaseInput from 'components/input';
 import PrimaryLink from 'components/link/primary';
 import PrimaryLink2 from 'components/link/primary/variant/soft';
 
-
 const ProfileSetting = () => {
   const initialFormState = {
     first_name: '',
@@ -30,7 +29,7 @@ const ProfileSetting = () => {
     // Fetch initial data and populate the form state if needed
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get('/auth/profile'); 
+        const response = await axiosInstance.get('/auth/profile');
         setForm(response.data);
       } catch (error) {
         console.error('Error fetching profile data:', error);
@@ -75,6 +74,11 @@ const ProfileSetting = () => {
       }, 7000);
     }
   };
+
+  const handleReset = () => {
+    setForm(initialFormState);
+  };
+
   return (
     <DashboardLayout>
       <FlashMessage 
@@ -84,16 +88,14 @@ const ProfileSetting = () => {
         flashSeverity={flashSeverity}
       />
       <div className='w-full h-full px-[2rem] lg:px-[4rem] py-[2rem]'>
-          
         <div className='flex flex-col gap-[1.875rem] w-full max-w-[75rem] mx-auto'>
-          <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Profle Information</h2>
+          <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Profile Information</h2>
           <div className='relative w-max rounded-[20rem] overflow-hidden'>
             <img 
               src="/assets/images/dp.jpg" 
               alt="Profile" 
               className='h-[8rem] w-[8rem] min-w-[8rem] object-cover'
             />
-
             <div className='absolute bottom-0 left-0 z-[2] flex justify-center w-full py-[0.5rem] bg-black/60'>
               <label htmlFor='profile_image' className='relative w-full h-full'>
                 <RiCamera3Line className='text-white text-[1.5rem] mx-auto ' />
@@ -113,7 +115,6 @@ const ProfileSetting = () => {
                 htmlFor='first_name' 
                 className='text-black-fade text-[0.75rem] uppercase font-[600] '
               >First Name</label>
-            
               <BaseInput 
                 id='first_name'
                 name='first_name'
@@ -128,7 +129,6 @@ const ProfileSetting = () => {
                 htmlFor='last_name' 
                 className='text-black-fade text-[0.75rem] uppercase font-[600] '
               >Last Name</label>
-            
               <BaseInput 
                 id='last_name'
                 name='last_name'
@@ -143,7 +143,6 @@ const ProfileSetting = () => {
                 htmlFor='email' 
                 className='text-black-fade text-[0.75rem] uppercase font-[600] '
               >Email</label>
-            
               <BaseInput 
                 id='email'
                 name='email'
@@ -155,9 +154,9 @@ const ProfileSetting = () => {
             </div>
             <div className='flex flex-col gap-[0.5rem] '>
               <label 
-                htmlFor='email' 
+                htmlFor='gender' 
                 className='text-black-fade text-[0.75rem] uppercase font-[600] '
-              >Email</label>
+              >Gender</label>
               <Select
                 name="gender"
                 value={form.gender}
@@ -192,7 +191,6 @@ const ProfileSetting = () => {
                 htmlFor='address' 
                 className='text-black-fade text-[0.75rem] uppercase font-[600] '
               >Address</label>
-            
               <BaseInput 
                 id='address'
                 name='address'
@@ -207,7 +205,6 @@ const ProfileSetting = () => {
                 htmlFor='zip_code' 
                 className='text-black-fade text-[0.75rem] uppercase font-[600] '
               >Zip code</label>
-            
               <BaseInput 
                 id='zip_code'
                 name='zip_code'
@@ -220,21 +217,19 @@ const ProfileSetting = () => {
             <button type='submit' hidden ></button>
           </form>
           <div className='flex justify-end items-center gap-[1rem]'>
-            <PrimaryLink2 
-              width='max-content' 
-              // onClick={handleSubmit}
-            >Reset</PrimaryLink2>
+            <PrimaryLink2 width='max-content' onClick={handleReset}>
+              Reset
+            </PrimaryLink2>
             <PrimaryLink width='max-content' onClick={handleSubmit}>
               <div className='flex items-center gap-[0.5rem]'>
-                {loading? <div className="loader"></div> : "Update"}
+                {loading ? <div className="loader"></div> : "Update"}
               </div>
             </PrimaryLink>
           </div>
         </div>
-        
       </div>
     </DashboardLayout>
-  )
+  );
 }
 
 export default ProfileSetting;
