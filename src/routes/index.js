@@ -15,6 +15,7 @@ const CreateEventPage = lazy(() => import('pages/dashboard/event-create'));
 const EventPage = lazy(() => import('pages/events/event'));
 const EventList = lazy(() => import('pages/events'));
 const Dashboard = lazy(() => import('pages/dashboard'));
+const ProfileSetting = lazy(() => import('pages/dashboard/profile'));
 
 
 const MyRoute = () => {
@@ -36,6 +37,7 @@ const MyRoute = () => {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/dashboard/events' element={<MyEventList />} />
           <Route path='/dashboard/events/create' element={<CreateEventPage />} />
+          <Route path='/dashboard/profile' element={<ProfileSetting />} />
         </Route>
 
         {/* ::::::::::::::: for undefined paths */}
