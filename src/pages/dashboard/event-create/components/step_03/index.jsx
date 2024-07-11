@@ -25,17 +25,15 @@ const Step3Form = () => {
     setFormValues({ ...formValues, floorplanImage: file });
   };
 
+  // ::::::::::::::::::: SEATING ARRANGEMENT
   const handleSwitchChange = (newValue) => {
     setFormValues({ ...formValues, is_floor: newValue });
-    console.log(formValues.is_floor)
-  };
-
-  // ::::::::::::::::::: SEATING ARRANGEMENT
-  useEffect(() => {
     if (formValues.is_floor) {
+      setEditFloorPlan(false);
+    } else {
       setEditFloorPlan(true);
     }
-  }, [formValues.is_floor]);
+  };
 
   const localFloorMode = formValues.floorplanMode;
   const [editFloorPlan, setEditFloorPlan] = useState(false);
@@ -91,7 +89,6 @@ const Step3Form = () => {
 
       <Modal 
         open={editFloorPlan}
-        // open={true}
         onClose={() => setEditFloorPlan(false)}
       >
         <div 

@@ -170,7 +170,7 @@ const Step2Form = () => {
       <SwitchWithLabel
         checked={formValues.use_map}
         onChange={handleSwitchChange}
-        label="Add seating arrangement"
+        label="Add Geological loaction"
       />  
       <div className={`${!formValues.use_map && 'hidden'} w-full`}>
         <span className='text-[0.875rem] text-black-light my-[-1rem]'>Pinpoint on your event venue</span>
