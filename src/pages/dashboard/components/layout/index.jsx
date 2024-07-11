@@ -32,7 +32,7 @@ const DashboardLayout = ({ children }) => {
 
   // :::::::::::::::::::::: SEARCH
   const [searchModal, setSearchModal] = useState(false);
-  console.log(searchModal);
+  // console.log(searchModal);
 
   // :::::::::::::::::::::: SMALL NAV
   const [openMenu, setOpenMenu] = useState(false);

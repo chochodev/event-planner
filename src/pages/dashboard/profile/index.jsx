@@ -3,14 +3,8 @@ import DashboardLayout from '../components/layout';
 import axiosInstance from 'utils/axios';
 import FlashMessage from 'components/alert';
 import { Button, FormControl, MenuItem, Select, TextField } from '@mui/material';
+import { RiCamera3Line } from 'react-icons/ri';
 
-// first_name: '',
-// last_name: '',
-// email: '',
-// gender: '',
-// password: '',
-// address: '',
-// zip_code: '',
 
 const ProfileSetting = () => {
   const initialFormState = {
@@ -20,7 +14,8 @@ const ProfileSetting = () => {
     gender: '',
     password: '',
     address: '',
-    zip_code: ''
+    zip_code: '',
+    profile_image: null
   };
 
   const [form, setForm] = useState(initialFormState);
@@ -33,14 +28,14 @@ const ProfileSetting = () => {
     // Fetch initial data and populate the form state if needed
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get('/auth/profile'); // Adjust the endpoint as needed
+        const response = await axiosInstance.get('/auth/profile'); 
         setForm(response.data);
       } catch (error) {
         console.error('Error fetching profile data:', error);
       }
     };
 
-    fetchData();
+    // fetchData();
   }, []);
 
   const handleChange = (e) => {
@@ -86,9 +81,30 @@ const ProfileSetting = () => {
         flashMessage={flashMessage}
         flashSeverity={flashSeverity}
       />
-      <div>
-        <h2>Profle Information</h2>
-        <form onSubmit={handleSubmit}>
+      <div className='flex flex-col gap-[1.875rem] px-[2rem] lg:px-[4rem] py-[2rem]'>
+        <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Profle Information</h2>
+        <div className='relative w-max rounded-[20rem] overflow-hidden'>
+          <img 
+            src="/assets/images/dp.jpg" 
+            alt="Profile" 
+            className='h-[8rem] w-[8rem] min-w-[8rem] object-cover'
+          />
+
+          <div className='absolute bottom-0 left-0 z-[2] flex justify-center w-full py-[0.5rem] bg-black/60'>
+            <label htmlFor='profile_image'>
+              <RiCamera3Line className='text-white text-[1.5rem] ' />
+              <input 
+                hidden
+                id='profile_image' 
+                type='file'
+                name='profile_image'
+                onChange={handleChange}
+                className='relative z-[5] h-full w-full'
+              />
+            </label>
+          </div>
+        </div>
+        <form onSubmit={handleSubmit} className='grid grid-cols-1 xmd:grid-cols-2 md:max-lg:grid-cols-1 md:grid-cols-2 gap-[1rem] gap-y-0 w-full'>
         <FormControl fullWidth margin="normal">
             <TextField 
               label="First Name"
@@ -216,7 +232,7 @@ const ProfileSetting = () => {
           <button type='submit' hidden ></button>
         </form>
         <Button onClick={handleSubmit} variant="contained" color="primary" sx={{height: '3rem'}} fullWidth>
-          {loading? <div className="loader"></div> : "Sign Up"}
+          {loading? <div className="loader"></div> : "Update"}
         </Button>
       </div>
     </DashboardLayout>
