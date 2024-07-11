@@ -166,7 +166,7 @@ const Header = () => {
                   <div className='flex flex-col gap-[0.875rem] w-full'>
                     <p className='text-[1.5rem] text-black-dim font-[600] '>Hello, {firstname}!</p>
                     <Link 
-                      to='/profile'
+                      to='/dashboard/profile'
                       onClick={handlePopoverClose}
                       className='flex gap-[0.5rem] items-center text-black-light hover:text-secondary w-full mt-[1rem] pb-[0.5rem] ease-250 border-solid border-0 border-b-[1px] border-black-light/50 '
                     >

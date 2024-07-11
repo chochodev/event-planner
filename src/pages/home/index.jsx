@@ -24,11 +24,7 @@ const HomePage = () => {
 
       try {
         setLoading(true);
-        const response = await axiosInstance.get('/events/list/', {
-          headers: {
-            'Authorization': `Token ${token}`,
-          },
-        });
+        const response = await axiosInstance.get('/events/list/');
         setEvents(response.data);
         console.log(response.data);
       } catch (error) {

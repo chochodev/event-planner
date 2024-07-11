@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import DashboardLayout from '../components/layout';
 import axiosInstance from 'utils/axios';
 import FlashMessage from 'components/alert';
-import { FormControl, MenuItem, Select } from '@mui/material';
+import { MenuItem, Select } from '@mui/material';
 import { RiCamera3Line } from 'react-icons/ri';
 import BaseInput from 'components/input';
 import PrimaryLink from 'components/link/primary';
 import PrimaryLink2 from 'components/link/primary/variant/soft';
+import Loader from 'components/loader';
 
 const ProfileSetting = () => {
   const [initialFormState, setInitialFormState] = useState({
@@ -20,40 +21,66 @@ const ProfileSetting = () => {
   });
 
   const [form, setForm] = useState(initialFormState);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [flashMessage, setFlashMessage] = useState('');
   const [flashSeverity, setFlashSeverity] = useState('success');
   const [openFlashMessage, setOpenFlashMessage] = useState(false);
 
+  // ::::::::::::::::::::::::::: GET USER DATA
   useEffect(() => {
-    // Fetch initial data and populate the form state if needed
     const fetchData = async () => {
+      setLoading(true);
       try {
-        const response = await axiosInstance.get('/auth/profile');
+        const response = await axiosInstance.get('/auth/profile/');
         setInitialFormState(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error('Error fetching profile data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    // fetchData();
+    fetchData();
   }, []);
 
+  useEffect(() => {
+    console.log('initialFormState', initialFormState);
+    setForm(initialFormState);
+  }, [initialFormState]);
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value
-    });
+    const { name, value, files } = e.target;
+    if (name !== 'profile_image') {
+      setForm({
+        ...form,
+        [name]: value,
+      });
+    } else {
+      setForm({
+        ...form,
+        [name]: files[0],
+      });
+    }
   };
 
+  // ::::::::::::::::::::: HANDLE SUBMIT FUNCTION
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
+    const formData = new FormData();
+    Object.keys(form).forEach((key) => {
+      formData.append(key, form[key]);
+    });
+
     try {
-      const response = await axiosInstance.post('/auth/profile', form);
-      setFlashMessage('Profile updated successfully');
+      const response = await axiosInstance.post('/auth/profile/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setFlashMessage(response.data.success);
       setFlashSeverity('success');
       setOpenFlashMessage(true);
       setLoading(false);
@@ -75,13 +102,23 @@ const ProfileSetting = () => {
     }
   };
 
+  // ::::::::::::::::::::: RESET FUNCTION
   const handleReset = () => {
     setForm(initialFormState);
   };
 
+  // :::::::::::::::::::::: IMAGE
+  const cloud_name = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+  const imageUrl = initialFormState.profile_image ? `https://res.cloudinary.com/${cloud_name}/${initialFormState.profile_image}` : "/assets/images/dp.jpg";
+
+  // :::::::::::::::::::::: LOADING STATE
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <DashboardLayout>
-      <FlashMessage 
+      <FlashMessage
         openFlashMessage={openFlashMessage}
         setOpenFlashMessage={setOpenFlashMessage}
         flashMessage={flashMessage}
@@ -91,16 +128,16 @@ const ProfileSetting = () => {
         <div className='flex flex-col gap-[1.875rem] w-full max-w-[75rem] mx-auto'>
           <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Profile Information</h2>
           <div className='relative w-max rounded-[20rem] overflow-hidden'>
-            <img 
-              src="/assets/images/dp.jpg" 
-              alt="Profile" 
+            <img
+              src={imageUrl}
+              alt="Profile"
               className='h-[8rem] w-[8rem] min-w-[8rem] object-cover'
             />
             <div className='absolute bottom-0 left-0 z-[2] flex justify-center w-full py-[0.5rem] bg-black/60'>
               <label htmlFor='profile_image' className='relative w-full h-full'>
                 <RiCamera3Line className='text-white text-[1.5rem] mx-auto ' />
                 <input
-                  id='profile_image' 
+                  id='profile_image'
                   type='file'
                   name='profile_image'
                   onChange={handleChange}
@@ -111,11 +148,11 @@ const ProfileSetting = () => {
           </div>
           <form onSubmit={handleSubmit} className='grid grid-cols-1 xmd:grid-cols-2 md:max-lg:grid-cols-1 md:grid-cols-2 gap-[1rem] gap-y-[2rem] w-full'>
             <div className='flex flex-col gap-[0.5rem] '>
-              <label 
-                htmlFor='first_name' 
+              <label
+                htmlFor='first_name'
                 className='text-black-fade text-[0.75rem] uppercase font-[600] '
               >First Name</label>
-              <BaseInput 
+              <BaseInput
                 id='first_name'
                 name='first_name'
                 type='text'
@@ -125,11 +162,11 @@ const ProfileSetting = () => {
               />
             </div>
             <div className='flex flex-col gap-[0.5rem] '>
-              <label 
-                htmlFor='last_name' 
+              <label
+                htmlFor='last_name'
                 className='text-black-fade text-[0.75rem] uppercase font-[600] '
               >Last Name</label>
-              <BaseInput 
+              <BaseInput
                 id='last_name'
                 name='last_name'
                 type='text'
@@ -139,11 +176,11 @@ const ProfileSetting = () => {
               />
             </div>
             <div className='flex flex-col gap-[0.5rem] '>
-              <label 
-                htmlFor='email' 
+              <label
+                htmlFor='email'
                 className='text-black-fade text-[0.75rem] uppercase font-[600] '
               >Email</label>
-              <BaseInput 
+              <BaseInput
                 id='email'
                 name='email'
                 type='email'
@@ -153,8 +190,8 @@ const ProfileSetting = () => {
               />
             </div>
             <div className='flex flex-col gap-[0.5rem] '>
-              <label 
-                htmlFor='gender' 
+              <label
+                htmlFor='gender'
                 className='text-black-fade text-[0.75rem] uppercase font-[600] '
               >Gender</label>
               <Select
@@ -164,6 +201,8 @@ const ProfileSetting = () => {
                 sx={{
                   height: '2.875rem',
                   borderRadius: '12px',
+                  fontWeight: '600',
+                  fontSize: '0.875rem',
                   borderColor: 'rgba(119,126,144,0.3)',
                   '&:hover .MuiOutlinedInput-notchedOutline': {
                     borderColor: 'rgba(119,126,144,0.3)',
@@ -187,11 +226,11 @@ const ProfileSetting = () => {
               </Select>
             </div>
             <div className='flex flex-col gap-[0.5rem] '>
-              <label 
-                htmlFor='address' 
+              <label
+                htmlFor='address'
                 className='text-black-fade text-[0.75rem] uppercase font-[600] '
               >Address</label>
-              <BaseInput 
+              <BaseInput
                 id='address'
                 name='address'
                 type='text'
