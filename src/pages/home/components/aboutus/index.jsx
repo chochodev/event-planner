@@ -7,7 +7,7 @@ const About = () => {
   return (
     <div className='flex flex-col items-start gap-[2rem] w-full py-[2rem] '>
       <SubHeader>About Us</SubHeader>
-      <p className='text-[1.15rem] text-gray-500 font-[600] text-start'>A professional event hosting platform for all events!</p>
+      {/* <p className='text-[1.15rem] text-gray-500 font-[600] text-start'>A professional event hosting platform for all events!</p> */}
       {/* <div className='flex flex-col xlg:flex-row justify-between gap-[1rem] w-full h-max '>
         <div className='relative z-[2] flex flex-col gap-[1rem] w-full py-[2rem] px-[1rem] rounded-[12px] '>
           <h2 className='relative z-[1] text-[2.5rem] text-black-dim font-[600] '>About Us</h2>
@@ -21,7 +21,7 @@ const About = () => {
         </div>
       </div> */}
 
-      <div className='flex flex-col xlg:flex-row justify-between gap-[1rem] w-full h-max mt-[1rem] '>
+      <div className='flex flex-col-reverse xlg:flex-row justify-between gap-[3rem] xlg:gap-[1rem] w-full h-max mt-[1rem] '>
         {/* ::::::::::::::::::: image */}
         <img 
           src='/assets/images/dance-beat-floor.jpg'
