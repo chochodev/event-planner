@@ -1,8 +1,7 @@
 import React from 'react';
 import { RiInstagramLine, RiLinkedinLine, RiTwitterLine } from 'react-icons/ri';
 import SubHeader from 'components/typography/sub_header';
-// import PrimaryButton from 'components/button/primary';
-// import PrimaryLink from 'components/link/primary';
+import PrimaryButton from 'components/button/primary';
 
 const OurTeam = () => {
   const members = [
@@ -89,6 +88,9 @@ const OurTeam = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className='flex justify-center w-full'>
+        <PrimaryButton onClick={() => { window.location.href = '/events'; }}>Show all</PrimaryButton>
       </div>
     </div>
   )

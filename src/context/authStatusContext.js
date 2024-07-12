@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
 
+  // ::::::::::::::::::: get session status function
   const getSessionStatus = async () => {  
     if (!authToken) {
       setLoading(false);
@@ -83,7 +84,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Logout function
+  // ::::::::::::::::::::::::::::: Logout function
   const handleLogout = async () => {
     try {
       const authToken = localStorage.getItem('authToken');
@@ -107,7 +108,6 @@ export const AuthProvider = ({ children }) => {
   // Refresh function
   const [refreshLoading, setRefreshLoading] = useState(true);
 
-
   useEffect(() => {
     const handleRefreshToken = async () => {
       try {
@@ -127,6 +127,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('authToken', JSON.stringify(newAuthToken));
       } catch (error) {
         console.error('Refresh-token failed:', error);
+        handleLogout();
       } finally {
         setRefreshLoading(false);
       }
