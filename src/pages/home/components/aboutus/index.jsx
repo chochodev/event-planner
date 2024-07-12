@@ -6,9 +6,9 @@ const About = () => {
   return (
     <div className='flex flex-col items-start gap-[3rem] w-full py-[2rem] '>
       <div className='flex flex-col xlg:flex-row justify-between gap-[1rem] w-full h-max '>
-        <div className='relative z-[2] flex flex-col gap-[1rem] w-full py-[2rem] rounded-[12px] '>
+        <div className='relative z-[2] flex flex-col gap-[1rem] w-full py-[2rem] px-[1rem] rounded-[12px] '>
           <h2 className='relative z-[1] text-[2.5rem] text-black-dim font-[600] '>About Us</h2>
-          <p className='relative z-[1] text-[1.15rem] text-black-dim '>A professional event hosting platform for all events</p>
+          <p className='relative z-[1] text-[1rem] text-gray-500 '>A professional event hosting platform for all events</p>
           {/* ::::::::::::::::::: overlay */}
           <img 
             src='/assets/images/glitters.jpg'
