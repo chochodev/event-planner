@@ -62,7 +62,7 @@ const DashboardLayout = ({ children }) => {
           <div className='flex items-center justify-between w-full max-w-[75rem] mx-auto h-[4rem] xmd:h-[5rem] '>
             <div className='flex gap-[0.375rem] xmd:gap-[1rem] md:gap-[2rem] items-center '>
               {/* eslint-disable-next-line react/style-prop-object */}
-              <Logo style='w-[3rem] xmd:w-[4rem]' />
+              <Logo className='w-[3rem] xmd:w-[4rem]' />
 
               {!isLargeScreen &&
               <IconButton

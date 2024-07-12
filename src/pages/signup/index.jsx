@@ -240,7 +240,7 @@ const SignUp = () => {
       </div>
 
       <div className='flex flex-col justify-center gap-[1rem] h-full bg-secondary px-[2rem] py-[2rem] '>
-        <Logo theme='white' style='w-[5.5rem]' />
+        <Logo theme='white' className='w-[5.5rem]' />
         <div className='flex flex-col gap-[1rem] '>
           <h2 className='text-[2rem] xmd:text-[3rem] font-[600] text-white leading-[1.05] '>Plan Unforgettable Events with Ease</h2>
           <p className='text-[0.875rem] text-white '>Join us today and start creating memorable moments, hassle-free! By signing up, you'll gain access to a world of exciting features tailored just for you.</p>
