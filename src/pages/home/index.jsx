@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import HomeLayout from 'components/layout';
-import About from './components/about';
+import Hero from './components/about';
 import Discover from './components/discover';
 import Recent from './components/recent';
 import Newsletter from './components/newsletter';
@@ -44,7 +44,7 @@ const HomePage = () => {
         <div className='flex flex-col gap-[5rem] items-center justify-center text-center max-w-[75rem] mx-auto w-full'>
 
           {/* :::::::::::::::::: HEAD SECTION */}
-          <About />
+          <Hero />
           
           {/* ::::::::::::::::: RECENT SECTION */}
           <Hot events={events} loading={loading} />

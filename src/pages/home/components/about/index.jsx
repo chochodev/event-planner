@@ -4,7 +4,7 @@ import PrimaryLink from 'components/link/primary';
 import { BsDot } from "react-icons/bs";
 
 
-const About = () => {
+const Hero = () => {
   return (
     <div className='flex flex-col items-start gap-[1rem] w-full'>
       <div className='flex flex-col xlg:flex-row justify-between gap-[1rem] w-full h-max '>
@@ -39,4 +39,4 @@ const About = () => {
   )
 }
 
-export default About
+export default Hero
