@@ -7,7 +7,7 @@ import { BsDot } from "react-icons/bs";
 const Hero = () => {
   return (
     <div className='flex flex-col items-start gap-[1rem] w-full'>
-      <div className='flex flex-col xlg:flex-row justify-between gap-[1rem] w-full h-max '>
+      <div className='flex flex-col xlg:flex-row justify-between gap-[3rem] xlg:gap-[1rem] w-full h-max '>
         <div className='flex flex-col gap-[2rem] items-start text-start xmd:max-xlg:text-center w-full xlg:w-[48%] py-[1rem] md:py-[4rem] '>
           <p 
             className='flex items-center xmd:max-xlg:mx-auto xmd:max-xlg:translate-x-[-1rem] font-dance text-[2.5rem] font-[600] text-secondary w-max'

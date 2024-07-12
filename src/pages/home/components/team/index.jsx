@@ -60,19 +60,7 @@ const OurTeam = () => {
     <div className='flex flex-col items-start gap-[2rem] w-full py-[2rem] '>
       <SubHeader>Our Team</SubHeader>
       <p className='text-[1.15rem] text-gray-500 font-[600] text-start'>Our team of dedicated professionals brings a wealth of knowledge, creativity, and passion to every project!</p>
-      {/* <div className='flex flex-col xlg:flex-row justify-between gap-[1rem] w-full h-max '>
-        <div className='relative z-[2] flex flex-col gap-[1rem] w-full py-[2rem] px-[1rem] rounded-[12px] '>
-          <h2 className='relative z-[1] text-[2.5rem] text-black-dim font-[600] '>Our Team</h2>
-          <p className='relative z-[1] text-[1rem] text-gray-500 '>Our team of dedicated professionals brings a wealth of knowledge, creativity, and passion to every project.</p> */}
-          {/* ::::::::::::::::::: overlay */}
-          {/* <img 
-            src='/assets/images/glitters.jpg'
-            alt='Dance floor'
-            className='absolute top-0 left-0 opacity-[0.1] w-full h-full rounded-[16px] object-cover'
-          />
-        </div>
-      </div> */}
-
+      
       <div className='grid grid-cols-1 xmd:grid-cols-2 lg:grid-cols-3 items-center justify-between gap-[2rem] w-full h-max mt-[1rem] '>
         {members.map((member, index) => (
           <div 
