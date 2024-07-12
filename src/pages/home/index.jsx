@@ -9,6 +9,7 @@ import Newsletter from './components/newsletter';
 import Hot from './components/hot';
 import axiosInstance from 'utils/axios';
 import About from './components/aboutus';
+import OurTeam from './components/team';
 
 
 const HomePage = () => {
@@ -53,6 +54,9 @@ const HomePage = () => {
 
           {/* ::::::::::::::::: ABOUT SECTION */}
           <About />
+
+          {/* ::::::::::::::::: OUR TEAM SECTION */}
+          <OurTeam />
 
           {/* ::::::::::::::::: DISCOVER SECTION */}
           <Discover events={events} loading={loading} />
