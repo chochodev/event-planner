@@ -33,8 +33,18 @@ const ProfileSetting = () => {
       setLoading(true);
       try {
         const response = await axiosInstance.get('/auth/profile/');
-        setInitialFormState(response.data);
+        setInitialFormState(response.data.user);
         console.log(response.data);
+        const authToken = JSON.parse(localStorage.getItem('authToken'));
+        const userData = {
+          'refresh': authToken.refresh,
+          'access': authToken.access,
+        }
+        const newAuthToken = {
+          ...response.data.token,
+          ...userData,
+        };
+        localStorage.setItem('authToken', JSON.stringify(newAuthToken));
       } catch (error) {
         console.error('Error fetching profile data:', error);
       } finally {
