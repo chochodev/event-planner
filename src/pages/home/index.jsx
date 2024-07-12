@@ -8,6 +8,8 @@ import Recent from './components/recent';
 import Newsletter from './components/newsletter';
 import Hot from './components/hot';
 import axiosInstance from 'utils/axios';
+import About from './components/aboutus';
+
 
 const HomePage = () => {
   const [loading, setLoading] = useState(false);
@@ -48,6 +50,9 @@ const HomePage = () => {
           
           {/* ::::::::::::::::: RECENT SECTION */}
           <Hot events={events} loading={loading} />
+
+          {/* ::::::::::::::::: ABOUT SECTION */}
+          <About />
 
           {/* ::::::::::::::::: DISCOVER SECTION */}
           <Discover events={events} loading={loading} />
