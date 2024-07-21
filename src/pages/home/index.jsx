@@ -18,7 +18,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const FetchEvents = async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem('authToken');
 
       if (!token) {
         setLoading(false);
