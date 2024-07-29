@@ -71,9 +71,12 @@ export const useTokenState = create(
   persist(
     (set) => ({
       tokenValues: initialTokenState,
-      setTokenValues: (values) => set((state) => ({
-        tokenValues: { ...state.tokenValues, ...values }
-      })),
+      setTokenValues: (values) => {
+        set((state) => {
+          const newTokenValues = { ...state.tokenValues, ...values };
+          return { tokenValues: newTokenValues };
+        });
+      },
       resetTokenState: () => set({ tokenValues: initialTokenState }),
     }),
     {

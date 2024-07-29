@@ -15,7 +15,7 @@ import {
   RiArtboard2Line
 } from 'react-icons/ri';
 import { Modal, Skeleton, Popover } from '@mui/material';
-import { AuthContext, cl } from 'context/authStatusContext';
+import { AuthContext } from 'context/authStatusContext';
 import { useTokenState } from '../../zustand/store';
 
 

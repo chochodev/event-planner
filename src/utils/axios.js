@@ -1,12 +1,7 @@
 // utils/csrftoken.js
 import axios from 'axios';
-import { useTokenState } from '../../zustand/store';
+import { useTokenState } from '../zustand/store';
 
-const useAuthToken = () => {
-  const { tokenValues } = useTokenState();
-  const { authToken } = tokenValues;
-  return authToken;
-};
 
 // :::::::::::::::: axiosInstance config
 const axiosInstance = axios.create({
@@ -16,7 +11,8 @@ const axiosInstance = axios.create({
 // :::::::::::::::: axiosInstance default header
 axiosInstance.interceptors.request.use(
   (config) => {
-    const authToken = useAuthToken();
+    const authToken = useTokenState.getState().tokenValues.authToken;
+    // console.log('auth token value:', authToken);
     // console.log('header token: ', token);
     if (authToken.refresh?.length > 0 && authToken.access?.length > 0) {
       config.headers.Authorization = `Bearer ${authToken.access}`;
@@ -29,19 +25,19 @@ axiosInstance.interceptors.request.use(
 export default axiosInstance;
 
 // :::::::::::::::::: get session status function
-export const getSessionStatus = async () => {
-  const token = localStorage.getItem('authToken');
+// export const getSessionStatus = async () => {
+//   const token = localStorage.getItem('authToken');
 
-  if (!token) {
-    return false;
-  }
+//   if (!token) {
+//     return false;
+//   }
 
-  try {
-    const response = await axiosInstance.get('/auth/status/');
-    console.log('status', response.data?.authenticated);
-    return response.data?.authenticated;
-  } catch (error) {
-    console.error('Error checking session status:', error);
-    return false;
-  }
-};
+//   try {
+//     const response = await axiosInstance.get('/auth/status/');
+//     console.log('status', response.data?.authenticated);
+//     return response.data?.authenticated;
+//   } catch (error) {
+//     console.error('Error checking session status:', error);
+//     return false;
+//   }
+// };
