@@ -216,6 +216,7 @@ const ProfileSetting = () => {
                 className='text-black-fade text-[0.75rem] uppercase font-[600] '
               >Gender</label>
               <Select
+                id='gender'
                 name="gender"
                 value={form.gender}
                 onChange={handleChange}
