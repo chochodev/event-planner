@@ -23,21 +23,3 @@ axiosInstance.interceptors.request.use(
 );
 
 export default axiosInstance;
-
-// :::::::::::::::::: get session status function
-// export const getSessionStatus = async () => {
-//   const token = localStorage.getItem('authToken');
-
-//   if (!token) {
-//     return false;
-//   }
-
-//   try {
-//     const response = await axiosInstance.get('/auth/status/');
-//     console.log('status', response.data?.authenticated);
-//     return response.data?.authenticated;
-//   } catch (error) {
-//     console.error('Error checking session status:', error);
-//     return false;
-//   }
-// };

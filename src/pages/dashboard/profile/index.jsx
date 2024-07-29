@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import DashboardLayout from '../components/layout';
 import axiosInstance from 'utils/axios';
 import FlashMessage from 'components/alert';
@@ -8,8 +8,12 @@ import BaseInput from 'components/input';
 import PrimaryLink from 'components/link/primary';
 import PrimaryLink2 from 'components/link/primary/variant/soft';
 import Loader from 'components/loader';
+import { useTokenState } from '../../../zustand/store';
+import { AuthContext } from 'context/authStatusContext';
 
 const ProfileSetting = () => {
+  const { tokenValues, setTokenValues } = useTokenState();
+  const { refreshUserData } = useContext(AuthContext)
   const [initialFormState, setInitialFormState] = useState({
     first_name: '',
     last_name: '',
@@ -34,17 +38,9 @@ const ProfileSetting = () => {
       try {
         const response = await axiosInstance.get('/auth/profile/');
         setInitialFormState(response.data.user);
-        console.log(response.data);
-        const authToken = JSON.parse(localStorage.getItem('authToken'));
-        const userData = {
-          'refresh': authToken.refresh,
-          'access': authToken.access,
-        }
-        const newAuthToken = {
-          ...response.data.token,
-          ...userData,
-        };
-        localStorage.setItem('authToken', JSON.stringify(newAuthToken));
+        // console.log(response.data);
+        const authToken = tokenValues;
+        setTokenValues({ ...authToken, ...response.data.token })
       } catch (error) {
         console.error('Error fetching profile data:', error);
       } finally {
@@ -119,6 +115,8 @@ const ProfileSetting = () => {
       setTimeout(() => {
         setOpenFlashMessage(false);
       }, 7000);
+    } finally {
+      refreshUserData();
     }
   };
 
@@ -150,7 +148,7 @@ const ProfileSetting = () => {
           <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Profile Information</h2>
           <div className='relative w-max rounded-[20rem] overflow-hidden'>
             <img
-              src={imagePreviewUrl || "/assets/images/dp.jpg"}
+              src={imagePreviewUrl || "/assets/images/dp.png"}
               alt="Profile"
               className='h-[8rem] w-[8rem] min-w-[8rem] object-cover'
             />

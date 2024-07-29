@@ -15,20 +15,19 @@ export const AuthProvider = ({ children }) => {
     true : false
 
   // ::::::::::::::::::: get session status function
-  // const getSessionStatus = async () => {  
-  //   if (!authToken) {
-  //     setLoading(false);
-  //     return false;
-  //   } else {
-  //     setFirstname(authToken.firstname);
-  //     setImage(authToken.profile_image);
-  //     setLoading(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getSessionStatus();
-  // });
+  const refreshUserData = async () => {  
+    try {
+      const response = await axiosInstance.get('/auth/status/');
+      console.log('user data gotten: ', response.data.user);
+      setTokenValues({
+        ...tokenValues,
+        ...response.data.user,
+      })
+    } catch (error) {
+      // const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
+      console.error('Error:', error.response ? error.response.data : error.message);
+    }
+  };
 
   // ::::::::::::::::::::::: LOGIN FUNCTION
   const [openFlashMessage, setOpenFlashMessage] = useState(false);
@@ -54,7 +53,7 @@ export const AuthProvider = ({ children }) => {
       // ::::::::::::::::: stores the response data
       // setAuthToken(response.data?.token);
       setTokenValues(response.data?.token)
-      cl('login response: ', response.data?.token);
+      // cl('login response: ', response.data?.token);
       localStorage.setItem('authToken', JSON.stringify(response.data?.token));
   
       // :::::::: closes the flash message and redirect
@@ -105,7 +104,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Refresh function
+  // ::::::::::::::::::::::::::::::::::::: Refresh function
   const [refreshLoading, setRefreshLoading] = useState(true);
 
   useEffect(() => {
@@ -134,7 +133,7 @@ export const AuthProvider = ({ children }) => {
         setRefreshLoading(true);
         handleRefreshToken();
       }
-    }, (60 * 1000))
+    }, (8 * 60 * 1000))
 
     // :::::::::::::::::: clear function
     return () => clearInterval(interval);
@@ -147,6 +146,7 @@ export const AuthProvider = ({ children }) => {
     // firstname: firstname, 
     // image: image, 
     // loading: loading,
+    refreshUserData: refreshUserData,
     loginLoading: loginLoading,
     handleLogin: handleLogin,
     handleLogout: handleLogout,
