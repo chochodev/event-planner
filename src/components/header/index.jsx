@@ -15,12 +15,15 @@ import {
   RiArtboard2Line
 } from 'react-icons/ri';
 import { Modal, Skeleton, Popover } from '@mui/material';
-import { AuthContext } from 'context/authStatusContext';
+import { AuthContext, cl } from 'context/authStatusContext';
+import { useTokenState } from '../../zustand/store';
 
 
 const Header = () => {
   const [openNav, setOpenNav] = useState(false);
-  const { isAuthenticated, firstname, image, loading, handleLogout }= useContext(AuthContext);
+  const { isAuthenticated, loading, handleLogout } = useContext(AuthContext);
+  const { tokenValues } = useTokenState();
+  const { firstname, profile_image: image } = tokenValues;
 
   useEffect(() => {
     const handleResize = () => {

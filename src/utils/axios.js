@@ -1,5 +1,12 @@
 // utils/csrftoken.js
 import axios from 'axios';
+import { useTokenState } from '../../zustand/store';
+
+const useAuthToken = () => {
+  const { tokenValues } = useTokenState();
+  const { authToken } = tokenValues;
+  return authToken;
+};
 
 // :::::::::::::::: axiosInstance config
 const axiosInstance = axios.create({
@@ -9,10 +16,10 @@ const axiosInstance = axios.create({
 // :::::::::::::::: axiosInstance default header
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = JSON.parse(localStorage.getItem('authToken'));
+    const authToken = useAuthToken();
     // console.log('header token: ', token);
-    if (token) {
-      config.headers.Authorization = `Bearer ${token.access}`;
+    if (authToken.refresh?.length > 0 && authToken.access?.length > 0) {
+      config.headers.Authorization = `Bearer ${authToken.access}`;
     }
     return config;
   },
@@ -20,21 +27,6 @@ axiosInstance.interceptors.request.use(
 );
 
 export default axiosInstance;
-
-// :::::::::::::::: logout function
-export const logout = async () => {
-  try {
-    const authToken = JSON.parse(localStorage.getItem('authToken'));
-    const response = await axiosInstance.post('/auth/logout/', { refresh: authToken.refresh });
-    // console.log('Logout success:', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Logout failed:', error);
-    throw new Error('Logout failed');
-  } finally {
-    localStorage.removeItem('authToken');
-  }
-};
 
 // :::::::::::::::::: get session status function
 export const getSessionStatus = async () => {

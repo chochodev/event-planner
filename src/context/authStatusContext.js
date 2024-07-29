@@ -1,38 +1,34 @@
 import React, { useEffect, useState, createContext } from 'react';
 import axiosInstance from 'utils/axios';
 import FlashMessage from 'components/alert';
+import { useTokenState } from '../zustand/store';
 
+export const cl = console.log.bind(console);
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [authToken, setAuthToken] = useState(
-    () => localStorage.getItem('authToken')? 
-      JSON.parse(localStorage.getItem('authToken')) : null
-  );
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    localStorage.getItem('authToken')? true : false
-  );
-  const [firstname, setFirstname] = useState('Anonymous');
-  const [image, setImage] = useState(null);
-  const [loading, setLoading] = useState(true);
-
+  const { tokenValues, setTokenValues, resetTokenState } = useTokenState();
+  const { firstname, profile_image, is_active } = tokenValues;
+  const authToken = tokenValues.authToken;
+  const isAuthenticated = 
+    authToken.refresh?.length > 0 && authToken.access?.length > 0? 
+    true : false
 
   // ::::::::::::::::::: get session status function
-  const getSessionStatus = async () => {  
-    if (!authToken) {
-      setLoading(false);
-      return false;
-    } else {
-      setFirstname(authToken.firstname);
-      setImage(authToken.profile_image);
-      setIsAuthenticated(true);
-      setLoading(false);
-    }
-  };
+  // const getSessionStatus = async () => {  
+  //   if (!authToken) {
+  //     setLoading(false);
+  //     return false;
+  //   } else {
+  //     setFirstname(authToken.firstname);
+  //     setImage(authToken.profile_image);
+  //     setLoading(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    getSessionStatus();
-  });
+  // useEffect(() => {
+  //   getSessionStatus();
+  // });
 
   // ::::::::::::::::::::::: LOGIN FUNCTION
   const [openFlashMessage, setOpenFlashMessage] = useState(false);
@@ -56,7 +52,9 @@ export const AuthProvider = ({ children }) => {
       setOpenFlashMessage(true);
       
       // ::::::::::::::::: stores the response data
-      setAuthToken(response.data?.token);
+      // setAuthToken(response.data?.token);
+      setTokenValues(response.data?.token)
+      cl('login response: ', response.data?.token);
       localStorage.setItem('authToken', JSON.stringify(response.data?.token));
   
       // :::::::: closes the flash message and redirect
@@ -87,8 +85,9 @@ export const AuthProvider = ({ children }) => {
   // ::::::::::::::::::::::::::::: Logout function
   const handleLogout = async () => {
     try {
-      const authToken = localStorage.getItem('authToken');
-      await axiosInstance.post('/auth/logout/', JSON.stringify({ refresh_token: authToken.refresh }));
+      await axiosInstance.post('/auth/logout/', JSON.stringify({
+        refresh_token: authToken.refresh 
+      }));
       setFlashMessage('User logged out successfully');
       setFlashSeverity('success');
     } catch (error) {
@@ -96,8 +95,9 @@ export const AuthProvider = ({ children }) => {
       setFlashSeverity('danger');
       console.error('Logout failed:', error);
     } finally {
+      // ::::::::::::::::: resets the tokens
       setOpenFlashMessage(true);
-      localStorage.removeItem('authToken');
+      resetTokenState();
       setTimeout(() => {
         setOpenFlashMessage(false);
         window.location.href = '/';
@@ -111,20 +111,16 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const handleRefreshToken = async () => {
       try {
-        const authToken = JSON.parse(localStorage.getItem('authToken'));
-        const userData = {
-          'firstname': authToken.firstname,
-          'profile_image': authToken.profile_image, 
-          'is_active': authToken.is_active
-        }
-        const response = await axiosInstance.post('/auth/token/refresh/', { 'refresh': authToken.refresh });
-        const newAuthToken = {
-          ...response.data,
-          ...userData,
-        };
-        setAuthToken(newAuthToken);
-        // console.log('refreshed token: ', newAuthToken);
-        localStorage.setItem('authToken', JSON.stringify(newAuthToken));
+        const response = await axiosInstance.post('/auth/token/refresh/', {
+          'refresh': authToken.refresh 
+        });
+        cl('refresh response:', response.data);
+        // setAuthToken(newAuthToken);
+        setTokenValues({ 
+          ...tokenValues, 
+          access: response.data.access, 
+          refresh: response.data.refresh
+        })
       } catch (error) {
         console.error('Refresh-token failed:', error);
         handleLogout();
@@ -138,19 +134,19 @@ export const AuthProvider = ({ children }) => {
         setRefreshLoading(true);
         handleRefreshToken();
       }
-    }, (8 * 60 * 1000))
+    }, (60 * 1000))
 
     // :::::::::::::::::: clear function
     return () => clearInterval(interval);
 
-  }, [authToken, refreshLoading]);
+  }, [authToken, refreshLoading, tokenValues]);
 
   // :::::::::::::::::: data
   let contextData = {
     isAuthenticated: isAuthenticated, 
-    firstname: firstname, 
-    image: image, 
-    loading: loading,
+    // firstname: firstname, 
+    // image: image, 
+    // loading: loading,
     loginLoading: loginLoading,
     handleLogin: handleLogin,
     handleLogout: handleLogout,

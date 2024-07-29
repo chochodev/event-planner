@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "zustand": ["src/zustand"]
+      "@zustand": ["src/zustand"]
     }
   },
   "include": ["src"]

@@ -61,9 +61,10 @@ const initialTokenState = {
     access: '', 
     refresh: ''
   },
-  firstname: '',
+  firstname: 'Anonymous',
   profile_image: '',
-  is_active: ''
+  is_active: '',
+  is_verified: '',
 }
 
 export const useTokenState = create(
