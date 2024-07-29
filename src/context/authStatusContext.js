@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }) => {
       // closes the flash message
       setTimeout(() => {
         setOpenFlashMessage(false);
-        // window.location.reload();
+        window.location.reload();
       }, 3000);
     } finally {
       setLoginLoading(false);

@@ -67,8 +67,8 @@ const SignUp = () => {
       }, 2000);
       
       setTimeout(() => {
-        window.location.reload();
-      }, 10000);
+        window.location.href = '/signin';
+      }, 8000);
     } catch (error) {
       console.error('Error:', error.response ? error.response.data : error.message);
       const errorMessage = error.response?.data?.error || error.message || 'An error occurred';

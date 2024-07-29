@@ -18,18 +18,19 @@ const HomePage = () => {
 
   useEffect(() => {
     const FetchEvents = async () => {
-      const token = localStorage.getItem('authToken');
+      // const token = localStorage.getItem('authToken');
+      // console.log('is token: ', token);
 
-      if (!token) {
-        setLoading(false);
-        return false;
-      }
+      // if (!token) {
+      //   setLoading(false);
+      //   return false;
+      // }
 
       try {
         setLoading(true);
         const response = await axiosInstance.get('/events/list/');
         setEvents(response.data);
-        console.log(response.data);
+        console.log('event data: ', response.data);
       } catch (error) {
         console.log('error: ', error);
         localStorage.removeItem('token');
