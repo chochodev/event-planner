@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
+
+// ::::::::::::::::::::::::::::::::: CREATE EVENT STATE
 const initialFormValues = {
   name: '',
   start_date: new Date(),
@@ -47,6 +49,34 @@ const useCreateFormStore = create(
     }),
     {
       name: 'create-form-storage',
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);
+
+
+// ::::::::::::::::::::::::::::::::::::: USER TOKEN STATE
+const initialTokenState = {
+  authToken: {
+    access: '', 
+    refresh: ''
+  },
+  firstname: '',
+  profile_image: '',
+  is_active: ''
+}
+
+export const useTokenState = create(
+  persist(
+    (set) => ({
+      tokenValues: initialTokenState,
+      setTokenValues: (values) => set((state) => ({
+        tokenValues: { ...state.tokenValues, ...values }
+      })),
+      resetTokenState: () => set({ tokenValues: initialTokenState }),
+    }),
+    {
+      name: 'token-storage',
       storage: createJSONStorage(() => sessionStorage),
     }
   )
