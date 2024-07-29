@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   const refreshUserData = async () => {  
     try {
       const response = await axiosInstance.get('/auth/status/');
-      console.log('user data gotten: ', response.data.user);
+      // console.log('user data gotten: ', response.data.user);
       setTokenValues({
         ...tokenValues,
         ...response.data.user,
