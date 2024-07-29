@@ -8,7 +8,6 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const { tokenValues, setTokenValues, resetTokenState } = useTokenState();
-  const { firstname, profile_image, is_active } = tokenValues;
   const authToken = tokenValues.authToken;
   const isAuthenticated = 
     authToken.refresh?.length > 0 && authToken.access?.length > 0? 
@@ -138,6 +137,7 @@ export const AuthProvider = ({ children }) => {
     // :::::::::::::::::: clear function
     return () => clearInterval(interval);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authToken, refreshLoading, tokenValues]);
 
   // :::::::::::::::::: data
