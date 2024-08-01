@@ -36,6 +36,13 @@ export const AuthProvider = ({ children }) => {
     })
   }
 
+  const closeFlashMessage = () => {
+    setLayoutValues({
+      ...layoutValues,
+      openFlashMessage: false,
+    })
+  }
+
   // ::::::::::::::::::: get session status function
   const refreshUserData = async () => {  
     try {

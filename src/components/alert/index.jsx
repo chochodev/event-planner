@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { 
+  // useEffect 
+} from 'react';
 import { Button, Collapse } from '@mui/material';
 import { Alert } from '@mui/material';
 import { RiCheckLine, RiCloseLine, RiErrorWarningLine } from "react-icons/ri";
@@ -12,7 +14,7 @@ const FlashMessage = () => {
     openFlashMessage,
     flashMessage,
     flashSeverity,
-  } = useLayoutState()
+  } = useLayoutState();
 
   const handleShowFlashMessage = () => {
     setLayoutValues({
@@ -21,18 +23,18 @@ const FlashMessage = () => {
     })
   }
 
-  useEffect(() => {
-    if (openFlashMessage === true) {
-      const timeout = setTimeout(() => {
-        setLayoutValues({
-          openFlashMessage: false,
-          ...layoutValues,
-        });
-      }, [4000]);
+  // useEffect(() => {
+  //   if (openFlashMessage === true) {
+  //     const timeout = setTimeout(() => {
+  //       setLayoutValues({
+  //         openFlashMessage: false,
+  //         ...layoutValues,
+  //       });
+  //     }, [4000]);
 
-      return () => clearTimeout(timeout);
-    }
-  }, [openFlashMessage, layoutValues, setLayoutValues])
+  //     return () => clearTimeout(timeout);
+  //   }
+  // }, [openFlashMessage, layoutValues, setLayoutValues])
 
   return (
     <div className='fixed top-0 z-[900] left-0 w-full bg-primary '>
