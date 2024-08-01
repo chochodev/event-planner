@@ -29,16 +29,16 @@ const EventCard = ({ event }) => {
 
   
   return (
-    <div className='group flex flex-col min-w-[12rem] w-[90%] mx-auto rounded-[16px] overflow-hidden font-poppins cursor-pointer '>
+    <div className='group flex flex-col min-w-[12rem] w-[90%] mx-auto rounded-[8px] overflow-hidden font-poppins cursor-pointer '>
       <div className='relative w-full flex justify-center overflow-hidden'>
         <img
           src={imageUrl || '/assets/images/lady-dancing.jpg'}
           alt='Event'
-          className='w-full min-w-full h-[80vw] sm:h-[54vw] lg:h-[34vw] xxl:h-[20rem] object-cover rounded-[16px] '
+          className='w-full min-w-full h-[80vw] sm:h-[54vw] lg:h-[34vw] xxl:h-[20rem] object-cover rounded-[8px] '
         />
 
         {/* :::::::::::::::::: OVERLAY */}
-        <div className='absolute z-[5] left-0 top-0 w-full h-full rounded-[16px] group-hover:bg-gray-900/30 ease-250'/>
+        <div className='absolute z-[5] left-0 top-0 w-full h-full rounded-[8px] group-hover:bg-gray-900/30 ease-250'/>
         <p className='absolute z-[5] right-0 top-0 flex items-center text-center justify-center h-[2.875rem] bg-secondary-dark text-primary text-[0.75rem] rounded-bl-[16px] px-[0.5rem] py-[0.1rem]'>${event.ticket_price}</p>
 
         {/* ::::::::::::::::::::: CTAs */}

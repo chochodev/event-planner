@@ -122,18 +122,18 @@ export const AuthProvider = ({ children }) => {
         })
       } catch (error) {
         console.error('Refresh-token failed:', error);
-        handleLogout();
+        // handleLogout();
       } finally {
         setRefreshLoading(false);
       }
     }
 
     const interval = setInterval(() => {
-      if (authToken) {
+      if (isAuthenticated) {
         setRefreshLoading(true);
         handleRefreshToken();
       }
-    }, (8 * 60 * 1000))
+    }, (2 * 60 * 1000))
 
     // :::::::::::::::::: clear function
     return () => clearInterval(interval);
