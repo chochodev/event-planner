@@ -49,7 +49,7 @@ const ProfileSetting = () => {
     };
 
     fetchData();
-  }, []);
+  });
 
   // ::::::::::::::::::::::: update initial state on render
   useEffect(() => {
