@@ -16,25 +16,14 @@ const EventList = () => {
   const eventsPerPage = 12;
 
   const fetchEvents = async () => {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-
     try {
       setLoading(true);
-      const response = await axiosInstance.get('/events/list/', {
-        headers: {
-          'Authorization': `Token ${token}`,
-        },
-      });
+      const response = await axiosInstance.get('/events/list/');
       setEvents(response.data);
       setFilteredEvents(response.data);
+      console.log('event data: ', response.data);
     } catch (error) {
       console.log('error: ', error);
-      localStorage.removeItem('token');
     } finally {
       setLoading(false);
     }

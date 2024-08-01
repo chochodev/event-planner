@@ -33,7 +33,6 @@ const HomePage = () => {
         console.log('event data: ', response.data);
       } catch (error) {
         console.log('error: ', error);
-        localStorage.removeItem('token');
       } finally {
         setLoading(false)
       }
