@@ -18,8 +18,10 @@ const SignIn = () => {
   const { 
     layoutValues, 
     setLayoutValues,
-    loginLoading,
   } = useLayoutState();
+  const { loginLoading } = layoutValues;
+  
+  cl('loading: ', loginLoading);
   
   // ::::::::::::::::::::: functions
   const showFlashMessage = (message, severity='success') => {

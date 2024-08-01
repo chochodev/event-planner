@@ -11,11 +11,13 @@ const FlashMessage = () => {
   const { 
     layoutValues, 
     setLayoutValues,
+  } = useLayoutState();
+    
+  const { 
     openFlashMessage,
     flashMessage,
     flashSeverity,
-    
-  } = useLayoutState();
+  } = layoutValues;
 
   const handleShowFlashMessage = () => {
     setLayoutValues({

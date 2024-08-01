@@ -105,7 +105,7 @@ export const useLayoutState = create(
         return { layoutValues: newLayoutValues };
       });
     },
-    resetTokenState: () => set({ layoutValues: initialLayoutState }),
+    resetLayoutState: () => set({ layoutValues: initialLayoutState }),
   })
 );
 
