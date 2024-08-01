@@ -64,7 +64,7 @@ const SignIn = () => {
       // :::::::: closes the flash message and redirect
       setTimeout(() => {
         closeFlashMessage();
-        // window.location.href = '/';
+        window.location.href = '/';
       }, 1000);
     } catch (error) {
       const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
