@@ -22,9 +22,7 @@ export const AuthProvider = ({ children }) => {
   const { 
     layoutValues, 
     setLayoutValues,
-    openFlashMessage: openFlash,
-    flashMessage: flash_message,
-    flashSeverity: flash_severity,
+    loginLoading,
   } = useLayoutState()
 
   const showFlashMessage = (message, severity='success') => {
@@ -59,14 +57,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   // ::::::::::::::::::::::: LOGIN FUNCTION
-  const [openFlashMessage, setOpenFlashMessage] = useState(false);
-  const [flashMessage, setFlashMessage] = useState('');
-  const [flashSeverity, setFlashSeverity] = useState('success');
-  const [loginLoading, setLoginLoading] = useState(false);
+  // const [openFlashMessage, setOpenFlashMessage] = useState(false);
+  // const [flashMessage, setFlashMessage] = useState('');
+  // const [flashSeverity, setFlashSeverity] = useState('success');
+  // const [loginLoading, setLoginLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoginLoading(true);
+    
+    setLayoutValues({
+      ...layoutValues,
+      loginLoading: true,
+    })
   
     const logInForm = {
       email: e.target.email.value,
@@ -82,30 +84,32 @@ export const AuthProvider = ({ children }) => {
       // setAuthToken(response.data?.token);
       setTokenValues(response.data?.token)
       // cl('login response: ', response.data?.token);
-      localStorage.setItem('authToken', JSON.stringify(response.data?.token));
+      // localStorage.setItem('authToken', JSON.stringify(response.data?.token));
   
       // :::::::: closes the flash message and redirect
       setTimeout(() => {
-        setOpenFlashMessage(false);
+        closeFlashMessage();
         window.location.href = '/';
       }, 1000);
     } catch (error) {
       const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
       console.error('Error:', error.response ? error.response.data : error.message);
-      setFlashMessage(errorMessage);
-      setFlashSeverity('error');
-      setOpenFlashMessage(true);
+      showFlashMessage(errorMessage, 'error');
 
       // ::::::::: removes credentials incase there is any
-      localStorage.removeItem('authToken');
+      // localStorage.removeItem('authToken');
+      resetTokenState();
       
       // closes the flash message
       setTimeout(() => {
-        setOpenFlashMessage(false);
+        closeFlashMessage();
         window.location.reload();
       }, 3000);
-    } finally {
-      setLoginLoading(false);
+    } finally {  
+      setLayoutValues({
+        ...layoutValues,
+        loginLoading: false,
+      })
     }
   };
 
@@ -115,18 +119,15 @@ export const AuthProvider = ({ children }) => {
       await axiosInstance.post('/auth/logout/', JSON.stringify({
         refresh_token: authToken.refresh 
       }));
-      setFlashMessage('User logged out successfully');
-      setFlashSeverity('success');
+      showFlashMessage('User logged out successfully', 'success');
     } catch (error) {
-      setFlashMessage('User is not logged in');
-      setFlashSeverity('danger');
+      showFlashMessage('User is not logged in', 'danger');
       console.error('Logout failed:', error);
     } finally {
       // ::::::::::::::::: resets the tokens
-      setOpenFlashMessage(true);
       resetTokenState();
       setTimeout(() => {
-        setOpenFlashMessage(false);
+        closeFlashMessage();
         window.location.href = '/';
       }, 1000);
     }
