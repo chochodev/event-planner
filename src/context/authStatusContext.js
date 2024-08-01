@@ -56,63 +56,7 @@ export const AuthProvider = ({ children }) => {
       console.error('Error:', error.response ? error.response.data : error.message);
     }
   };
-
-  // ::::::::::::::::::::::: LOGIN FUNCTION
-  // const [openFlashMessage, setOpenFlashMessage] = useState(false);
-  // const [flashMessage, setFlashMessage] = useState('');
-  // const [flashSeverity, setFlashSeverity] = useState('success');
-  // const [loginLoading, setLoginLoading] = useState(false);
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    
-    setLayoutValues({
-      ...layoutValues,
-      loginLoading: true,
-    })
   
-    const logInForm = {
-      email: e.target.email.value,
-      password: e.target.password.value
-    }
-  
-    try {
-      const response = await axiosInstance.post('/auth/signin/', logInForm);
-      showFlashMessage(response.data?.message || 'User logged in successfully', 'success');
-      // setOpenFlashMessage(true);
-      
-      // ::::::::::::::::: stores the response data
-      // setAuthToken(response.data?.token);
-      setTokenValues(response.data?.token)
-      // cl('login response: ', response.data?.token);
-      // localStorage.setItem('authToken', JSON.stringify(response.data?.token));
-  
-      // :::::::: closes the flash message and redirect
-      setTimeout(() => {
-        closeFlashMessage();
-        window.location.href = '/';
-      }, 1000);
-    } catch (error) {
-      const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
-      console.error('Error:', error.response ? error.response.data : error.message);
-      showFlashMessage(errorMessage, 'error');
-
-      // ::::::::: removes credentials incase there is any
-      // localStorage.removeItem('authToken');
-      resetTokenState();
-      
-      // closes the flash message
-      setTimeout(() => {
-        closeFlashMessage();
-        window.location.reload();
-      }, 3000);
-    } finally {  
-      setLayoutValues({
-        ...layoutValues,
-        loginLoading: false,
-      })
-    }
-  };
 
   // ::::::::::::::::::::::::::::: Logout function
   const handleLogout = async () => {
@@ -179,7 +123,6 @@ export const AuthProvider = ({ children }) => {
     // loading: loading,
     refreshUserData: refreshUserData,
     loginLoading: loginLoading,
-    handleLogin: handleLogin,
     handleLogout: handleLogout,
   }
 
