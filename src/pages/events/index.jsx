@@ -114,7 +114,7 @@ const EventList = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className='grid gap-[1rem] grid-cols-1 sm:grid-cols-2 xmd:grid-cols-3 lg:grid-cols-4 w-full'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xxl:grid-cols-4 gap-[2rem] lg:gap-[3rem] gap-y-[3rem] w-full'>
                       {currentEvents.map((event, index) => (
                         <EventCard key={index} event={event} />
                       ))}
