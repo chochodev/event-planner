@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
     setLayoutValues,
     resetLayoutState
   } = useLayoutState();
-  const { loginLoading } = layoutValues;
 
   const showFlashMessage = (message, severity='success') => {
     setLayoutValues({
@@ -114,12 +113,8 @@ export const AuthProvider = ({ children }) => {
 
   // :::::::::::::::::: data
   let contextData = {
-    isAuthenticated: isAuthenticated, 
-    // firstname: firstname, 
-    // image: image, 
-    // loading: loading,
+    isAuthenticated: isAuthenticated,
     refreshUserData: refreshUserData,
-    loginLoading: loginLoading,
     handleLogout: handleLogout,
   }
 
