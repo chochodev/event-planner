@@ -9,37 +9,37 @@ const FlashMessage = () => {
   const { 
     layoutValues, 
     setLayoutValues,
-    openFlashMessage: openFlash,
-    flashMessage: message,
-    flashSeverity: severity,
+    openFlashMessage,
+    flashMessage,
+    flashSeverity,
   } = useLayoutState()
 
   const handleShowFlashMessage = () => {
     setLayoutValues({
       ...layoutValues,
-      openFlash: true
+      openFlashMessage: true
     })
   }
 
   useEffect(() => {
-    if (openFlash === true) {
+    if (openFlashMessage === true) {
       const timeout = setTimeout(() => {
         setLayoutValues({
-          openFlash: false,
+          openFlashMessage: false,
           ...layoutValues,
         });
       }, [4000]);
 
       return () => clearTimeout(timeout);
     }
-  }, [openFlash, layoutValues, setLayoutValues])
+  }, [openFlashMessage, layoutValues, setLayoutValues])
 
   return (
     <div className='fixed top-0 z-[900] left-0 w-full bg-primary '>
-      <Collapse in={openFlash}>
+      <Collapse in={openFlashMessage}>
         <Alert
-          severity={severity}
-          icon={severity === 'success' ? 
+          severity={flashSeverity}
+          icon={flashSeverity === 'success' ? 
             <RiCheckLine className='text-green-500 text-[1rem]' /> : 
             <RiErrorWarningLine className='text-red-500 text-[1.25rem]' />
           }
@@ -57,7 +57,7 @@ const FlashMessage = () => {
             </Button>
           }
         >
-          <span className={`${severity === 'success'? 'text-green-500' : 'text-red-700'} `}>{message}</span>
+          <span className={`${flashSeverity === 'success'? 'text-green-500' : 'text-red-700'} `}>{flashMessage}</span>
         </Alert>
       </Collapse>
     </div>

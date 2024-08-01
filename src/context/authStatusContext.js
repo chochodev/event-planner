@@ -176,12 +176,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={contextData}>
-      <FlashMessage
-        openFlashMessage={openFlash}
-        setOpenFlashMessage={setOpenFlashMessage}
-        flashMessage={flash_message}
-        flashSeverity={flash_severity}
-      />
+      <FlashMessage />
       {children}
     </AuthContext.Provider>
   );
