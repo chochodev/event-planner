@@ -3,7 +3,8 @@ import axiosInstance from 'utils/axios';
 import FlashMessage from 'components/alert';
 import { useTokenState } from '../zustand/store';
 
-export const cl = console.log.bind(console);
+const is_dev_server = process.env.REACT_APP_DEVELOPMENT_SERVER;
+export const cl = is_dev_server === 'true' && console.log.bind(console);
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {

@@ -6,6 +6,7 @@ import axiosInstance from 'utils/axios';
 import { Skeleton, Pagination } from '@mui/material';
 import { MdEventBusy } from 'react-icons/md';
 import EventCard from 'components/event_card';
+import { cl } from 'context/authStatusContext';
 
 const EventList = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -21,7 +22,7 @@ const EventList = () => {
       const response = await axiosInstance.get('/events/list/');
       setEvents(response.data);
       setFilteredEvents(response.data);
-      console.log('event data: ', response.data);
+      cl('event data - events: ', response.data);
     } catch (error) {
       console.log('error: ', error);
     } finally {
