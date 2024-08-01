@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Button, 
@@ -7,10 +7,84 @@ import {
   TextField
 } from '@mui/material';
 import Logo from 'components/logo';
-import { AuthContext } from 'context/authStatusContext';
+import { useLayoutState, useTokenState } from '../../zustand/store';
+import axiosInstance from 'utils/axios';
+import { cl } from 'context/authStatusContext';
+
 
 const SignIn = () => {
-  const { handleLogin, loginLoading } = useContext(AuthContext)
+  // :::::::::::::::::::::::: STATES
+  const { setTokenValues, resetTokenState } = useTokenState();
+  const { 
+    layoutValues, 
+    setLayoutValues,
+    loginLoading,
+  } = useLayoutState();
+  
+  // ::::::::::::::::::::: functions
+  const showFlashMessage = (message, severity='success') => {
+    setLayoutValues({
+      ...layoutValues,
+      flashMessage: message,
+      flashSeverity: severity,
+      openFlashMessage: true
+    })
+  }
+
+  const closeFlashMessage = () => {
+    setLayoutValues({
+      ...layoutValues,
+      openFlashMessage: false,
+    })
+  }
+
+  // ::::::::::::::::::::::::: submit form function
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    
+    setLayoutValues({
+      ...layoutValues,
+      loginLoading: true,
+    })
+  
+    const logInForm = {
+      email: e.target.email.value,
+      password: e.target.password.value
+    }
+    cl('hit the submit function!!');
+  
+    try {
+      const response = await axiosInstance.post('/auth/signin/', logInForm);
+      showFlashMessage(response.data?.message || 'User logged in successfully', 'success');
+      setTokenValues(response.data?.token)
+      cl('login response: ', response.data?.token);
+      
+      // :::::::: closes the flash message and redirect
+      setTimeout(() => {
+        closeFlashMessage();
+        // window.location.href = '/';
+      }, 1000);
+    } catch (error) {
+      const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
+      console.error('Error:', error.response ? error.response.data : error.message);
+      showFlashMessage(errorMessage, 'error');
+
+      // ::::::::: removes credentials incase there is any
+      resetTokenState();
+      
+      // closes the flash message
+      setTimeout(() => {
+        closeFlashMessage();
+        window.location.reload();
+      }, 3000);
+    } finally {  
+      // ::::::::::::::::::::: set loading to false
+      setLayoutValues({
+        ...layoutValues,
+        loginLoading: false,
+      })
+    }
+  };
 
   return (
     <>
@@ -50,11 +124,17 @@ const SignIn = () => {
               required
             />
           </FormControl>
-          <button type='submit' hidden ></button>
+          {/* <button type='submit' hidden ></button> */}
+          <Button 
+            type='submit' 
+            variant="contained" 
+            color="primary" 
+            sx={{height: '3rem', marginTop: '1rem'}} 
+            fullWidth
+          >
+            {loginLoading? <div className="loader"></div> : "Sign In"}
+          </Button>
         </form>
-        <Button onClick={handleLogin} variant="contained" color="primary" sx={{height: '3rem'}} fullWidth>
-          {loginLoading? <div className="loader"></div> : "Sign In"}
-        </Button>
         <div className='flex gap-[0.5rem] items-center'>
           <p className='text-[0.875rem]'>Don't have an account?</p>
           <Link to="/signup" className='text-[0.875rem] text-secondary hover:underline ease-250'>Sign Up</Link>
