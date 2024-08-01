@@ -1,21 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Collapse } from '@mui/material';
 import { Alert } from '@mui/material';
 import { RiCheckLine, RiCloseLine, RiErrorWarningLine } from "react-icons/ri";
+import { useLayoutState } from '../../zustand/store';
 
-const FlashMessage = ({ 
-  openFlashMessage, 
-  setOpenFlashMessage, 
-  flashMessage, 
-  flashSeverity 
-}) => {
+const FlashMessage = () => {
+  // :::::::::::::::::::::::: LAYOUT STATES
+  const { 
+    layoutValues, 
+    setLayoutValues,
+    openFlashMessage: openFlash,
+    flashMessage: message,
+    flashSeverity: severity,
+  } = useLayoutState()
+
+  const handleShowFlashMessage = () => {
+    setLayoutValues({
+      ...layoutValues,
+      openFlash: true
+    })
+  }
+
+  useEffect(() => {
+    if (openFlash === true) {
+      const timeout = setTimeout(() => {
+        setLayoutValues({
+          openFlash: false,
+          ...layoutValues,
+        });
+      }, [4000]);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [openFlash, layoutValues, setLayoutValues])
 
   return (
     <div className='fixed top-0 z-[900] left-0 w-full bg-primary '>
-      <Collapse in={openFlashMessage}>
+      <Collapse in={openFlash}>
         <Alert
-          severity={flashSeverity}
-          icon={flashSeverity === 'success' ? 
+          severity={severity}
+          icon={severity === 'success' ? 
             <RiCheckLine className='text-green-500 text-[1rem]' /> : 
             <RiErrorWarningLine className='text-red-500 text-[1.25rem]' />
           }
@@ -23,9 +47,7 @@ const FlashMessage = ({
             <Button
               color="inherit"
               size="small"
-              onClick={() => {
-                setOpenFlashMessage(false);
-              }}
+              onClick={handleShowFlashMessage}
               sx={{
                 paddingX: '0',
                 borderRadius: '50rem'
@@ -35,7 +57,7 @@ const FlashMessage = ({
             </Button>
           }
         >
-          <span className={`${flashSeverity === 'success'? 'text-green-500' : 'text-red-700'} `}>{flashMessage}</span>
+          <span className={`${severity === 'success'? 'text-green-500' : 'text-red-700'} `}>{message}</span>
         </Alert>
       </Collapse>
     </div>

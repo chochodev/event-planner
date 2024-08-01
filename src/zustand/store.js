@@ -54,6 +54,7 @@ const useCreateFormStore = create(
   )
 );
 
+export default useCreateFormStore;
 
 // ::::::::::::::::::::::::::::::::::::: USER TOKEN STATE
 const initialTokenState = {
@@ -86,4 +87,25 @@ export const useTokenState = create(
   )
 );
 
-export default useCreateFormStore;
+
+// :::::::::::::::::::::::::::::::: LAYOUT STATE
+const initialLayoutState = {
+  openFlashMessage: false,
+  flashMessage: '',
+  flashSeverity: '',
+  loginLoading: false,
+}
+
+export const useLayoutState = create(
+  (set) => ({
+    layoutValues: initialLayoutState,
+    setLayoutValues: (values) => {
+      set((state) => {
+        const newLayoutValues = { ...state.layoutValues, ...values };
+        return { layoutValues: newLayoutValues };
+      });
+    },
+    resetTokenState: () => set({ layoutValues: initialLayoutState }),
+  })
+);
+

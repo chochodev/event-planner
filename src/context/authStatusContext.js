@@ -1,18 +1,40 @@
 import React, { useEffect, useState, createContext } from 'react';
 import axiosInstance from 'utils/axios';
 import FlashMessage from 'components/alert';
-import { useTokenState } from '../zustand/store';
+import { useTokenState, useLayoutState } from '../zustand/store';
 
-const is_dev_server = process.env.REACT_APP_DEVELOPMENT_SERVER;
-export const cl = is_dev_server === 'true' && console.log.bind(console);
+// ::::::::::::::::::::::::: cl as console.log
+const is_dev_server = process.env.REACT_APP_DEVELOPMENT_SERVER === 'true';
+export const cl = is_dev_server ? console.log.bind(console) : () => {};
+
+// ::::::::::::::::::::::::: auth context provider
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  // ::::::::::::::::::::::: AUTH TOKEN STATES
   const { tokenValues, setTokenValues, resetTokenState } = useTokenState();
   const authToken = tokenValues.authToken;
   const isAuthenticated = 
     authToken.refresh?.length > 0 && authToken.access?.length > 0? 
     true : false
+
+  // :::::::::::::::::::::::: LAYOUT STATES
+  const { 
+    layoutValues, 
+    setLayoutValues,
+    openFlashMessage: openFlash,
+    flashMessage: flash_message,
+    flashSeverity: flash_severity,
+  } = useLayoutState()
+
+  const showFlashMessage = (message, severity='success') => {
+    setLayoutValues({
+      ...layoutValues,
+      flashMessage: message,
+      flashSeverity: severity,
+      openFlashMessage: true
+    })
+  }
 
   // ::::::::::::::::::: get session status function
   const refreshUserData = async () => {  
@@ -46,9 +68,8 @@ export const AuthProvider = ({ children }) => {
   
     try {
       const response = await axiosInstance.post('/auth/signin/', logInForm);
-      setFlashMessage(response.data?.message || 'User logged in successfully');
-      setFlashSeverity('success');
-      setOpenFlashMessage(true);
+      showFlashMessage(response.data?.message || 'User logged in successfully', 'success');
+      // setOpenFlashMessage(true);
       
       // ::::::::::::::::: stores the response data
       // setAuthToken(response.data?.token);
@@ -156,10 +177,10 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={contextData}>
       <FlashMessage
-        openFlashMessage={openFlashMessage}
+        openFlashMessage={openFlash}
         setOpenFlashMessage={setOpenFlashMessage}
-        flashMessage={flashMessage}
-        flashSeverity={flashSeverity}
+        flashMessage={flash_message}
+        flashSeverity={flash_severity}
       />
       {children}
     </AuthContext.Provider>
