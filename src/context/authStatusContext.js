@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
   const { 
     layoutValues, 
     setLayoutValues,
+    resetLayoutState
   } = useLayoutState();
   const { loginLoading } = layoutValues;
 
@@ -35,10 +36,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   const closeFlashMessage = () => {
-    setLayoutValues({
-      ...layoutValues,
-      openFlashMessage: false,
-    })
+    resetLayoutState();
   }
 
   // ::::::::::::::::::: get session status function
@@ -72,7 +70,7 @@ export const AuthProvider = ({ children }) => {
       resetTokenState();
       setTimeout(() => {
         closeFlashMessage();
-        window.location.href = '/';
+        // window.location.href = '/';
       }, 1000);
     }
   };

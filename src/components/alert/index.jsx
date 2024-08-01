@@ -9,8 +9,8 @@ import { useLayoutState } from '../../zustand/store';
 const FlashMessage = () => {
   // :::::::::::::::::::::::: LAYOUT STATES
   const { 
-    layoutValues, 
-    setLayoutValues,
+    layoutValues,
+    resetLayoutState,
   } = useLayoutState();
     
   const { 
@@ -19,26 +19,10 @@ const FlashMessage = () => {
     flashSeverity,
   } = layoutValues;
 
-  const handleShowFlashMessage = () => {
-    setLayoutValues({
-      ...layoutValues,
-      openFlashMessage: true
-    })
+  const handleCloseFlashMessage = () => {
+    resetLayoutState();
   }
-
-  // useEffect(() => {
-  //   if (openFlashMessage === true) {
-  //     const timeout = setTimeout(() => {
-  //       setLayoutValues({
-  //         openFlashMessage: false,
-  //         ...layoutValues,
-  //       });
-  //     }, [4000]);
-
-  //     return () => clearTimeout(timeout);
-  //   }
-  // }, [openFlashMessage, layoutValues, setLayoutValues])
-
+  
   return (
     <div className='fixed top-0 z-[900] left-0 w-full bg-primary '>
       <Collapse in={openFlashMessage}>
@@ -52,13 +36,13 @@ const FlashMessage = () => {
             <Button
               color="inherit"
               size="small"
-              onClick={handleShowFlashMessage}
+              onClick={handleCloseFlashMessage}
               sx={{
                 paddingX: '0',
                 borderRadius: '50rem'
               }}
             >
-              <RiCloseLine className='text-[1rem] ' />
+              <RiCloseLine className={`${flashSeverity === 'success'? 'text-green-500' : 'text-red-700'} text-[1rem] `} />
             </Button>
           }
         >
