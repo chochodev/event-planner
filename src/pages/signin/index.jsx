@@ -63,13 +63,13 @@ const SignIn = () => {
       
       // :::::::: closes the flash message and redirect
       setTimeout(() => {
-        closeFlashMessage();
-        window.location.href = '/';
-      }, 1000);
+        // closeFlashMessage();
+        // window.location.href = '/';
+      }, 1500);
     } catch (error) {
       const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
-      console.error('Error:', error.response ? error.response.data : error.message);
       showFlashMessage(errorMessage, 'error');
+      console.error('Error:', error.response ? error.response.data : error.message);
 
       // ::::::::: removes credentials incase there is any
       resetTokenState();

@@ -5,7 +5,6 @@ import { useTokenState, useLayoutState } from '../zustand/store';
 
 // ::::::::::::::::::::::::: cl as console.log
 const is_dev_server = process.env.REACT_APP_DEVELOPMENT_SERVER === 'true';
-console.log('dev server: ', is_dev_server)
 export const cl = is_dev_server ? console.log.bind(console) : () => {};
 
 // ::::::::::::::::::::::::: auth context provider
