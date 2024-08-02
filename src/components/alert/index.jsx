@@ -25,7 +25,7 @@ const FlashMessage = () => {
   
   return (
     <div className='fixed top-0 z-[900] left-0 w-full bg-primary '>
-      <Collapse in={openFlashMessage}>
+      <Collapse in={true}>
         <Alert
           severity={flashSeverity}
           icon={flashSeverity === 'success' ? 
@@ -46,7 +46,7 @@ const FlashMessage = () => {
             </Button>
           }
         >
-          <span className={`${flashSeverity === 'success'? 'text-green-500' : 'text-red-700'} `}>{flashMessage}</span>
+          <span className={`${flashSeverity === 'success'? 'text-green-500' : 'text-red-700'} `}>{flashMessage || 'null'}</span>
         </Alert>
       </Collapse>
     </div>

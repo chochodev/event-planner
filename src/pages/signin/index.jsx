@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Button, 
@@ -20,7 +20,11 @@ const SignIn = () => {
     layoutValues, 
     setLayoutValues,
   } = useLayoutState();
-  const { loginLoading } = layoutValues;
+  const { loginLoading, flashMessage } = layoutValues;
+
+  useEffect(() => {
+    cl('flash message: ', flashMessage);
+  }, [flashMessage, setLayoutValues])
   
   cl('loading: ', loginLoading);
   
@@ -30,7 +34,7 @@ const SignIn = () => {
       ...layoutValues,
       flashMessage: message,
       flashSeverity: severity,
-      openFlashMessage: true
+      openFlashMessage: true,
     })
   }
 
@@ -54,7 +58,8 @@ const SignIn = () => {
       email: e.target.email.value,
       password: e.target.password.value
     }
-    cl('hit the submit function!!');
+    e.target.email.value = null;
+    e.target.password.value = null;
   
     try {
       const response = await axiosInstance.post('/auth/signin/', logInForm);
