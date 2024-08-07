@@ -1,6 +1,5 @@
 import React, { useEffect, useState, createContext } from 'react';
 import axiosInstance from 'utils/axios';
-import FlashMessage from 'components/alert';
 import { useTokenState, useLayoutState } from '../zustand/store';
 
 // ::::::::::::::::::::::::: cl as console.log
@@ -120,7 +119,6 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={contextData}>
-      <FlashMessage />
       {children}
     </AuthContext.Provider>
   );
