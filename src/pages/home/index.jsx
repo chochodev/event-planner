@@ -10,6 +10,7 @@ import Hot from './components/hot';
 import axiosInstance from 'utils/axios';
 import About from './components/aboutus';
 import OurTeam from './components/team';
+import { cl } from 'context/authStatusContext';
 
 
 const HomePage = () => {
@@ -22,7 +23,7 @@ const HomePage = () => {
         setLoading(true);
         const response = await axiosInstance.get('/events/list/');
         setEvents(response.data);
-        console.log('event data: ', response.data);
+        cl('event data: ', response.data);
       } catch (error) {
         console.log('error: ', error);
       } finally {

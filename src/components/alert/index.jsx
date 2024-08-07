@@ -14,7 +14,7 @@ const FlashMessage = () => {
   } = useLayoutState();
     
   const { 
-    openFlashMessage,
+    // openFlashMessage,
     flashMessage,
     flashSeverity,
   } = layoutValues;
