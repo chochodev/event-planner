@@ -1,10 +1,11 @@
 import React, { 
-  // useEffect 
+  useEffect 
 } from 'react';
 import { Button, Collapse } from '@mui/material';
 import { Alert } from '@mui/material';
 import { RiCheckLine, RiCloseLine, RiErrorWarningLine } from "react-icons/ri";
 import { useLayoutState } from '../../zustand/store';
+import { cl } from 'context/authStatusContext';
 
 const FlashMessage = () => {
   // :::::::::::::::::::::::: LAYOUT STATES
@@ -22,6 +23,10 @@ const FlashMessage = () => {
   const handleCloseFlashMessage = () => {
     resetLayoutState();
   }
+
+  useEffect(() => {
+    cl('layout values: ', layoutValues);
+  }, [layoutValues]);
   
   return (
     <div className='sticky top-0 z-[900] left-0 w-full bg-primary '>
