@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
       resetTokenState();
       setTimeout(() => {
         closeFlashMessage();
-        // window.location.href = '/';
+        window.location.href = '/';
       }, 1000);
     }
   };
