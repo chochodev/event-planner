@@ -12,6 +12,9 @@ export default defineConfig({
       assets: "/src/assets",
       context: "/src/context",
       routes: "/src/routes",
+      utils: "/src/utils",
+      pages: "/src/pages",
+      store: "/src/zustand",
     },
   },
 })
