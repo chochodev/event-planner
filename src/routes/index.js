@@ -20,8 +20,7 @@ const ProfileSetting = lazy(() => import('pages/dashboard/profile'));
 
 const MyRoute = () => {
   return (
-    <Suspense fallback={<Loader />}
-    >
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
