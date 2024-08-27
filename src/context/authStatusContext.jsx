@@ -3,7 +3,7 @@ import axiosInstance from 'utils/axios';
 import { useTokenState, useLayoutState } from '../zustand/store';
 
 // ::::::::::::::::::::::::: cl as console.log
-const is_dev_server = process.env.REACT_APP_DEVELOPMENT_SERVER === 'true';
+const is_dev_server = import.meta.env.REACT_APP_DEVELOPMENT_SERVER === 'true';
 export const cl = is_dev_server ? console.log.bind(console) : () => {};
 cl('is dev: ', is_dev_server);
 
