@@ -8,7 +8,7 @@ import { AuthProvider } from 'context/authStatusContext';
 const customTheme = createTheme({
   palette: {
     primary: {
-      main: '#3F51B5',
+      main: '#3F51B5', 
       dark: '#323d76', 
       light: '#5d7dd4', 
     },
