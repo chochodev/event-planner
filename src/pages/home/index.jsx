@@ -18,6 +18,8 @@ const HomePage = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
+    cl('working!!');
+    
     const FetchEvents = async () => {
       try {
         setLoading(true);
