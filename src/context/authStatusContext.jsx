@@ -4,7 +4,6 @@ import { useTokenState, useLayoutState } from '../zustand/store';
 
 // ::::::::::::::::::::::::: cl as console.log
 const is_dev_server = import.meta.env.VITE_APP_DEVELOPMENT_SERVER === 'true';
-console.log('is dev server: ', is_dev_server);
 export const cl = is_dev_server ? console.log.bind(console) : () => {};
 cl('is dev: ', is_dev_server);
 
