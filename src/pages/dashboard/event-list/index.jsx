@@ -118,7 +118,7 @@ export default function MyEventList() {
                 </StyledTableRow>
                 ))}
               </TableBody> : 
-              <>        
+              <>
               {(events || events.length !== 0) &&
               <TableBody>
                 {events?.map((event, index) => (

@@ -27,9 +27,14 @@ const Hot = ({ loading, events }) => {
       <>
       <div className='w-full overflow-hidden'>
         <div className='grid grid-cols-1 xlg:grid-cols-2 gap-[2rem] lg:gap-[3rem] gap-y-[3rem] w-full '>
-          {events?.map((event, index) => (
+          
+        {(events || events.length !== 0) &&
+          <>
+          {/* {events?.map((event, index) => (
             <EventCard key={index} event={event} />
-          ))}
+          ))} */}
+          </>
+        }
         </div>
       </div>
 
