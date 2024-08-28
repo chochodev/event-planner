@@ -30,9 +30,9 @@ const Hot = ({ loading, events }) => {
           
         {(events || events.length !== 0) &&
           <>
-          {/* {events?.map((event, index) => (
+          {events?.map((event, index) => (
             <EventCard key={index} event={event} />
-          ))} */}
+          ))}
           </>
         }
         </div>
