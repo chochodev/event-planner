@@ -17,4 +17,7 @@ export default defineConfig({
       store: "/src/zustand",
     },
   },
+  worker: {
+    plugins: () => [tsconfigPaths()],
+  },
 })
