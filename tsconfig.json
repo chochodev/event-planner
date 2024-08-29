@@ -4,10 +4,10 @@
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
+  "include": ["src"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
       "components/*":["./src/components/*"],
       "assets": ["./src/assets/*"],
       "context": ["./src/context/*"],
