@@ -6,6 +6,7 @@
   ],
   "include": ["src", "vite-env.d.ts"],
   "compilerOptions": {
+    "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
       "components/*":["./src/components/*"],

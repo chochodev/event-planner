@@ -1,6 +1,6 @@
 import PageNotFound from 'components/error_page/404';
 import Loader from 'components/loader';
-import React, { Suspense, lazy } from 'react';
+import { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Protected from './PrivateRoute';
 import AccessDenied from 'components/error_page/unauthenticated';

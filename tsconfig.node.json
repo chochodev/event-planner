@@ -11,6 +11,7 @@
     // Removed "allowImportingTsExtensions" since noEmit is set to false
     "isolatedModules": true,
     "moduleDetection": "force",
+    "jsx": "react-jsx",
     "noEmit": false, // Keep as false if you need to emit files.
     
     /* Linting */
