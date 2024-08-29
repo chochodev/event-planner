@@ -1,4 +1,3 @@
-import React from 'react';
 import HomeLayout from 'components/layout';
 import PrimaryLink from 'components/link/primary';
 

@@ -1,4 +1,3 @@
-// @ts-ignore
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
