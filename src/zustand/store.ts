@@ -26,8 +26,8 @@ interface EventFormValues {
   domain_url: string;
   floorplanMode: number;
   floorplanImage: File | null;
-  floorplanLayout: unknown[]; // Update `any` to a more specific type if possible
-  categoryplanLayout: unknown[]; // Update `any` to a more specific type if possible
+  floorplanLayout: unknown[];
+  categoryplanLayout: unknown[];
   ticket_variants: {
     ticket_name: string;
     ticket_price: number;
