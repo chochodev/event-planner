@@ -15,6 +15,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+
+    "composite": true,
+    "types": ["vite/client"],
+
     "baseUrl": ".",
     "paths": {
       "components/*": ["src/components/*"],
