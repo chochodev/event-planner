@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import PrimaryButton from 'components/button/primary';
 import EventCard from 'components/event_card/variant/large';
 import SubHeader from 'components/typography/sub_header';
@@ -9,7 +9,7 @@ const Hot = ({ loading, events }) => {
   return (
     <div className='flex flex-col items-start gap-[2rem] w-full'>
       <SubHeader>Hot-Events</SubHeader>
-      <p className='text-[1.15rem] text-gray-500 font-[600]'> Don't Miss Out on These Must-See Experiences!</p>
+      <p className='text-[1.15rem] text-gray-500 font-[600]'> Don&apos;t Miss Out on These Must-See Experiences!</p>
       {loading? 
       <div className='w-full overflow-hidden'>
         <div className='grid grid-cols-1 xlg:grid-cols-2 gap-[2rem] lg:gap-[3rem] gap-y-[3rem] w-full '>
@@ -19,7 +19,6 @@ const Hot = ({ loading, events }) => {
               <Skeleton variant='rectangle' width='70%' height='3rem' sx={{borderRadius: '8px'}}/>
               <Skeleton variant='rectangle' width='50%' height='1.25rem' sx={{borderRadius: '8px'}}/>
               <Skeleton variant='rectangle' width='90%' height='1.25rem' sx={{borderRadius: '8px'}}/>
-
             </div>
           ))}
         </div>
@@ -27,9 +26,14 @@ const Hot = ({ loading, events }) => {
       <>
       <div className='w-full overflow-hidden'>
         <div className='grid grid-cols-1 xlg:grid-cols-2 gap-[2rem] lg:gap-[3rem] gap-y-[3rem] w-full '>
+          
+        {(events || events.length !== 0) &&
+          <>
           {events?.map((event, index) => (
             <EventCard key={index} event={event} />
           ))}
+          </>
+        }
         </div>
       </div>
 
@@ -48,6 +52,11 @@ const Hot = ({ loading, events }) => {
       </div>
     </div>
   );
+};
+
+Hot.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  events: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Hot;
