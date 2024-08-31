@@ -1,9 +1,43 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
+// ::::::::::::::::::::::::::::::::: CREATE EVENT TYPE
+interface EventFormValues {
+  name: string;
+  start_date: Date;
+  end_date: Date;
+  start_time: string;
+  end_time: string;
+  ticket_qty: number;
+  ticket_price: number;
+  description: string;
+  organizer_company_name: string;
+  for_contact_phone: string;
+  for_contact_email: string;
+  source_image: File | null;
+  address: string;
+  city: string;
+  state: string;
+  zipcode: string;
+  use_map: boolean;
+  lat: number;
+  lng: number;
+  is_floor: boolean;
+  domain_url: string;
+  floorplanMode: number;
+  floorplanImage: File | null;
+  floorplanLayout: unknown[]; // Update `any` to a more specific type if possible
+  categoryplanLayout: unknown[]; // Update `any` to a more specific type if possible
+  ticket_variants: {
+    ticket_name: string;
+    ticket_price: number;
+    ticket_description: string;
+  }[];
+}
+
 
 // ::::::::::::::::::::::::::::::::: CREATE EVENT STATE
-const initialFormValues = {
+const initialFormValues: EventFormValues = {
   name: '',
   start_date: new Date(),
   end_date: new Date(),

@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext } from 'react';
+import { useEffect, useState, createContext, ReactNode } from 'react';
 import axiosInstance from 'utils/axios';
 import { useTokenState, useLayoutState } from '../zustand/store';
 
@@ -8,15 +8,24 @@ export const cl = is_dev_server ? console.log.bind(console) : () => {};
 cl('is dev: ', is_dev_server);
 
 // ::::::::::::::::::::::::: auth context provider
-export const AuthContext = createContext();
+interface AuthContextType {
+  isAuthenticated: boolean;
+  refreshUserData: () => void;
+  handleLogout: () => void;
+}
 
-export const AuthProvider = ({ children }) => {
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // ::::::::::::::::::::::: AUTH TOKEN STATES
   const { tokenValues, setTokenValues, resetTokenState } = useTokenState();
   const authToken = tokenValues.authToken;
   const isAuthenticated = 
-    authToken.refresh?.length > 0 && authToken.access?.length > 0? 
-    true : false
+    authToken.refresh?.length > 0 && authToken.access?.length > 0;
 
   // :::::::::::::::::::::::: LAYOUT STATES
   const { 
@@ -25,13 +34,13 @@ export const AuthProvider = ({ children }) => {
     resetLayoutState
   } = useLayoutState();
 
-  const showFlashMessage = (message, severity='success') => {
+  const showFlashMessage = (message: string, severity: 'success' | 'danger' = 'success') => {
     setLayoutValues({
       ...layoutValues,
       flashMessage: message,
       flashSeverity: severity,
       openFlashMessage: true
-    })
+    });
   }
 
   const closeFlashMessage = () => {
@@ -42,18 +51,15 @@ export const AuthProvider = ({ children }) => {
   const refreshUserData = async () => {  
     try {
       const response = await axiosInstance.get('/auth/status/');
-      // console.log('user data gotten: ', response.data.user);
       setTokenValues({
         ...tokenValues,
         ...response.data.user,
-      })
+      });
     } catch (error) {
-      // const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
       console.error('Error:', error.response ? error.response.data : error.message);
     }
   };
   
-
   // ::::::::::::::::::::::::::::: Logout function
   const handleLogout = async () => {
     try {
@@ -84,15 +90,13 @@ export const AuthProvider = ({ children }) => {
           'refresh': authToken.refresh 
         });
         cl('refresh response:', response.data);
-        // setAuthToken(newAuthToken);
         setTokenValues({ 
           ...tokenValues, 
           access: response.data.access, 
           refresh: response.data.refresh
-        })
+        });
       } catch (error) {
         console.error('Refresh-token failed:', error);
-        // handleLogout();
       } finally {
         setRefreshLoading(false);
       }
@@ -103,7 +107,7 @@ export const AuthProvider = ({ children }) => {
         setRefreshLoading(true);
         handleRefreshToken();
       }
-    }, (2 * 60 * 1000))
+    }, (2 * 60 * 1000));
 
     // :::::::::::::::::: clear function
     return () => clearInterval(interval);
@@ -112,11 +116,11 @@ export const AuthProvider = ({ children }) => {
   }, [authToken, refreshLoading, tokenValues]);
 
   // :::::::::::::::::: data
-  let contextData = {
-    isAuthenticated: isAuthenticated,
-    refreshUserData: refreshUserData,
-    handleLogout: handleLogout,
-  }
+  let contextData: AuthContextType = {
+    isAuthenticated,
+    refreshUserData,
+    handleLogout,
+  };
 
   return (
     <AuthContext.Provider value={contextData}>
