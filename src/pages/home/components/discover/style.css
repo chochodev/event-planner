@@ -1,0 +1,19 @@
+/* Discover.css */
+
+.slick-dots {
+  display: flex !important;
+  justify-content: center;
+}
+
+.slick-dots li {
+  width: auto;
+}
+
+.slick-dots li button:before {
+  font-size: 12px;
+  color: gray;
+}
+
+.slick-dots li.slick-active button:before {
+  color: black;
+}
