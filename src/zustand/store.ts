@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 // ::::::::::::::::::::::::::::::::: CREATE EVENT TYPE
-interface EventFormValues {
+interface EventFormState {
   name: string;
   start_date: Date;
   end_date: Date;
@@ -35,9 +35,15 @@ interface EventFormValues {
   }[];
 }
 
+interface EventFormStore {
+  formValues: EventFormState;
+  setFormValues: (values: Partial<EventFormState>) => void;
+  resetFormValues: () => void;
+}
+
 
 // ::::::::::::::::::::::::::::::::: CREATE EVENT STATE
-const initialFormValues: EventFormValues = {
+const initialFormValues: EventFormState = {
   name: '',
   start_date: new Date(),
   end_date: new Date(),
@@ -72,7 +78,7 @@ const initialFormValues: EventFormValues = {
   ]
 };
 
-const useCreateFormStore = create(
+const useCreateFormStore = create<EventFormStore>()(
   persist(
     (set) => ({
       formValues: initialFormValues,
