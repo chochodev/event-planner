@@ -1,9 +1,10 @@
-import React, { useEffect, useState, createContext } from 'react';
+import { useEffect, useState, createContext } from 'react';
+import PropTypes from 'prop-types';
 import axiosInstance from 'utils/axios';
 import { useTokenState, useLayoutState } from '../zustand/store';
 
 // ::::::::::::::::::::::::: cl as console.log
-const is_dev_server = process.env.REACT_APP_DEVELOPMENT_SERVER === 'true';
+const is_dev_server = import.meta.env.VITE_APP_DEVELOPMENT_SERVER === 'true';
 export const cl = is_dev_server ? console.log.bind(console) : () => {};
 cl('is dev: ', is_dev_server);
 
@@ -123,4 +124,8 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
