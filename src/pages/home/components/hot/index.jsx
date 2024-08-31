@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import PrimaryButton from 'components/button/primary';
 import EventCard from 'components/event_card/variant/large';
 import SubHeader from 'components/typography/sub_header';
@@ -52,11 +51,6 @@ const Hot = ({ loading, events }) => {
       </div>
     </div>
   );
-};
-
-Hot.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  events: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Hot;
