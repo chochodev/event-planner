@@ -1,3 +1,5 @@
+/* @ts-disable */
+
 import React, { 
   useEffect 
 } from 'react';

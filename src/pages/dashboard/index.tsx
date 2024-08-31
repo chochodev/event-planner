@@ -1,4 +1,3 @@
-import React from 'react';
 import DashboardLayout from './components/layout';
 import { Button } from '@mui/material';
 import { RiCalendarEventLine } from 'react-icons/ri';
