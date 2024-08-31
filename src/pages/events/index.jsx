@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import BaseInput from 'components/input';
 import HomeLayout from 'components/layout';
 import { RiSearch2Line } from 'react-icons/ri';
