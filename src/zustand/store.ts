@@ -123,7 +123,13 @@ export const useTokenState = create(
 
 
 // :::::::::::::::::::::::::::::::: LAYOUT STATE
-const initialLayoutState = {
+interface initialLayoutStateType {
+  openFlashMessage: boolean;
+  flashMessage: string;
+  flashSeverity: string;
+  loginLoading: boolean;
+}
+const initialLayoutState: initialLayoutStateType = {
   openFlashMessage: false,
   flashMessage: '',
   flashSeverity: '',

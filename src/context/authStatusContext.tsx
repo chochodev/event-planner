@@ -1,6 +1,7 @@
 import { useEffect, useState, createContext, ReactNode } from 'react';
 import axiosInstance from 'utils/axios';
 import { useTokenState, useLayoutState } from '../zustand/store';
+import axios, { AxiosError } from 'axios';
 
 // ::::::::::::::::::::::::: cl as console.log
 const is_dev_server = import.meta.env.VITE_APP_DEVELOPMENT_SERVER === 'true';
@@ -56,8 +57,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         ...response.data.user,
       });
     } catch (error) {
-      console.error('Error:', error.response ? error.response.data : error.message);
-    }
+      if (axios.isAxiosError(error)) {
+        // This type assertion tells TypeScript that error is AxiosError
+        const axiosError = error as AxiosError;
+        console.error('Error:', axiosError.response?.data || axiosError.message);
+      } else {
+        // This is an unknown error
+        console.error('An unexpected error occurred:', error);
+      }
   };
   
   // ::::::::::::::::::::::::::::: Logout function
@@ -116,7 +123,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, [authToken, refreshLoading, tokenValues]);
 
   // :::::::::::::::::: data
-  let contextData: AuthContextType = {
+  const contextData: AuthContextType = {
     isAuthenticated,
     refreshUserData,
     handleLogout,
