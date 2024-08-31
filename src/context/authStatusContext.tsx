@@ -1,4 +1,4 @@
-import { useEffect, useState, createContext, ReactNode } from 'react';
+import React, { useEffect, useState, createContext, ReactNode } from 'react';
 import axiosInstance from 'utils/axios';
 import { useTokenState, useLayoutState } from '../zustand/store';
 import axios, { AxiosError } from 'axios';
@@ -54,7 +54,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 
   // ::::::::::::::::::: get session status function
-  const refreshUserData = async () => {  
+  const refreshUserData = async () => {
     try {
       const response = await axiosInstance.get('/auth/status/');
       setTokenValues({
@@ -70,6 +70,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         // This is an unknown error
         console.error('An unexpected error occurred:', error);
       }
+    }
   };
   
   // ::::::::::::::::::::::::::::: Logout function
@@ -104,8 +105,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         cl('refresh response:', response.data);
         setTokenValues({ 
           ...tokenValues, 
-          access: response.data.access, 
-          refresh: response.data.refresh
+          authToken: {
+            access: response.data.access, 
+            refresh: response.data.refresh
+          }
         });
       } catch (error) {
         console.error('Refresh-token failed:', error);
@@ -139,4 +142,4 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+}
