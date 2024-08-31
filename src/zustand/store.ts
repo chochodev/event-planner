@@ -90,8 +90,86 @@ const useCreateFormStore = create(
 
 export default useCreateFormStore;
 
-// ::::::::::::::::::::::::::::::::::::: USER TOKEN STATE
-const initialTokenState = {
+// // ::::::::::::::::::::::::::::::::::::: USER TOKEN STATE
+// const initialTokenState = {
+//   authToken: {
+//     access: '', 
+//     refresh: ''
+//   },
+//   firstname: 'Anonymous',
+//   profile_image: '',
+//   is_active: '',
+//   is_verified: '',
+// }
+
+// export const useTokenState = create(
+//   persist(
+//     (set) => ({
+//       tokenValues: initialTokenState,
+//       setTokenValues: (values) => {
+//         set((state) => {
+//           const newTokenValues = { ...state.tokenValues, ...values };
+//           return { tokenValues: newTokenValues };
+//         });
+//       },
+//       resetTokenState: () => set({ tokenValues: initialTokenState }),
+//     }),
+//     {
+//       name: 'token-storage',
+//       storage: createJSONStorage(() => sessionStorage),
+//     }
+//   )
+// );
+
+
+// // :::::::::::::::::::::::::::::::: LAYOUT STATE
+// export interface layoutStateType {
+//   openFlashMessage: boolean;
+//   flashMessage: string;
+//   flashSeverity: string;
+//   loginLoading: boolean;
+// }
+
+// const initialLayoutState: layoutStateType = {
+//   openFlashMessage: false,
+//   flashMessage: '',
+//   flashSeverity: '',
+//   loginLoading: false,
+// }
+
+// export const useLayoutState = create(
+//   (set) => ({
+//     layoutValues: initialLayoutState,
+//     setLayoutValues: (values) => {
+//       set((state) => {
+//         const newLayoutValues: layoutStateType = { ...state.layoutValues, ...values };
+//         return { layoutValues: newLayoutValues };
+//       });
+//     },
+//     resetLayoutState: () => set({ layoutValues: initialLayoutState }),
+//   })
+// );
+
+
+// ::::::::::::::::::::::::::::: Token State
+interface TokenState {
+  authToken: {
+    access: string;
+    refresh: string;
+  };
+  firstname: string;
+  profile_image: string;
+  is_active: string;
+  is_verified: string;
+}
+
+interface TokenStore {
+  tokenValues: TokenState;
+  setTokenValues: (values: Partial<TokenState>) => void;
+  resetTokenState: () => void;
+}
+
+const initialTokenState: TokenState = {
   authToken: {
     access: '', 
     refresh: ''
@@ -100,18 +178,15 @@ const initialTokenState = {
   profile_image: '',
   is_active: '',
   is_verified: '',
-}
+};
 
-export const useTokenState = create(
+export const useTokenState = create<TokenStore>()(
   persist(
     (set) => ({
       tokenValues: initialTokenState,
-      setTokenValues: (values) => {
-        set((state) => {
-          const newTokenValues = { ...state.tokenValues, ...values };
-          return { tokenValues: newTokenValues };
-        });
-      },
+      setTokenValues: (values) => set((state) => ({
+        tokenValues: { ...state.tokenValues, ...values }
+      })),
       resetTokenState: () => set({ tokenValues: initialTokenState }),
     }),
     {
@@ -121,31 +196,31 @@ export const useTokenState = create(
   )
 );
 
-
-// :::::::::::::::::::::::::::::::: LAYOUT STATE
-interface initialLayoutStateType {
+// ::::::::::::::::::::::::::::: Layout State
+export interface LayoutState {
   openFlashMessage: boolean;
   flashMessage: string;
   flashSeverity: string;
   loginLoading: boolean;
 }
-const initialLayoutState: initialLayoutStateType = {
+
+interface LayoutStore {
+  layoutValues: LayoutState;
+  setLayoutValues: (values: Partial<LayoutState>) => void;
+  resetLayoutState: () => void;
+}
+
+const initialLayoutState: LayoutState = {
   openFlashMessage: false,
   flashMessage: '',
   flashSeverity: '',
   loginLoading: false,
-}
+};
 
-export const useLayoutState = create(
-  (set) => ({
-    layoutValues: initialLayoutState,
-    setLayoutValues: (values) => {
-      set((state) => {
-        const newLayoutValues = { ...state.layoutValues, ...values };
-        return { layoutValues: newLayoutValues };
-      });
-    },
-    resetLayoutState: () => set({ layoutValues: initialLayoutState }),
-  })
-);
-
+export const useLayoutState = create<LayoutStore>((set) => ({
+  layoutValues: initialLayoutState,
+  setLayoutValues: (values) => set((state) => ({
+    layoutValues: { ...state.layoutValues, ...values }
+  })),
+  resetLayoutState: () => set({ layoutValues: initialLayoutState }),
+}));

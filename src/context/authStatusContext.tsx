@@ -23,7 +23,12 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // ::::::::::::::::::::::: AUTH TOKEN STATES
-  const { tokenValues, setTokenValues, resetTokenState } = useTokenState();
+  const { 
+    tokenValues, 
+    setTokenValues, 
+    resetTokenState 
+  } = useTokenState();
+
   const authToken = tokenValues.authToken;
   const isAuthenticated = 
     authToken.refresh?.length > 0 && authToken.access?.length > 0;
