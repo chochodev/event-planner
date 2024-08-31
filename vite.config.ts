@@ -15,8 +15,5 @@ export default defineConfig({
       pages: "/src/pages",
       store: "/src/zustand",
     },
-  },
-  worker: {
-    plugins: () => [tsconfigPaths()],
-  },
+  }
 })

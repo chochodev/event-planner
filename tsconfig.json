@@ -1,20 +1,31 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" }
-  ],
-  "include": ["src/**/*", "vite-env.d.ts"],
   "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
     "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "components/*":["./src/components/*"],
-      "assets": ["./src/assets/*"],
-      "context": ["./src/context/*"],
-      "routes": ["./src/routes/*"],
-      "utils": ["./src/utils/*"],
-      "pages": ["./src/pages/*"],
-      "store": ["./src/zustand/*"],
+      "components/*": ["src/components/*"],
+      "assets/*": ["src/assets/*"],
+      "context/*": ["src/context/*"],
+      "routes/*": ["src/routes/*"],
+      "utils/*": ["src/utils/*"],
+      "pages/*": ["src/pages/*"],
+      "store/*": ["src/zustand/*"]
     }
-  }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
