@@ -1,4 +1,3 @@
-import React from 'react';
 import PrimaryButton from 'components/button/primary';
 import PrimaryLink from 'components/link/primary';
 import SubHeader from 'components/typography/sub_header';
