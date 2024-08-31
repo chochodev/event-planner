@@ -14,5 +14,8 @@ export default defineConfig({
       pages: "/src/pages",
       store: "/src/zustand",
     },
+  },
+  build: {
+    outDir: 'dist'
   }
 })
