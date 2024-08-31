@@ -1,4 +1,3 @@
-import React from 'react';
 import PrimaryButton from 'components/button/primary';
 import PrimaryLink from 'components/link/primary';
 import { BsDot } from "react-icons/bs";
@@ -17,7 +16,7 @@ const Hero = () => {
           <div className='flex flex-col gap-[1.5rem] w-full '>
             <p className='text-[0.875rem] font-[600] text-black/50'>CREATE, EXPLORE, & BOOK EVENTS.</p>
             <h1 className='text-[2.5rem] sm:text-[3rem] text-black font-[700] leading-[1.15] '>Transform Your Ideas into Unforgettable Events</h1>
-            <p className='text-[0.75rem] text-secondary-dark'>At Event Planner, we specialize in creating memorable events tailored to your unique needs. Our experienced team handles every detail, ensuring a seamless and stress-free experience for you. Whether you're planning a wedding, corporate event, or a social gathering, we bring your vision to life.</p>
+            <p className='text-[0.75rem] text-secondary-dark'>At Event Planner, we specialize in creating memorable events tailored to your unique needs. Our experienced team handles every detail, ensuring a seamless and stress-free experience for you. Whether you&apos;re planning a wedding, corporate event, or a social gathering, we bring your vision to life.</p>
 
             <div className='flex max-sm:justify-between gap-[1rem] xmd:max-xlg:mx-auto w-max'>
               <div className='w-max'>
