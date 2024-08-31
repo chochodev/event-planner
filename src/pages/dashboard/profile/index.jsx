@@ -55,7 +55,7 @@ const ProfileSetting = () => {
   useEffect(() => {
     setForm(initialFormState);
     if (initialFormState.profile_image) {
-      setImagePreviewUrl(`https://res.cloudinary.com/${import.meta.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/${initialFormState.profile_image}`);
+      setImagePreviewUrl(`https://res.cloudinary.com/${import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME}/${initialFormState.profile_image}`);
     }
   }, [initialFormState]);
 
@@ -124,7 +124,7 @@ const ProfileSetting = () => {
   const handleReset = () => {
     setForm(initialFormState);
     if (initialFormState.profile_image) {
-      setImagePreviewUrl(`https://res.cloudinary.com/${import.meta.env.REACT_APP_CLOUDINARY_CLOUD_NAME}/${initialFormState.profile_image}`);
+      setImagePreviewUrl(`https://res.cloudinary.com/${import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME}/${initialFormState.profile_image}`);
     } else {
       setImagePreviewUrl('');
     }

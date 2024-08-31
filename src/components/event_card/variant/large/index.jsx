@@ -17,7 +17,7 @@ const EventCard = ({ event }) => {
   const formattedDate = formatDate(date);
 
   // :::::::::::::::::::::: IMAGE 
-  const cloud_name = import.meta.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+  const cloud_name = import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME;
   const imageUrl = `https://res.cloudinary.com/${cloud_name}/${event.source_image}`;
 
   // ::::::::::::::::::::::: GO TO EVENT

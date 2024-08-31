@@ -55,7 +55,7 @@ export default function MyEventList() {
   const { firstname }= useContext(AuthContext);
   
   // :::::::::::::::::::::: IMAGE 
-  const cloud_name = import.meta.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+  const cloud_name = import.meta.env.VITE_APP_CLOUDINARY_CLOUD_NAME;
 
   // :::::::::::::::::::::: HANDLE ONCLICK
   const router = Router();
