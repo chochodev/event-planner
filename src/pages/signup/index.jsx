@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Button, 
@@ -243,7 +243,7 @@ const SignUp = () => {
         <Logo theme='white' className='w-[5.5rem]' />
         <div className='flex flex-col gap-[1rem] '>
           <h2 className='text-[2rem] xmd:text-[3rem] font-[600] text-white leading-[1.05] '>Plan Unforgettable Events with Ease</h2>
-          <p className='text-[0.875rem] text-white '>Join us today and start creating memorable moments, hassle-free! By signing up, you'll gain access to a world of exciting features tailored just for you.</p>
+          <p className='text-[0.875rem] text-white '>Join us today and start creating memorable moments, hassle-free! By signing up, you&apos;ll gain access to a world of exciting features tailored just for you.</p>
           <p className='text-white/80 text-[0.75rem] '>Join Hive today and take the first step towards a more organized and exciting life!</p>
         </div>
       </div>
