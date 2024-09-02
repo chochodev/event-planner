@@ -1,4 +1,3 @@
-import React from 'react';
 import { Modal } from '@mui/material';
 import { GiCheckMark } from "react-icons/gi";
 import PrimaryLink from 'components/link/primary/variant/outlined';
