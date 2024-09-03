@@ -31,12 +31,6 @@ This should entail a straight forward signup experience.
 This would be a cliche signing in method.
 
 
-<!-- :::::::::::::::::::::::::::::::::::::::: -->
-csrf token: thought I take care of it
-<!-- :::::::::::::::::::::::::::::::::::::::: -->
-
-
-
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
