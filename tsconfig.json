@@ -18,7 +18,15 @@
     
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "components/*": ["src/components/*"],
+      "assets/*": ["src/assets/*"],
+      "context/*": ["src/context/*"],
+      "routes/*": ["src/routes/*"],
+      "utils/*": ["src/utils/*"],
+      "pages/*": ["src/pages/*"],
+      "store/*": ["src/zustand/*"],
+      "ui/*": ["./src/components/ui/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"],

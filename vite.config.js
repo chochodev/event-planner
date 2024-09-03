@@ -15,6 +15,7 @@ export default defineConfig({
       utils: "/src/utils",
       pages: "/src/pages",
       store: "/src/zustand",
+      ui: "/src/components/ui",
     },
   },
   build: {

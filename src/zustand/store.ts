@@ -145,8 +145,9 @@ export const useTokenState = create<TokenStore>()(
 // ::::::::::::::::::::::::::::: Layout State
 export interface LayoutState {
   openFlashMessage: boolean;
+  flashTitle: string;
   flashMessage: string;
-  flashSeverity: string;
+  flashSeverity: 'success' | 'danger' | 'warning' | 'message';
   loginLoading: boolean;
 }
 
@@ -158,8 +159,9 @@ interface LayoutStore {
 
 const initialLayoutState: LayoutState = {
   openFlashMessage: false,
+  flashTitle: '',
   flashMessage: '',
-  flashSeverity: '',
+  flashSeverity: 'success',
   loginLoading: false,
 };
 

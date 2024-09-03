@@ -18,6 +18,7 @@ import { Modal, Skeleton, Popover } from '@mui/material';
 import { AuthContext } from 'context/authStatusContext';
 import { useTokenState } from '../../zustand/store';
 import FlashMessage from 'components/alert';
+import Alert from 'ui/alert';
 
 
 const Header = () => {
@@ -91,6 +92,7 @@ const Header = () => {
       className={`sticky top-0 left-0 z-[10] w-full bg-primary border-solid border-black/20 border-x-0 border-t-0 border-b-[1px] `}
     >
       <FlashMessage />
+      <Alert />
       {!isAuthenticated &&
       <div className='flex flex-col items-center justify-center w-full bg-secondary px-[1rem] sm:px-[2rem] '>
         <div className='flex max-sm:flex-col gap-y-[0.875rem] justify-between items-start sm:items-center py-[0.5rem] max-w-[75rem] w-full mx-auto'>
