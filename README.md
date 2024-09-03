@@ -33,4 +33,4 @@ This would be a cliche signing in method.
 
 # React + TypeScript + Vite
 
-
+Guide: [vite](https://vitejs.dev/guide/)
