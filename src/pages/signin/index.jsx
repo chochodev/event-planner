@@ -8,7 +8,6 @@ import {
 import Logo from 'components/logo';
 import { useLayoutState, useTokenState } from '../../zustand/store';
 import axiosInstance from 'utils/axios';
-// import FlashMessage from 'components/alert';
 import Alert from '@/components/ui/alert';
 import { cl } from 'context/authStatusContext';
 import useFlashMessage from '@/utils/flashMessage';
@@ -32,10 +31,10 @@ const SignIn = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     
+    // ::::::::::::::::::::::::::: set login loading state to true
     setLayoutValues({
       ...layoutValues,
-      loginLoading: true,
-      openFlashMessage: true,
+      loginLoading: true
     })
   
     const logInForm = {
@@ -61,8 +60,8 @@ const SignIn = () => {
       
       // :::::::: closes the flash message and redirect
       setTimeout(() => {
-        // window.location.href = '/';
-      }, 20000);
+        window.location.href = '/';
+      }, 2000);
     } catch (error) {
       const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
       

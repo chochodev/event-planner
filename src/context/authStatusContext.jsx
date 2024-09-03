@@ -2,6 +2,7 @@ import { useEffect, useState, createContext } from 'react';
 import PropTypes from 'prop-types';
 import axiosInstance from 'utils/axios';
 import { useTokenState, useLayoutState } from '../zustand/store';
+import useFlashMessage from '@/utils/flashMessage';
 
 // ::::::::::::::::::::::::: cl as console.log
 const is_dev_server = import.meta.env.VITE_APP_DEVELOPMENT_SERVER === 'true';
@@ -10,23 +11,6 @@ cl('is dev: ', is_dev_server);
 
 // ::::::::::::::::::::::::: auth context provider
 export const AuthContext = createContext();
-
-export const useFlashMessage = (title, message, severity='success') => {
-  const { 
-    layoutValues, 
-    setLayoutValues
-  } = useLayoutState();
-
-  // cl('updated layout values: ', layoutValues);
-  
-  setLayoutValues({
-    ...layoutValues,
-    flashTitle: title,
-    flashMessage: message,
-    flashSeverity: severity,
-    openFlashMessage: true,
-  })
-}
 
 export const AuthProvider = ({ children }) => {
   // ::::::::::::::::::::::: AUTH TOKEN STATES
@@ -37,21 +21,19 @@ export const AuthProvider = ({ children }) => {
     true : false
 
   // :::::::::::::::::::::::: LAYOUT STATES
-  const { 
-    layoutValues, 
-    setLayoutValues,
-    resetLayoutState
-  } = useLayoutState();
+  const { resetLayoutState } = useLayoutState();
 
-  const showFlashMessage = (title, message, severity='success') => {
-    setLayoutValues({
-      ...layoutValues,
-      flashTitle: title,
-      flashMessage: message,
-      flashSeverity: severity,
-      openFlashMessage: true
-    })
-  }
+  const flashMessage = useFlashMessage();
+
+  // const showFlashMessage = (title, message, severity='success') => {
+  //   setLayoutValues({
+  //     ...layoutValues,
+  //     flashTitle: title,
+  //     flashMessage: message,
+  //     flashSeverity: severity,
+  //     openFlashMessage: true
+  //   })
+  // }
 
   const closeFlashMessage = () => {
     resetLayoutState();
@@ -81,11 +63,12 @@ export const AuthProvider = ({ children }) => {
       }));
 
       // ::::::::::::::::: show flash message
-      showFlashMessage('Login Success', 'User logged out successfully', 'success');
+      flashMessage('Login Success', 'User logged out successfully', 'success');
+
     } catch (error) {
       // ::::::::::::::::: show flash message
-      showFlashMessage('Login Error', 'User is not logged in', 'danger');
-      console.error('Logout failed:', error);
+      flashMessage('Login Error', 'User is not logged in', 'danger');
+      console.error('Logout Error:', error);
     } finally {
       // ::::::::::::::::: resets the tokens
       resetTokenState();
@@ -120,12 +103,14 @@ export const AuthProvider = ({ children }) => {
       }
     }
 
+    const time = 2; // :::::::::::: no of minutes
+
     const interval = setInterval(() => {
       if (isAuthenticated) {
         setRefreshLoading(true);
         handleRefreshToken();
       }
-    }, (2 * 60 * 1000))
+    }, (time * 60 * 1000))
 
     // :::::::::::::::::: clear function
     return () => clearInterval(interval);
