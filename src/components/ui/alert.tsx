@@ -1,7 +1,7 @@
 import { 
   useEffect 
 } from 'react';
-import { Button, Collapse } from '@mui/material';
+import { Collapse } from '@mui/material';
 import { 
   RiCheckboxCircleLine, 
   RiCloseLine, 
@@ -32,7 +32,7 @@ const Alert = () => {
   // :::::::::::::::::::::::: LAYOUT STATES
   const { 
     layoutValues,
-    resetLayoutState,
+    resetLayoutState
   } = useLayoutState();
     
   const { 
@@ -46,34 +46,42 @@ const Alert = () => {
     resetLayoutState();
   }
 
+  // :::::::::::::::::: removes the alert after 10000 of not calling handleCloseFlashMessage
   useEffect(() => {
     cl('layout values: ', layoutValues);
-  }, [layoutValues]);
+
+    const timeout = setTimeout(() => {
+      resetLayoutState();
+    }, 10000);
+
+    // :::::::::::::::::: Cleanup function to clear the timeout
+    return () => clearTimeout(timeout);
+  }, []);
   
   return (
     <div className='sticky top-0 z-[900] left-0 w-full bg-primary'>
-      <Collapse in={true || openFlashMessage}>
+      <Collapse in={openFlashMessage}>
         <div
-          className={`flex items-center gap-[0.25rem] sm:gap-[0.5rem] p-4 rounded-lg 
-          ${flashSeverity === 'success' ? 'bg-success-200' :
-            flashSeverity === 'warning' ? 'bg-yellow-500' :
-            flashSeverity === 'danger' ? 'bg-red-500' :
-            flashSeverity === 'message' ? 'bg-blue-500' : 'bg-slate-500'}`}
+          className={cn('flex items-center justify-between gap-[0.25rem] sm:gap-[0.5rem] sm:px-4 p-2  border-solid border-[1px] ',
+            {
+              'bg-green-50 text-green-400 [&_h3]:text-green-600 border-green-200 ': flashSeverity === 'success',
+              'bg-yellow-50 text-yellow-400 [&_h3]:text-yellow-600 border-yellow-200 ': flashSeverity === 'warning',
+              'bg-red-50 text-red-400 [&_h3]:text-red-600 border-red-200 ': flashSeverity === 'danger',
+              'bg-blue-50 text-blue-400 [&_h3]:text-blue-600 border-blue-200 ': flashSeverity === 'message',
+            }
+          )}
         >
-          {renderIcon(flashSeverity)}
-          <div>
-            <h3 className='text-success-600 '>{flashTitle || 'Null title'}</h3>
-            <span className={`${
-              flashSeverity === 'success' ? 'text-success-500' :
-              flashSeverity === 'warning' ? 'text-yellow-500' :
-              flashSeverity === 'danger' ? 'text-red-500' :
-              flashSeverity === 'message' ? 'text-blue-500' : 'text-slate-500'
-            }`}>
-              {flashMessage || 'Null message body that is supposed to contain data.'}
-            </span>
+          <div className='flex items-center gap-[0.5rem] sm:gap-[0.875rem] '>
+            {renderIcon(flashSeverity)}
+            <div className='flex flex-col '>
+              <h3 className='text-[0.75rem] sm:text-[0.875rem] font-[500] '>{flashTitle || 'Null title'}</h3>
+              <span className='text-[0.75rem] sm:text-[0.875rem]'>
+                {flashMessage || 'Null message body that is supposed to contain data.'}
+              </span>
+            </div>
           </div>
           <button
-            className={cn('')}
+            className={cn('p-2 rounded-full hover:text-slate-700 ease-250')}
             onClick={handleCloseFlashMessage}
           >
             <RiCloseLine className={'text-[1rem] sm:text-[1.25rem]'} />
