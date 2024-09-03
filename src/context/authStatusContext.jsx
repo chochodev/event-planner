@@ -6,6 +6,7 @@ import useFlashMessage from '@/utils/flashMessage';
 
 // ::::::::::::::::::::::::: cl as console.log
 const is_dev_server = import.meta.env.VITE_APP_DEVELOPMENT_SERVER === 'true';
+// eslint-disable-next-line react-refresh/only-export-components
 export const cl = is_dev_server ? console.log.bind(console) : () => {};
 cl('is dev: ', is_dev_server);
 
