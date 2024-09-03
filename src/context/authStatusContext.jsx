@@ -1,7 +1,7 @@
 import { useEffect, useState, createContext } from 'react';
 import PropTypes from 'prop-types';
 import axiosInstance from 'utils/axios';
-import { useTokenState, useLayoutState } from '../zustand/store';
+import { useTokenState } from '../zustand/store';
 import useFlashMessage from '@/utils/flashMessage';
 
 // ::::::::::::::::::::::::: cl as console.log
@@ -22,8 +22,6 @@ export const AuthProvider = ({ children }) => {
     true : false
 
   // :::::::::::::::::::::::: LAYOUT STATES
-  const { resetLayoutState } = useLayoutState();
-
   const flashMessage = useFlashMessage();
 
   // const showFlashMessage = (title, message, severity='success') => {
@@ -35,10 +33,6 @@ export const AuthProvider = ({ children }) => {
   //     openFlashMessage: true
   //   })
   // }
-
-  const closeFlashMessage = () => {
-    resetLayoutState();
-  }
 
   // ::::::::::::::::::: get session status function
   const refreshUserData = async () => {  
@@ -74,7 +68,6 @@ export const AuthProvider = ({ children }) => {
       // ::::::::::::::::: resets the tokens
       resetTokenState();
       setTimeout(() => {
-        closeFlashMessage();
         window.location.href = '/';
       }, 1500);
     }
