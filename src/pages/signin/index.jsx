@@ -11,37 +11,22 @@ import axiosInstance from 'utils/axios';
 // import FlashMessage from 'components/alert';
 import Alert from '@/components/ui/alert';
 import { cl } from 'context/authStatusContext';
+import useFlashMessage from '@/utils/flashMessage';
 
 
 const SignIn = () => {
   // :::::::::::::::::::::::: STATES
   const { setTokenValues, resetTokenState } = useTokenState();
-  const { 
-    layoutValues, 
-    setLayoutValues
-  } = useLayoutState();
+  const { layoutValues, setLayoutValues } = useLayoutState();
   const { loginLoading } = layoutValues;
+  const flashMessage = useFlashMessage();
   
   useEffect(() => {
     cl('updated layout values: ', layoutValues);
     
   }, [layoutValues, setLayoutValues])
   
-  cl('loading: ', loginLoading);
-  
   // ::::::::::::::::::::: functions
-  const showFlashMessage = (title, message, severity='success') => {
-    cl('updated layout values: ', layoutValues);
-    
-    setLayoutValues({
-      ...layoutValues,
-      flashTitle: title,
-      flashMessage: message,
-      flashSeverity: severity,
-      openFlashMessage: true,
-    })
-
-  }
 
   // ::::::::::::::::::::::::: submit form function
   const handleLogin = async (e) => {
@@ -50,6 +35,7 @@ const SignIn = () => {
     setLayoutValues({
       ...layoutValues,
       loginLoading: true,
+      openFlashMessage: true,
     })
   
     const logInForm = {
@@ -63,18 +49,11 @@ const SignIn = () => {
       const response = await axiosInstance.post('/auth/signin/', logInForm);
       
       // ::::::::::::::::: show flash message
-      // showFlashMessage(
-      //   'Login Success',
-      //   response.data?.message || 'User logged in successfully', 
-      //   'success'
-      // );
-      setLayoutValues({
-        ...layoutValues,
-        // flashTitle: 'Login Success',
-        // flashMessage: response.data?.message || 'User logged in successfully',
-        // flashSeverity: 'success',
-        openFlashMessage: true,
-      });
+      flashMessage(
+        'Login Success',
+        response.data?.message || 'User logged in successfully', 
+        'success'
+      );
 
       // ::::::::::::::::: set login tokens
       setTokenValues(response.data?.token)
@@ -88,7 +67,7 @@ const SignIn = () => {
       const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
       
       // ::::::::::::::::: show flash message
-      showFlashMessage(
+      flashMessage(
         'Login Error', 
         errorMessage, 
         'danger'
@@ -102,12 +81,6 @@ const SignIn = () => {
       setTimeout(() => {
         window.location.reload();
       }, 3000);
-    } finally {  
-      // ::::::::::::::::::::: set loading to false
-      setLayoutValues({
-        ...layoutValues,
-        loginLoading: false,
-      })
     }
   };
 

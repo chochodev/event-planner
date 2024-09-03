@@ -11,6 +11,23 @@ cl('is dev: ', is_dev_server);
 // ::::::::::::::::::::::::: auth context provider
 export const AuthContext = createContext();
 
+export const useFlashMessage = (title, message, severity='success') => {
+  const { 
+    layoutValues, 
+    setLayoutValues
+  } = useLayoutState();
+
+  // cl('updated layout values: ', layoutValues);
+  
+  setLayoutValues({
+    ...layoutValues,
+    flashTitle: title,
+    flashMessage: message,
+    flashSeverity: severity,
+    openFlashMessage: true,
+  })
+}
+
 export const AuthProvider = ({ children }) => {
   // ::::::::::::::::::::::: AUTH TOKEN STATES
   const { tokenValues, setTokenValues, resetTokenState } = useTokenState();
@@ -62,8 +79,11 @@ export const AuthProvider = ({ children }) => {
       await axiosInstance.post('/auth/logout/', JSON.stringify({
         refresh_token: authToken.refresh 
       }));
+
+      // ::::::::::::::::: show flash message
       showFlashMessage('Login Success', 'User logged out successfully', 'success');
     } catch (error) {
+      // ::::::::::::::::: show flash message
       showFlashMessage('Login Error', 'User is not logged in', 'danger');
       console.error('Logout failed:', error);
     } finally {
@@ -72,7 +92,7 @@ export const AuthProvider = ({ children }) => {
       setTimeout(() => {
         closeFlashMessage();
         window.location.href = '/';
-      }, 1000);
+      }, 1500);
     }
   };
 
