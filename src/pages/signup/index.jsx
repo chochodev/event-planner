@@ -9,23 +9,15 @@ import {
 } from '@mui/material';
 import Logo from 'components/logo';
 import axiosInstance from 'utils/axios';
-import FlashMessage from 'components/alert';
-import Message from 'components/message';
+import Alert from '@/components/ui/alert';
+import useFlashMessage from '@/utils/flashMessage';
+import { cl } from '@/context/authStatusContext';
 
 const SignUp = () => {
-  const [openFlashMessage, setOpenFlashMessage] = useState(false);
-  const [flashMessage, setFlashMessage] = useState('');
-  const [flashSeverity, setFlashSeverity] = useState('success');
   const [loading, setLoading] = useState(false);
+  const flashMessage = useFlashMessage();
 
-  // :::::::::::::::::::::::: message
-  const [isMessageOpen, setIsMessageOpen] = useState(false);
-  const [messageContent, setMessageContent] = useState('Your operation was successful.');
-
-  const handleCloseMessage = () => {
-    setIsMessageOpen(false);
-  };
-
+  // :::::::::::::::::: state
 
   const [form, setForm] = useState({
     first_name: '',
@@ -52,52 +44,27 @@ const SignUp = () => {
 
     try {
       const response = await axiosInstance.post('/auth/signup/', form);
-      // console.log('Success:', response.data);
-      setFlashMessage(response.data?.success || 'User created successfully');
-      setFlashSeverity('success');
-      setOpenFlashMessage(true);
+      cl('Success:', response.data);
+      // ::::::::::::::::: show flash message
+      flashMessage('Signup Successful', response.data?.success || 'User created successfully', 'success');
       setLoading(false);
-      
-      // closes the flash message and redirect
-      setTimeout(() => {
-        setOpenFlashMessage(false);
-        setMessageContent(response.data)
-        setIsMessageOpen(true);
-      }, 2000);
-      
+            
       setTimeout(() => {
         window.location.href = '/signin';
       }, 8000);
     } catch (error) {
       console.error('Error:', error.response ? error.response.data : error.message);
       const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
-      setFlashMessage(errorMessage);
-      setFlashSeverity('error');
+      
+      // ::::::::::::::::: show flash message
+      flashMessage('Signup Error', errorMessage, 'danger');
       setLoading(false);
-      setOpenFlashMessage(true);
-
-      // closes the flash message
-      setTimeout(() => {
-        setOpenFlashMessage(false);
-      }, 7000);
     }
   };
 
   return (
     <>
-    <FlashMessage
-      openFlashMessage={openFlashMessage}
-      setOpenFlashMessage={setOpenFlashMessage}
-      flashMessage={flashMessage}
-      flashSeverity={flashSeverity}
-    />
-    <Message
-      severity={flashSeverity}
-      title={messageContent.title}
-      message={messageContent.message}
-      open={isMessageOpen}
-      onClose={handleCloseMessage}
-    />
+    <Alert />
     <div className='grid grid-cols-1 md:grid-cols-2 justify-center items-center w-full min-h-screen'>
       <div className='flex flex-col gap-[1.875rem] px-[2rem] lg:px-[4rem] py-[2rem]'>
         <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Welcome</h2>

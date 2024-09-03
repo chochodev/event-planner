@@ -64,11 +64,11 @@ export const AuthProvider = ({ children }) => {
       }));
 
       // ::::::::::::::::: show flash message
-      flashMessage('Login Success', 'User logged out successfully', 'success');
+      flashMessage('Logout Success', 'User logged out successfully', 'success');
 
     } catch (error) {
       // ::::::::::::::::: show flash message
-      flashMessage('Login Error', 'User is not logged in', 'danger');
+      flashMessage('Logout Error', 'User is not logged in', 'danger');
       console.error('Logout Error:', error);
     } finally {
       // ::::::::::::::::: resets the tokens

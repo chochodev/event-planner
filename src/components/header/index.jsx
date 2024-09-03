@@ -91,7 +91,6 @@ const Header = () => {
     <header 
       className={`sticky top-0 left-0 z-[10] w-full bg-primary border-solid border-black/20 border-x-0 border-t-0 border-b-[1px] `}
     >
-      {/* <FlashMessage /> */}
       <Alert />
       {!isAuthenticated &&
       <div className='flex flex-col items-center justify-center w-full bg-secondary px-[1rem] sm:px-[2rem] '>
