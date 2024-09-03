@@ -68,13 +68,13 @@ const SignIn = () => {
       //   response.data?.message || 'User logged in successfully', 
       //   'success'
       // );
-      setLayoutValues((prevValues) => ({
-        ...prevValues,
-        flashTitle: 'Login Success',
-        flashMessage: response.data?.message || 'User logged in successfully',
-        flashSeverity: 'success',
+      setLayoutValues({
+        ...layoutValues,
+        // flashTitle: 'Login Success',
+        // flashMessage: response.data?.message || 'User logged in successfully',
+        // flashSeverity: 'success',
         openFlashMessage: true,
-      }));
+      });
 
       // ::::::::::::::::: set login tokens
       setTokenValues(response.data?.token)

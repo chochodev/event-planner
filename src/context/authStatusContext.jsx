@@ -26,9 +26,10 @@ export const AuthProvider = ({ children }) => {
     resetLayoutState
   } = useLayoutState();
 
-  const showFlashMessage = (message, severity='success') => {
+  const showFlashMessage = (title, message, severity='success') => {
     setLayoutValues({
       ...layoutValues,
+      flashTitle: title,
       flashMessage: message,
       flashSeverity: severity,
       openFlashMessage: true
@@ -61,9 +62,9 @@ export const AuthProvider = ({ children }) => {
       await axiosInstance.post('/auth/logout/', JSON.stringify({
         refresh_token: authToken.refresh 
       }));
-      showFlashMessage('User logged out successfully', 'success');
+      showFlashMessage('Login Success', 'User logged out successfully', 'success');
     } catch (error) {
-      showFlashMessage('User is not logged in', 'danger');
+      showFlashMessage('Login Error', 'User is not logged in', 'danger');
       console.error('Logout failed:', error);
     } finally {
       // ::::::::::::::::: resets the tokens
