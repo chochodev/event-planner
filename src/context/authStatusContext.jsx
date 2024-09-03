@@ -24,16 +24,6 @@ export const AuthProvider = ({ children }) => {
   // :::::::::::::::::::::::: LAYOUT STATES
   const flashMessage = useFlashMessage();
 
-  // const showFlashMessage = (title, message, severity='success') => {
-  //   setLayoutValues({
-  //     ...layoutValues,
-  //     flashTitle: title,
-  //     flashMessage: message,
-  //     flashSeverity: severity,
-  //     openFlashMessage: true
-  //   })
-  // }
-
   // ::::::::::::::::::: get session status function
   const refreshUserData = async () => {  
     try {
