@@ -1,5 +1,4 @@
-/* eslint-disable react/style-prop-object */
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Button, 
@@ -10,6 +9,7 @@ import Logo from 'components/logo';
 import { useLayoutState, useTokenState } from '../../zustand/store';
 import axiosInstance from 'utils/axios';
 // import FlashMessage from 'components/alert';
+import Alert from '@/components/ui/alert';
 import { cl } from 'context/authStatusContext';
 
 
@@ -18,31 +18,29 @@ const SignIn = () => {
   const { setTokenValues, resetTokenState } = useTokenState();
   const { 
     layoutValues, 
-    setLayoutValues,
+    setLayoutValues
   } = useLayoutState();
-  const { loginLoading, flashMessage } = layoutValues;
-
+  const { loginLoading } = layoutValues;
+  
   useEffect(() => {
-    cl('flash message: ', flashMessage);
-  }, [flashMessage, setLayoutValues])
+    cl('updated layout values: ', layoutValues);
+    
+  }, [layoutValues, setLayoutValues])
   
   cl('loading: ', loginLoading);
   
   // ::::::::::::::::::::: functions
-  const showFlashMessage = (message, severity='success') => {
+  const showFlashMessage = (title, message, severity='success') => {
+    cl('updated layout values: ', layoutValues);
+    
     setLayoutValues({
       ...layoutValues,
+      flashTitle: title,
       flashMessage: message,
       flashSeverity: severity,
       openFlashMessage: true,
     })
-  }
 
-  const closeFlashMessage = () => {
-    setLayoutValues({
-      ...layoutValues,
-      openFlashMessage: false,
-    })
   }
 
   // ::::::::::::::::::::::::: submit form function
@@ -63,18 +61,38 @@ const SignIn = () => {
   
     try {
       const response = await axiosInstance.post('/auth/signin/', logInForm);
-      showFlashMessage(response.data?.message || 'User logged in successfully', 'success');
+      
+      // ::::::::::::::::: show flash message
+      // showFlashMessage(
+      //   'Login Success',
+      //   response.data?.message || 'User logged in successfully', 
+      //   'success'
+      // );
+      setLayoutValues((prevValues) => ({
+        ...prevValues,
+        flashTitle: 'Login Success',
+        flashMessage: response.data?.message || 'User logged in successfully',
+        flashSeverity: 'success',
+        openFlashMessage: true,
+      }));
+
+      // ::::::::::::::::: set login tokens
       setTokenValues(response.data?.token)
       cl('login response: ', response.data?.token);
       
       // :::::::: closes the flash message and redirect
       setTimeout(() => {
-        // closeFlashMessage();
         // window.location.href = '/';
-      }, 1500);
+      }, 20000);
     } catch (error) {
       const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
-      showFlashMessage(errorMessage, 'error');
+      
+      // ::::::::::::::::: show flash message
+      showFlashMessage(
+        'Login Error', 
+        errorMessage, 
+        'danger'
+      );
       console.error('Error:', error.response ? error.response.data : error.message);
 
       // ::::::::: removes credentials incase there is any
@@ -82,7 +100,6 @@ const SignIn = () => {
       
       // closes the flash message
       setTimeout(() => {
-        closeFlashMessage();
         window.location.reload();
       }, 3000);
     } finally {  
@@ -96,7 +113,7 @@ const SignIn = () => {
 
   return (
     <>
-    {/* <FlashMessage /> */}
+    <Alert />
     <div className='grid grid-cols-1 md:grid-cols-2 justify-center items-center w-full min-h-screen'>
       <div className='flex flex-col gap-[1.875rem] px-[2rem] lg:px-[4rem] py-[2rem]'>
         <h2 className='text-black font-[600] text-[1.5rem] md:text-[1.25rem]'>Welcome</h2>
@@ -145,7 +162,7 @@ const SignIn = () => {
           </Button>
         </form>
         <div className='flex gap-[0.5rem] items-center'>
-          <p className='text-[0.875rem]'>Don't have an account?</p>
+          <p className='text-[0.875rem]'>Don&apos;t have an account?</p>
           <Link to="/signup" className='text-[0.875rem] text-secondary hover:underline ease-250'>Sign Up</Link>
         </div>
         <div className='flex gap-[0.5rem] mt-[-1.5rem] items-center'>
@@ -158,7 +175,7 @@ const SignIn = () => {
         <Logo theme='white' className='w-[5.5rem]' />
         <div className='flex flex-col gap-[1rem] '>
           <h2 className='text-[2rem] xmd:text-[3rem] font-[600] text-white leading-[1.05] '>Plan Unforgettable Events with Ease</h2>
-          <p className='text-[0.875rem] text-white '>Join us today and start creating memorable moments, hassle-free! By signing up, you'll gain access to a world of exciting features tailored just for you.</p>
+          <p className='text-[0.875rem] text-white '>Join us today and start creating memorable moments, hassle-free! By signing up, you&apos;ll gain access to a world of exciting features tailored just for you.</p>
           <p className='text-white/80 text-[0.75rem] '>Join Hive today and take the first step towards a more organized and exciting life!</p>
         </div>
       </div>

@@ -50,12 +50,15 @@ const Alert = () => {
   useEffect(() => {
     cl('layout values: ', layoutValues);
 
-    const timeout = setTimeout(() => {
-      resetLayoutState();
-    }, 10000);
+    if (openFlashMessage) {
+      const timeout = setTimeout(() => {
+        resetLayoutState();
+        // 10000ms = 10 seconds
+      }, 100000);
 
-    // :::::::::::::::::: Cleanup function to clear the timeout
-    return () => clearTimeout(timeout);
+      // :::::::::::::::::: Cleanup function to clear the timeout
+      return () => clearTimeout(timeout);
+    }
   }, []);
   
   return (
