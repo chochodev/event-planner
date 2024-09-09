@@ -1,4 +1,5 @@
 # EVENT PLANNER
+[notes-issues](./todo.md)
 
 # PAGES
 - [home](#home)
