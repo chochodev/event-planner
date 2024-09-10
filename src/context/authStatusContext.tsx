@@ -90,11 +90,34 @@ export const AuthProvider = ({ children }: AuthProviderProps ) => {
           }
         });
       } catch (error) {
+        let errorMessage = 'An unexpected error occurred. Please try again later.';
+
+        if (axios.isAxiosError(error)) {
+          // Handle Axios-specific errors
+          if (error.response) {
+            // Server responded with a status other than 2xx
+            if (error.response.status === 401) {
+              errorMessage = 'Session expired. Please log in again.';
+            } else if (error.response.status === 400) {
+              errorMessage = 'Invalid refresh token. Please log in again.';
+            } else {
+              errorMessage = `Error ${error.response.status}: ${error.response.data.message || 'Unable to refresh token.'}`;
+            }
+          } else if (error.request) {
+            // The request was made but no response was received
+            errorMessage = 'Network error. Please check your connection and try again.';
+          }
+        } else if (error instanceof Error) {
+          // Handle generic JavaScript errors
+          errorMessage = error.message;
+        }
+
         console.error('Refresh-token failed:', error);
-        flashMessage('User Error', 'User is not logged in', 'danger');
+        flashMessage('User Error', errorMessage, 'danger');
+
         setTimeout(() => {
           handleLogout();
-        }, 1500);
+        }, 2000);
       } finally {
         setRefreshLoading(false);
       }
