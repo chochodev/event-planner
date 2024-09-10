@@ -91,7 +91,10 @@ export const AuthProvider = ({ children }: AuthProviderProps ) => {
         });
       } catch (error) {
         console.error('Refresh-token failed:', error);
-        // handleLogout();
+        flashMessage('User Error', 'User is not logged in', 'danger');
+        setTimeout(() => {
+          handleLogout();
+        }, 1500);
       } finally {
         setRefreshLoading(false);
       }
