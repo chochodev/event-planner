@@ -97,7 +97,7 @@ export const AuthProvider = ({ children }: AuthProviderProps ) => {
       }
     };
 
-    const time = 0.2; // :::::::::::: no of minutes
+    const time = 8; // :::::::::::: no of minutes
     const interval = setInterval(() => {
       if (isAuthenticated) {
         setRefreshLoading(true);
