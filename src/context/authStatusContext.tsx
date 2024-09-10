@@ -1,25 +1,35 @@
-import { useEffect, useState, createContext } from 'react';
+import { useEffect, useState, createContext, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import axiosInstance from 'utils/axios';
 import { useTokenState } from '../zustand/store';
 import useFlashMessage from '@/utils/flashMessage';
+import axios from 'axios';
 
 // ::::::::::::::::::::::::: cl as console.log
 const is_dev_server = import.meta.env.VITE_APP_DEVELOPMENT_SERVER === 'true';
-// eslint-disable-next-line react-refresh/only-export-components
 export const cl = is_dev_server ? console.log.bind(console) : () => {};
 cl('is dev: ', is_dev_server);
 
-// ::::::::::::::::::::::::: auth context provider
-export const AuthContext = createContext();
+// ::::::::::::::::::::::::: Define AuthContextType
+interface AuthContextType {
+  isAuthenticated: boolean;
+  refreshUserData: () => Promise<void>;
+  handleLogout: () => Promise<void>;
+}
 
-export const AuthProvider = ({ children }) => {
+// ::::::::::::::::::::::::: auth context provider
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const AuthProvider = ({ children }: AuthProviderProps ) => {
   // ::::::::::::::::::::::: AUTH TOKEN STATES
   const { tokenValues, setTokenValues, resetTokenState } = useTokenState();
   const authToken = tokenValues.authToken;
-  const isAuthenticated = 
-    authToken.refresh?.length > 0 && authToken.access?.length > 0? 
-    true : false
+
+  const isAuthenticated = authToken.refresh?.length > 0 && authToken.access?.length > 0;
 
   // :::::::::::::::::::::::: LAYOUT STATES
   const flashMessage = useFlashMessage();
@@ -28,17 +38,20 @@ export const AuthProvider = ({ children }) => {
   const refreshUserData = async () => {  
     try {
       const response = await axiosInstance.get('/auth/status/');
-      // console.log('user data gotten: ', response.data.user);
       setTokenValues({
         ...tokenValues,
         ...response.data.user,
       })
-    } catch (error) {
-      // const errorMessage = error.response?.data?.error || error.message || 'An error occurred';
-      console.error('Error:', error.response ? error.response.data : error.message);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error('Error:', error.response ? error.response.data : error.message);
+      } else if (error instanceof Error) {
+        console.error('Error:', error.message);
+      } else {
+        console.error('Unknown error occurred');
+      }
     }
   };
-  
 
   // ::::::::::::::::::::::::::::: Logout function
   const handleLogout = async () => {
@@ -46,16 +59,11 @@ export const AuthProvider = ({ children }) => {
       await axiosInstance.post('/auth/logout/', JSON.stringify({
         refresh_token: authToken.refresh 
       }));
-
-      // ::::::::::::::::: show flash message
       flashMessage('Logout Success', 'User logged out successfully', 'success');
-
     } catch (error) {
-      // ::::::::::::::::: show flash message
       flashMessage('Logout Error', 'User is not logged in', 'danger');
       console.error('Logout Error:', error);
     } finally {
-      // ::::::::::::::::: resets the tokens
       resetTokenState();
       setTimeout(() => {
         window.location.href = '/';
@@ -70,45 +78,44 @@ export const AuthProvider = ({ children }) => {
     const handleRefreshToken = async () => {
       try {
         const response = await axiosInstance.post('/auth/token/refresh/', {
-          'refresh': authToken.refresh 
+          refresh: authToken.refresh
         });
         cl('refresh response:', response.data);
         // setAuthToken(newAuthToken);
         setTokenValues({ 
           ...tokenValues, 
-          access: response.data.access, 
-          refresh: response.data.refresh
-        })
+          authToken: {
+            access: response.data.access, 
+            refresh: response.data.refresh
+          }
+        });
       } catch (error) {
         console.error('Refresh-token failed:', error);
         // handleLogout();
       } finally {
         setRefreshLoading(false);
       }
-    }
+    };
 
-    const time = 2; // :::::::::::: no of minutes
-
+    const time = 0.2; // :::::::::::: no of minutes
     const interval = setInterval(() => {
       if (isAuthenticated) {
         setRefreshLoading(true);
         handleRefreshToken();
         cl('successfully refreshed the token');
       }
-    }, (time * 60 * 1000))
+    }, time * 60 * 1000);
 
-    // :::::::::::::::::: clear function
     return () => clearInterval(interval);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authToken, refreshLoading, tokenValues]);
 
-  // :::::::::::::::::: data
-  let contextData = {
-    isAuthenticated: isAuthenticated,
-    refreshUserData: refreshUserData,
-    handleLogout: handleLogout,
-  }
+  // :::::::::::::::::: context data
+  const contextData: AuthContextType = {
+    isAuthenticated,
+    refreshUserData,
+    handleLogout,
+  };
 
   return (
     <AuthContext.Provider value={contextData}>
