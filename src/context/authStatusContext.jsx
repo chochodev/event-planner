@@ -93,6 +93,7 @@ export const AuthProvider = ({ children }) => {
       if (isAuthenticated) {
         setRefreshLoading(true);
         handleRefreshToken();
+        cl('successfully refreshed the token');
       }
     }, (time * 60 * 1000))
 
