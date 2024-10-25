@@ -17,6 +17,7 @@ const EventList = lazy(() => import('pages/events'));
 const Dashboard = lazy(() => import('pages/dashboard'));
 const ProfileSetting = lazy(() => import('pages/dashboard/profile'));
 
+const EventGui = lazy(() => import('@/components/event_gui'));
 
 const MyRoute = () => {
   return (
@@ -36,13 +37,12 @@ const MyRoute = () => {
         <Route element={<Protected />}>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/dashboard/events' element={<MyEventList />} />
-          {/* ::::::: uncomment this line */}
-          {/* <Route path='/dashboard/events/create' element={<CreateEventPage />} /> */} 
+          <Route path='/dashboard/events/create' element={<CreateEventPage />} />
           <Route path='/dashboard/profile' element={<ProfileSetting />} />
         </Route>
 
-        {/* :::::::: remove this line before production */}
-        <Route path='/dashboard/events/create' element={<CreateEventPage />} />
+        {/* :::::::::::::::::: Event plan gui */}
+        <Route path='/dashboard/event/gui' element={<EventGui />} />
 
         {/* ::::::::::::::: for undefined paths */}
         <Route path="*" element={<PageNotFound />} />
