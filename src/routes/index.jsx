@@ -36,9 +36,13 @@ const MyRoute = () => {
         <Route element={<Protected />}>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/dashboard/events' element={<MyEventList />} />
-          <Route path='/dashboard/events/create' element={<CreateEventPage />} />
+          {/* ::::::: uncomment this line */}
+          {/* <Route path='/dashboard/events/create' element={<CreateEventPage />} /> */} 
           <Route path='/dashboard/profile' element={<ProfileSetting />} />
         </Route>
+
+        {/* :::::::: remove this line before production */}
+        <Route path='/dashboard/events/create' element={<CreateEventPage />} />
 
         {/* ::::::::::::::: for undefined paths */}
         <Route path="*" element={<PageNotFound />} />

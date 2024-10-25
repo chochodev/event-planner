@@ -43,37 +43,82 @@ interface EventFormStore {
 
 
 // ::::::::::::::::::::::::::::::::: CREATE EVENT STATE
+// const initialFormValues: EventFormState = {
+//   name: '',
+//   start_date: new Date(),
+//   end_date: new Date(),
+//   start_time: '',
+//   end_time: '',
+//   ticket_qty: 0,
+//   ticket_price: 0.00,
+//   description: '',
+//   organizer_company_name: '',
+//   for_contact_phone: '',
+//   for_contact_email: '',
+//   source_image: null,
+//   address: '',
+//   city: '',
+//   state: '',
+//   zipcode: '',
+//   use_map: false,
+//   lat: 41.8527,
+//   lng: 87.6158,
+//   is_floor: false,
+//   domain_url: '',
+//   floorplanMode: 0,
+//   floorplanImage: null,
+//   floorplanLayout: [],
+//   categoryplanLayout: [],
+//   ticket_variants: [
+//     {
+//       ticket_name: '',
+//       ticket_price: 0.00,
+//       ticket_description: ''
+//     }
+//   ]
+// };
+
 const initialFormValues: EventFormState = {
-  name: '',
+  name: 'TEST',
   start_date: new Date(),
   end_date: new Date(),
-  start_time: '',
-  end_time: '',
-  ticket_qty: 0,
-  ticket_price: 0.00,
-  description: '',
-  organizer_company_name: '',
-  for_contact_phone: '',
-  for_contact_email: '',
+  start_time: '12:00pm',
+  end_time: '4:30pm',
+  ticket_qty: 40,
+  ticket_price: 50.00,
+  description: 'This is the description of the test event for development',
+  organizer_company_name: 'CHOCHO TESTER',
+  for_contact_phone: '+234 903 910 8667',
+  for_contact_email: 'mikeychocho@gmail.com',
   source_image: null,
-  address: '',
-  city: '',
-  state: '',
-  zipcode: '',
+  address: 'Test Address',
+  city: 'Akure',
+  state: 'Ondo',
+  zipcode: '320105',
   use_map: false,
   lat: 41.8527,
   lng: 87.6158,
   is_floor: false,
-  domain_url: '',
+  domain_url: 'chocho',
   floorplanMode: 0,
   floorplanImage: null,
   floorplanLayout: [],
   categoryplanLayout: [],
   ticket_variants: [
     {
-      ticket_name: '',
-      ticket_price: 0.00,
-      ticket_description: ''
+      ticket_name: 'VVIP',
+      ticket_price: 80.00,
+      ticket_description: 'This is for VVIP personnel and premium users'
+    },
+    {
+      ticket_name: 'VIP',
+      ticket_price: 55.00,
+      ticket_description: 'This is for VIP experience'
+    },
+    {
+      ticket_name: 'COMMON',
+      ticket_price: 50.00,
+      ticket_description: 'this is the default price for the masses'
     }
   ]
 };
