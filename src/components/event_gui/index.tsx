@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import fabric from 'fabric';
+import { Canvas, Rect } from 'fabric';
 
 const SeatCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -7,12 +7,12 @@ const SeatCanvas = () => {
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    const canvas = new fabric.Canvas(canvasRef.current);
+    const canvas = new Canvas(canvasRef.current);
     canvas.width = 800;
     canvas.height = 600;
 
     // Example seat object
-    const seat = new fabric.Rect({
+    const seat = new Rect({
       left: 100,
       top: 100,
       fill: 'blue',
