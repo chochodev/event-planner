@@ -1,5 +1,5 @@
 import React from 'react';
-import useCreateFormStore from '../../../../../zustand/store';
+import useCreateFormStore from '@/zustand/store';
 import dayjs from 'dayjs';
 import SwitchWithLabel from 'components/switch';
 

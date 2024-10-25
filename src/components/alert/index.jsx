@@ -4,7 +4,7 @@ import {
 import { Button, Collapse } from '@mui/material';
 import { Alert } from '@mui/material';
 import { RiCheckLine, RiCloseLine, RiErrorWarningLine } from "react-icons/ri";
-import { useLayoutState } from '../../zustand/store';
+import { useLayoutState } from '@/zustand/store';
 import { cl } from 'context/authStatusContext';
 
 const FlashMessage = () => {

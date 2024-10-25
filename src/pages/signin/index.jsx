@@ -6,7 +6,7 @@ import {
   TextField
 } from '@mui/material';
 import Logo from 'components/logo';
-import { useLayoutState, useTokenState } from '../../zustand/store';
+import { useLayoutState, useTokenState } from '@/zustand/store';
 import axiosInstance from 'utils/axios';
 import Alert from '@/components/ui/alert';
 import { cl } from 'context/authStatusContext';

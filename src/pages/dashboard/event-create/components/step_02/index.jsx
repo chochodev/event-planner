@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import useCreateFormStore from '../../../../../zustand/store';
+import useCreateFormStore from '@/zustand/store';
 import BaseInput from 'components/input';
 import dayjs from 'dayjs';
 import LocationSelector from 'components/map';

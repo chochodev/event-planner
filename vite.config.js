@@ -17,6 +17,7 @@ export default defineConfig({
       pages: "/src/pages",
       store: "/src/zustand",
       ui: "/src/components/ui",
+      "@/zustand" : "/src/zustand",
     },
   },
   build: {

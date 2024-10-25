@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useCreateFormStore from '../../../../../zustand/store';
+import useCreateFormStore from '@/zustand/store';
 import BaseInput from 'components/input';
 import TicketVariants from './ticket_variant';
 

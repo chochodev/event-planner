@@ -1,13 +1,15 @@
 import { useEffect, useRef } from 'react';
-import { fabric } from 'fabric';
+import fabric from 'fabric';
 
 const SeatCanvas = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
+    if (!canvasRef.current) return;
+
     const canvas = new fabric.Canvas(canvasRef.current);
-    canvas.setWidth(800);
-    canvas.setHeight(600);
+    canvas.width = 800;
+    canvas.height = 600;
 
     // Example seat object
     const seat = new fabric.Rect({
@@ -20,13 +22,18 @@ const SeatCanvas = () => {
     });
 
     canvas.add(seat);
-    canvas.on('object:selected', (e) => {
+    
+    // Cast the event type to any to avoid TypeScript errors
+    canvas.on('object:selected' as any, (e) => {
       // handle seat selection
     });
 
-    return () => canvas.dispose();
+    return () => {
+      canvas.dispose();
+    };
   }, []);
 
   return <canvas ref={canvasRef} />;
 };
+
 export default SeatCanvas;

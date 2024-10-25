@@ -37,10 +37,10 @@ const MyRoute = () => {
         <Route element={<Protected />}>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/dashboard/events' element={<MyEventList />} />
-          <Route path='/dashboard/events/create' element={<CreateEventPage />} />
           <Route path='/dashboard/profile' element={<ProfileSetting />} />
         </Route>
 
+          <Route path='/dashboard/events/create' element={<CreateEventPage />} />
         {/* :::::::::::::::::: Event plan gui */}
         <Route path='/dashboard/event/gui' element={<EventGui />} />
 

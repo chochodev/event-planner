@@ -28,7 +28,8 @@
       "utils/*": ["src/utils/*"],
       "pages/*": ["src/pages/*"],
       "store/*": ["src/zustand/*"],
-      "ui/*": ["./src/components/ui/*"]
+      "ui/*": ["./src/components/ui/*"],
+      "@/zustand/*": ["./src/zustand/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"],

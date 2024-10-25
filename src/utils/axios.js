@@ -1,6 +1,6 @@
 // utils/csrftoken.js
 import axios from 'axios';
-import { useTokenState } from '../zustand/store';
+import { useTokenState } from '@/zustand/store';
 
 
 // :::::::::::::::: axiosInstance config

@@ -1,6 +1,6 @@
 // flashMessage.js or flashMessage.ts
 
-import { useLayoutState } from '../zustand/store';
+import { useLayoutState } from '@/zustand/store';
 
 // ::::::::::::::::::::::::: Global Flash Message Hook
 type flashSeverityType = "success" | "danger" | "warning" | "message";

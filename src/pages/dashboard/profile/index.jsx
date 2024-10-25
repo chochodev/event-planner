@@ -8,7 +8,7 @@ import BaseInput from 'components/input';
 import PrimaryLink from 'components/link/primary';
 import PrimaryLink2 from 'components/link/primary/variant/soft';
 import Loader from 'components/loader';
-import { useTokenState } from '../../../zustand/store';
+import { useTokenState } from '@/zustand/store';
 import { AuthContext } from 'context/authStatusContext';
 
 const ProfileSetting = () => {
