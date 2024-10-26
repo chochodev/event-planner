@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { RiAddLine } from "react-icons/ri";
-import useCreateFormStore from '@/zustand/store';
+import { useCreateFormStore } from '@/zustand/store';
 import BaseInput from 'components/input';
 
 const TextForm = () => {

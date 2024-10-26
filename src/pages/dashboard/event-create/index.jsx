@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Stepper, Step, Button, StepLabel } from '@mui/material';
 import HomeLayout from 'components/layout';
-import useCreateFormStore from '@/zustand/store';
+import { useCreateFormStore } from '@/zustand/store';
 import Step1Form from './components/step_01';
 import Step2Form from './components/step_02';
 import Step3Form from './components/step_03';

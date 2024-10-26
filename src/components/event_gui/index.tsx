@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Canvas, Rect } from 'fabric';
+import { fabric } from 'fabric';
 
 const SeatCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -7,25 +7,51 @@ const SeatCanvas = () => {
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    const canvas = new Canvas(canvasRef.current);
-    canvas.width = 800;
-    canvas.height = 600;
+    const canvas = new fabric.Canvas(canvasRef.current);
+    canvas.setWidth(800);
+    canvas.setHeight(600);
 
-    // Example seat object
-    const seat = new Rect({
+    // Define custom control handler for resizing
+    const customResizeHandler = (eventData: any, transform: any, x: any, y: any) => {
+      const target = transform.target;
+      const newWidth = target.width * target.scaleX + x;
+      const newHeight = target.height * target.scaleY + y;
+      target.set({ width: newWidth, height: newHeight, scaleX: 1, scaleY: 1 });
+      return true;
+    };
+
+    // ::::::::::::::: seat object
+    const seat = new fabric.Rect({
       left: 100,
       top: 100,
-      fill: 'blue',
-      width: 30,
-      height: 30,
+      fill: 'orange',
+      width: 50,
+      height: 50,
       selectable: true,
+      hasBorders: false,
+      cornerColor: 'white',
+      cornerSize: 8,
+      // cornerStyle: 'circle',
+      cornerStrokeColor: 'red',
+      transparentCorners: false,
+    });
+
+    seat.setControlsVisibility({
+      mt: false,
+      mb: true,
+      ml: false,
+      mr: true,
+      tl: false,
+      tr: false,
+      bl: false,
+      br: true,
     });
 
     canvas.add(seat);
-    
-    // Cast the event type to any to avoid TypeScript errors
-    canvas.on('object:selected' as any, (e) => {
-      // handle seat selection
+
+    // Listen for object selection
+    canvas.on('object:selected', () => {
+      console.log('selected!!');
     });
 
     return () => {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useCreateFormStore from '@/zustand/store';
+import { useCreateFormStore } from '@/zustand/store';
 import UploadImage, { UploadImageSmall } from 'components/image_input';
 import BaseInput from 'components/input';
 import SwitchWithLabel from 'components/switch';

@@ -9,7 +9,7 @@ import {
   TableRow,
   Paper
 } from '@mui/material';
-import useCreateFormStore from '@/zustand/store';
+import { useCreateFormStore } from '@/zustand/store';
 
 
 // Component for individual item inputs
