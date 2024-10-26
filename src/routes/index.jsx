@@ -36,13 +36,13 @@ const MyRoute = () => {
         {/* ::::::::::::::: Protected Routes */}
         <Route element={<Protected />}>
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/dashboard/events/create' element={<CreateEventPage />} />
           <Route path='/dashboard/events' element={<MyEventList />} />
           <Route path='/dashboard/profile' element={<ProfileSetting />} />
         </Route>
 
-          <Route path='/dashboard/events/create' element={<CreateEventPage />} />
         {/* :::::::::::::::::: Event plan gui */}
-        <Route path='/dashboard/event/gui' element={<EventGui />} />
+        <Route path='/gui' element={<EventGui />} />
 
         {/* ::::::::::::::: for undefined paths */}
         <Route path="*" element={<PageNotFound />} />
