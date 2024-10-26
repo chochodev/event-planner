@@ -30,7 +30,7 @@ const SeatCanvas = () => {
 
     seat.setControlsVisibility({
       mt: false,
-      mb: true,
+      // mb: true,
       ml: false,
       // mr: true,
       tl: false,
