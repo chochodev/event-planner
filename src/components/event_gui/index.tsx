@@ -11,15 +11,6 @@ const SeatCanvas = () => {
     canvas.setWidth(800);
     canvas.setHeight(600);
 
-    // Define custom control handler for resizing
-    const customResizeHandler = (eventData: any, transform: any, x: any, y: any) => {
-      const target = transform.target;
-      const newWidth = target.width * target.scaleX + x;
-      const newHeight = target.height * target.scaleY + y;
-      target.set({ width: newWidth, height: newHeight, scaleX: 1, scaleY: 1 });
-      return true;
-    };
-
     // ::::::::::::::: seat object
     const seat = new fabric.Rect({
       left: 100,
@@ -31,9 +22,10 @@ const SeatCanvas = () => {
       hasBorders: false,
       cornerColor: 'white',
       cornerSize: 8,
-      // cornerStyle: 'circle',
       cornerStrokeColor: 'red',
       transparentCorners: false,
+      rx: 0.25,
+      ry: 0.25,
     });
 
     seat.setControlsVisibility({
