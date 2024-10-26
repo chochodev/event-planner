@@ -32,7 +32,7 @@ const SeatCanvas = () => {
       mt: false,
       mb: true,
       ml: false,
-      mr: true,
+      // mr: true,
       tl: false,
       tr: false,
       bl: false,
