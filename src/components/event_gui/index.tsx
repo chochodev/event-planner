@@ -36,7 +36,7 @@ const SeatCanvas = () => {
       tl: false,
       tr: false,
       bl: false,
-      br: true,
+      // br: true,
     });
 
     canvas.add(seat);
