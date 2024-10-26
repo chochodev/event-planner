@@ -17,7 +17,7 @@ const EventList = lazy(() => import('pages/events'));
 const Dashboard = lazy(() => import('pages/dashboard'));
 const ProfileSetting = lazy(() => import('pages/dashboard/profile'));
 
-const EventGui = lazy(() => import('@/components/event_gui'));
+const EventGui = lazy(() => import('@/pages/gui'));
 
 const MyRoute = () => {
   return (
