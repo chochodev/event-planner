@@ -18,16 +18,13 @@ const SeatCanvas = () => {
         const parent = canvasParent.current;
 
         if (parent) {
-          console.log('parent: ', parent);
           const { width, height } = parent.getBoundingClientRect();
-          console.log('width and height: ', width, height);
           canvas.setDimensions({ width, height }, {cssOnly: false});
         }
       }
     };
 
     resizeCanvas();
-    // canvas.requestRenderAll();
     window.addEventListener('resize', resizeCanvas);
 
     // ::::::::::::::: seat object
@@ -65,6 +62,7 @@ const SeatCanvas = () => {
       console.log('selected!!');
     });
 
+    // :::::::::::::::::::: Keeps the object in bound (in the canvas)
     canvas.on('object:moving', (event) => {
       const obj = event.target;
       const { width: canvasWidth, height: canvasHeight } = canvas;
