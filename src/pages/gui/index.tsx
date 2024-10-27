@@ -181,13 +181,6 @@ const SeatCanvas = () => {
 
   return (
     <div className='relative size-full bg-gray-200'>
-      <Toolbar />
-      <div className='flex justify-between w-full'>
-        <div className='w-full max-w-[45rem] mx-auto bg-gray-100' ref={canvasParent}>
-          <canvas className='size-full' style={{width: '100%', height: '100%'}} ref={canvasRef} />
-        </div>
-        <Sidebar />
-      </div>
       <button
         onClick={toggleFloorPlanMode}
         className={`absolute bottom-4 right-4 px-4 py-2 rounded ${
@@ -196,6 +189,13 @@ const SeatCanvas = () => {
       >
         {isCreatingFloorPlan ? 'Exit Floor Plan Mode' : 'Create Floor Plan'}
       </button>
+      <Toolbar />
+      <div className='flex justify-between w-full'>
+        <div className='w-full max-w-[45rem] mx-auto bg-gray-100' ref={canvasParent}>
+          <canvas className='size-full' style={{width: '100%', height: '100%'}} ref={canvasRef} />
+        </div>
+        <Sidebar />
+      </div>
     </div>
   );
 };
