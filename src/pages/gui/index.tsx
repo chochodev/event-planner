@@ -4,6 +4,16 @@ import Toolbar from './components/toolbar';
 import Sidebar from './components/sidebar';
 import { v4 as uuidv4 } from 'uuid';
 
+// :::::::::::::::::: Custom object
+class CustomRect extends fabric.Rect {
+  readonly id: string;
+
+  constructor(options: any) {
+    super(options);
+    this.id = uuidv4(); // Assign a UUID to this object
+  }
+}
+
 const SeatCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasParent = useRef<HTMLDivElement>(null);
@@ -29,17 +39,19 @@ const SeatCanvas = () => {
     window.addEventListener('resize', resizeCanvas);
 
     // ::::::::::::::: seat object
-    const seat = new fabric.Rect({
+    const seat = new CustomRect({
       left: 100,
       top: 100,
       fill: 'orange',
       width: 50,
       height: 50,
       selectable: true,
-      hasBorders: false,
-      cornerColor: 'white',
-      cornerSize: 8,
-      cornerStrokeColor: 'red',
+      borderColor: 'green',
+      borderDashArray: [2, 4],
+      padding: 2,
+      cornerColor: 'lightblue',
+      cornerSize: 5,
+      cornerStrokeColor: 'blue',
       transparentCorners: false,
       rx: 0.25,
       ry: 0.25,
