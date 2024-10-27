@@ -15,8 +15,8 @@ const SeatCanvas = () => {
     // :::::::::::::::::: Canvas height and width
     const resizeCanvas = () => {
       if (canvasParent.current) {
-        const parent = canvasParent;
-        
+        const parent = canvasParent.current;
+
         if (parent) {
           console.log('parent: ', parent);
           const { width, height } = parent.getBoundingClientRect();
