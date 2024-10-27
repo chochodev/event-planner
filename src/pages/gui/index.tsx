@@ -27,7 +27,7 @@ const SeatCanvas = () => {
     };
 
     resizeCanvas();
-    canvas.requestRenderAll();
+    // canvas.requestRenderAll();
     window.addEventListener('resize', resizeCanvas);
 
     // ::::::::::::::: seat object
