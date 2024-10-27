@@ -54,7 +54,7 @@ const SeatCanvas = () => {
   }, []);
 
   return (
-    <div>
+    <div className='relative size-full'>
       <Toolbar />
       <div className='flex justify-between w-full'>
         <canvas className='flex-1' ref={canvasRef} />

@@ -53,7 +53,7 @@ const Separator: React.FC = () => (
 
 const Toolbar = () => {
   return (
-    <div className="flex items-center gap-1 bg-white px-[1rem] py-[0.375rem] shadow">
+    <div className="sticky top-0 left-0 z-[200] flex items-center gap-1 w-full bg-white px-[1rem] py-[0.375rem] shadow">
       <Button icon={<FileIcon className="h-4 w-4" />} tooltip="New File" />
       <Button icon={<FolderOpen className="h-4 w-4" />} tooltip="Open File" />
       <Button icon={<Save className="h-4 w-4" />} tooltip="Save File" />

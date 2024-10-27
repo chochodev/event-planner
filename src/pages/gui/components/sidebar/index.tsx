@@ -13,7 +13,7 @@ const Sidebar = () => {
   const [textColor, setTextColor] = useState('#000000')
 
   return (
-    <div className="w-[20rem] bg-gray-100 p-4 space-y-4">
+    <div className="w-[20rem] bg-gray-50 p-4 space-y-4">
       <div className="bg-white rounded-md shadow">
         <div className="flex items-center justify-between p-2 bg-gray-200 rounded-t-md">
           <span className="font-semibold">Zones</span>
