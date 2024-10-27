@@ -183,7 +183,7 @@ const SeatCanvas = () => {
     <div className='relative size-full bg-gray-200'>
       <button
         onClick={toggleFloorPlanMode}
-        className={`absolute bottom-4 right-4 px-4 py-2 rounded ${
+        className={`fixed bottom-4 right-4 px-4 py-2 rounded ${
           isCreatingFloorPlan ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'
         }`}
       >
