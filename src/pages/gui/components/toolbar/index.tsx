@@ -31,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({ icon, tooltip, ...props }) => {
   return (
     <div className="relative">
       <button
-        className="p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+        className="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 ease-250"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         {...props}
@@ -39,7 +39,7 @@ const Button: React.FC<ButtonProps> = ({ icon, tooltip, ...props }) => {
         {icon}
       </button>
       {showTooltip && (
-        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap">
+        <div className="absolute top-[calc(100%+0.5rem)] left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-200 text-gray-900 text-[0.625rem] rounded whitespace-nowrap ease-250">
           {tooltip}
         </div>
       )}
@@ -48,16 +48,17 @@ const Button: React.FC<ButtonProps> = ({ icon, tooltip, ...props }) => {
 }
 
 const Separator: React.FC = () => (
-  <div className="w-px h-6 bg-gray-300 mx-1" />
+  <div className="w-px h-6 bg-gray-300 mx-[1rem] " />
 )
 
 const Toolbar = () => {
   return (
-    <div className="flex items-center gap-1 bg-white p-1 shadow">
+    <div className="flex items-center gap-1 bg-white px-[1rem] py-[0.375rem] shadow">
       <Button icon={<FileIcon className="h-4 w-4" />} tooltip="New File" />
       <Button icon={<FolderOpen className="h-4 w-4" />} tooltip="Open File" />
       <Button icon={<Save className="h-4 w-4" />} tooltip="Save File" />
-      <Separator />
+      <div className='flex-1' />
+      {/* <Separator /> */}
       <Button icon={<MousePointer className="h-4 w-4" />} tooltip="Select" />
       <Button icon={<Move className="h-4 w-4" />} tooltip="Move" />
       <Button icon={<LayoutGrid className="h-4 w-4" />} tooltip="Grid View" />
@@ -79,7 +80,8 @@ const Toolbar = () => {
         78%
       </div>
       <Button icon={<ZoomIn className="h-4 w-4" />} tooltip="Zoom In" />
-      <Separator />
+      {/* <Separator /> */}
+      <div className='flex-1' />
       <Button icon={<QrCode className="h-4 w-4" />} tooltip="QR Code" />
     </div>
   )
