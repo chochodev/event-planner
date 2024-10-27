@@ -67,18 +67,6 @@ const SeatCanvas = () => {
 
     canvas.on('object:moving', (event) => {
       const obj = event.target;
-      // const { width: canvasWidth, height: canvasHeight } = canvas;
-
-      // if (obj && obj.width && obj.height && obj.scaleX && obj.scaleY && obj.left && obj.top && canvasHeight && canvasWidth) {
-      //   const objWidth = obj.width * obj.scaleX;
-      //   const objHeight = obj.height * obj.scaleY;
-    
-      //   // Set boundaries
-      //   if (obj.left < 1) obj.left = 1;
-      //   if (obj.top < 1) obj.top = 1;
-      //   if (obj.left + objWidth > canvasWidth) obj.left = canvasWidth - objWidth;
-      //   if (obj.top + objHeight > canvasHeight) obj.top = canvasHeight - objHeight;
-      // }
       const { width: canvasWidth, height: canvasHeight } = canvas;
 
       if (obj) {
