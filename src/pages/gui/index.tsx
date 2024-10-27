@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { fabric } from 'fabric';
+import Toolbar from './components/toolbar';
 
 const SeatCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -51,7 +52,11 @@ const SeatCanvas = () => {
     };
   }, []);
 
-  return <canvas ref={canvasRef} />;
+  return (
+    <div>
+      <Toolbar />
+      <canvas ref={canvasRef} />
+    </div>);
 };
 
 export default SeatCanvas;
