@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { fabric } from 'fabric';
 import Toolbar from './components/toolbar';
 import Sidebar from './components/sidebar';
+import { v4 as uuidv4 } from 'uuid';
 
 const SeatCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -42,6 +43,7 @@ const SeatCanvas = () => {
       transparentCorners: false,
       rx: 0.25,
       ry: 0.25,
+      id: uuidv4()
     });
 
     seat.setControlsVisibility({
