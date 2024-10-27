@@ -21,12 +21,13 @@ const SeatCanvas = () => {
           console.log('parent: ', parent);
           const { width, height } = parent.getBoundingClientRect();
           console.log('width and height: ', width, height);
-          canvas.setDimensions({ width: `${width}px`, height: `${height}px` }, {cssOnly: false});
+          canvas.setDimensions({ width, height }, {cssOnly: false});
         }
       }
     };
 
     resizeCanvas();
+    canvas.requestRenderAll();
     window.addEventListener('resize', resizeCanvas);
 
     // ::::::::::::::: seat object
