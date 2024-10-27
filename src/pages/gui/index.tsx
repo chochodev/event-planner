@@ -83,8 +83,6 @@ const SeatCanvas = () => {
       if (activeObject) {
         console.log('Selected object:', activeObject);
         // Now you can pass activeObject to the sidebar for changes
-        // For example:
-        // sidebar.updateSelection(activeObject);
       } else {
         console.log('No object selected');
       }
