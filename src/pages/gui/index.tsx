@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { fabric } from 'fabric';
 import Toolbar from './components/toolbar';
+import Sidebar from './components/sidebar';
 
 const SeatCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -55,7 +56,10 @@ const SeatCanvas = () => {
   return (
     <div>
       <Toolbar />
-      <canvas ref={canvasRef} />
+      <div className='flex justify-between w-full'>
+        <canvas className='flex-1' ref={canvasRef} />
+        <Sidebar />
+      </div>
     </div>);
 };
 
