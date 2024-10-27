@@ -46,20 +46,27 @@ const SeatCanvas = () => {
 
     seat.setControlsVisibility({
       mt: false,
-      // mb: true,
+      mb: false,
       ml: false,
-      // mr: true,
-      tl: false,
-      tr: false,
-      bl: false,
-      // br: true,
+      mr: false,
     });
 
     canvas.add(seat);
-
+    canvas.selection = true;
+    // console.log(seat.selectable);
+    
     // Listen for object selection
-    canvas.on('object:selected', () => {
-      console.log('selected!!');
+    canvas.on('selection:created', () => {
+      const activeObject = canvas.getActiveObject();
+  
+      if (activeObject) {
+        console.log('Selected object:', activeObject);
+        // Now you can pass activeObject to the sidebar for changes
+        // For example:
+        // sidebar.updateSelection(activeObject);
+      } else {
+        console.log('No object selected');
+      }
     });
 
     // :::::::::::::::::::: Keeps the object in bound (in the canvas)
