@@ -67,17 +67,27 @@ const SeatCanvas = () => {
 
     canvas.on('object:moving', (event) => {
       const obj = event.target;
+      // const { width: canvasWidth, height: canvasHeight } = canvas;
+
+      // if (obj && obj.width && obj.height && obj.scaleX && obj.scaleY && obj.left && obj.top && canvasHeight && canvasWidth) {
+      //   const objWidth = obj.width * obj.scaleX;
+      //   const objHeight = obj.height * obj.scaleY;
+    
+      //   // Set boundaries
+      //   if (obj.left < 1) obj.left = 1;
+      //   if (obj.top < 1) obj.top = 1;
+      //   if (obj.left + objWidth > canvasWidth) obj.left = canvasWidth - objWidth;
+      //   if (obj.top + objHeight > canvasHeight) obj.top = canvasHeight - objHeight;
+      // }
       const { width: canvasWidth, height: canvasHeight } = canvas;
 
-      if (obj && obj.width && obj.height && obj.scaleX && obj.scaleY && obj.left && obj.top && canvasHeight && canvasWidth) {
-        const objWidth = obj.width * obj.scaleX;
-        const objHeight = obj.height * obj.scaleY;
-    
+      if (obj) {
+        const objWidth = (obj.width ?? 0) * (obj.scaleX ?? 1);
+        const objHeight = (obj.height ?? 0) * (obj.scaleY ?? 1);
+
         // Set boundaries
-        if (obj.left < 1) obj.left = 1;
-        if (obj.top < 1) obj.top = 1;
-        if (obj.left + objWidth > canvasWidth) obj.left = canvasWidth - objWidth;
-        if (obj.top + objHeight > canvasHeight) obj.top = canvasHeight - objHeight;
+        obj.left = Math.max(0, Math.min(obj.left ?? 0, canvasWidth ?? 0 - objWidth));
+        obj.top = Math.max(0, Math.min(obj.top ?? 0, canvasHeight ?? 0 - objHeight));
       }
     });
 
