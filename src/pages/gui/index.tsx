@@ -5,13 +5,29 @@ import Sidebar from './components/sidebar';
 
 const SeatCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const canvasParent = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!canvasRef.current) return;
+    if (!canvasRef.current || !canvasParent.current) return;
 
     const canvas = new fabric.Canvas(canvasRef.current);
-    canvas.setWidth(800);
-    canvas.setHeight(600);
+    
+    // :::::::::::::::::: Canvas height and width
+    const resizeCanvas = () => {
+      if (canvasParent.current) {
+        const parent = canvasParent;
+        
+        if (parent) {
+          console.log('parent: ', parent);
+          const { width, height } = parent.getBoundingClientRect();
+          console.log('width and height: ', width, height);
+          canvas.setDimensions({ width: `${width}px`, height: `${height}px` }, {cssOnly: false});
+        }
+      }
+    };
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
     // ::::::::::::::: seat object
     const seat = new fabric.Rect({
@@ -54,10 +70,12 @@ const SeatCanvas = () => {
   }, []);
 
   return (
-    <div className='relative size-full'>
+    <div className='relative size-full bg-gray-200'>
       <Toolbar />
       <div className='flex justify-between w-full'>
-        <canvas className='flex-1' ref={canvasRef} />
+        <div className='w-full max-w-[45rem] mx-auto bg-gray-100' ref={canvasParent}>
+          <canvas className='size-full' style={{width: '100%', height: '100%'}} ref={canvasRef} />
+        </div>
         <Sidebar />
       </div>
     </div>);
