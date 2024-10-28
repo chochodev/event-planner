@@ -7,7 +7,7 @@ import {
   Move,
   LayoutGrid,
   Layout,
-  RotateCcw,
+  Plus,
   RotateCw,
   Undo,
   Redo,
@@ -18,6 +18,7 @@ import {
   ZoomIn,
   ZoomOut,
   QrCode,
+  Grid2x2Plus,
 } from 'lucide-react'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -64,8 +65,8 @@ const Toolbar = () => {
       <Button icon={<LayoutGrid className="h-4 w-4" />} tooltip="Grid View" />
       <Button icon={<Layout className="h-4 w-4" />} tooltip="Layout View" />
       <Separator />
-      <Button icon={<RotateCcw className="h-4 w-4" />} tooltip="Rotate Left" />
-      <Button icon={<RotateCw className="h-4 w-4" />} tooltip="Rotate Right" />
+      <Button icon={<Plus className="h-4 w-4" />} tooltip="Add Seat" />
+      <Button icon={<Grid2x2Plus className="h-4 w-4" />} tooltip="Add Rows" />
       <Separator />
       <Button icon={<Undo className="h-4 w-4" />} tooltip="Undo" />
       <Button icon={<Redo className="h-4 w-4" />} tooltip="Redo" />
