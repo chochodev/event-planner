@@ -1,0 +1,91 @@
+import { create } from 'zustand'
+import { fabric } from 'fabric'
+import { v4 as uuidv4 } from 'uuid'
+
+interface Seat {
+  id: string
+  left: number
+  top: number
+  radius: number
+  fill: string
+  stroke: string
+  text: string
+  textSize: number
+  textColor: string
+}
+
+interface Zone {
+  id: string
+  name: string
+  isChecked: boolean
+}
+
+interface EventGuiState {
+  canvas: fabric.Canvas | null
+  setCanvas: (canvas: fabric.Canvas) => void
+  seats: Seat[]
+  addSeat: (seat: Seat) => void
+  updateSeat: (id: string, updates: Partial<Seat>) => void
+  deleteSeat: (id: string) => void
+  selectedSeatIds: string[]
+  setSelectedSeatIds: (ids: string[]) => void
+  isCreatingFloorPlan: boolean
+  setIsCreatingFloorPlan: (isCreating: boolean) => void
+  zones: Zone[]
+  addZone: (name: string) => void
+  updateZone: (id: string, updates: Partial<Zone>) => void
+  deleteZone: (id: string) => void
+  zoomLevel: number
+  setZoomLevel: (level: number) => void
+}
+
+export const useEventGuiStore = create<EventGuiState>((set) => ({
+  
+  // ::::::::::::::::::: Canvas state
+  canvas: null,
+  // ::::::::::::::::::: Modifier: canvas state function 
+  setCanvas: (canvas) => set({ canvas }),
+  
+  // ::::::::::::::::::: Seat states
+  seats: [],
+  // ::::::::::::::::::: Add Seat 
+  addSeat: (seat) => set((state) => ({ seats: [...state.seats, seat] })),
+  // ::::::::::::::::::: Update Seat
+  updateSeat: (id, updates) => set((state) => ({
+    seats: state.seats.map((seat) => (seat.id === id ? { ...seat, ...updates } : seat))
+  })),
+  // ::::::::::::::::::: Delete Seat
+  deleteSeat: (id) => set((state) => ({
+    seats: state.seats.filter((seat) => seat.id !== id)
+  })),
+
+  // ::::::::::::::::::: Selected Seat ID
+  selectedSeatIds: [],
+  // ::::::::::::::::::: Modifier: Selected Seat function
+  setSelectedSeatIds: (ids) => set({ selectedSeatIds: ids }),
+
+  // ::::::::::::::::::: Multiple seat creation mode state
+  isCreatingFloorPlan: false,
+  // ::::::::::::::::::: Modifier: Multiple seat creation mode state function
+  setIsCreatingFloorPlan: (isCreating) => set({ isCreatingFloorPlan: isCreating }),
+  
+  // ::::::::::::::::::: Zone states
+  zones: [{ id: uuidv4(), name: 'Ground floor', isChecked: true }],
+  // ::::::::::::::::::: Add zone
+  addZone: (name) => set((state) => ({
+    zones: [...state.zones, { id: uuidv4(), name, isChecked: true }]
+  })),
+  // ::::::::::::::::::: Update zone
+  updateZone: (id, updates) => set((state) => ({
+    zones: state.zones.map((zone) => (zone.id === id ? { ...zone, ...updates } : zone))
+  })),
+  // ::::::::::::::::::: Delete zone
+  deleteZone: (id) => set((state) => ({
+    zones: state.zones.filter((zone) => zone.id !== id)
+  })),
+  
+  // ::::::::::::::::::: Zoom level state
+  zoomLevel: 100,
+  // ::::::::::::::::::: Modifier: Zoom level function
+  setZoomLevel: (level) => set({ zoomLevel: level }),
+}))
