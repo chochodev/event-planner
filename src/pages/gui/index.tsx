@@ -1,11 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { fabric } from 'fabric';
 import Toolbar from './components/toolbar';
 import Sidebar from './components/sidebar';
 import { v4 as uuidv4 } from 'uuid';
 
-// :::::::::::::::::: Custom object
+// :::::::::::::::::: Custom Rect object
 class CustomRect extends fabric.Rect {
+  readonly id: string;
+
+  constructor(options: any) {
+    super(options);
+    this.id = uuidv4(); // Assign a UUID to this object
+  }
+}
+
+// :::::::::::::::::: Custom Circle object
+class CustomCircle extends fabric.Circle {
   readonly id: string;
 
   constructor(options: any) {
@@ -21,6 +31,38 @@ const SeatCanvas = () => {
   const [isCreatingFloorPlan, setIsCreatingFloorPlan] = useState(false);
   const startPointRef = useRef<{ x: number; y: number } | null>(null);
 
+  // ::::::::::::::: Create seat object
+  const createSeat = (left: number, top: number) => {
+    const seat = new CustomCircle({
+      left,
+      top,
+      fill: 'transparent',
+      stroke: 1,
+      radius: 10,
+      selectable: true,
+      borderColor: 'green',
+      borderDashArray: [2, 4],
+      padding: 2,
+      cornerColor: 'lightblue',
+      cornerSize: 5,
+      cornerStrokeColor: 'blue',
+      transparentCorners: false,
+      rx: 0.25,
+      ry: 0.25,
+      id: uuidv4()
+    });
+
+    seat.setControlsVisibility({
+      mt: false,
+      mb: false,
+      ml: false,
+      mr: false,
+    });
+    
+    return seat;    
+  };
+
+  // ::::::::::::::::::: Create a simple seat object
   useEffect(() => {
     if (!canvasRef.current || !canvasParent.current) return;
 
@@ -42,36 +84,8 @@ const SeatCanvas = () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // ::::::::::::::: seat object
-    const createSeat = (left: number, top: number) => {
-      return new CustomRect({
-        left,
-        top,
-        fill: 'orange',
-        width: 50,
-        height: 50,
-        selectable: true,
-        borderColor: 'green',
-        borderDashArray: [2, 4],
-        padding: 2,
-        cornerColor: 'lightblue',
-        cornerSize: 5,
-        cornerStrokeColor: 'blue',
-        transparentCorners: false,
-        rx: 0.25,
-        ry: 0.25,
-        id: uuidv4()
-      });
-    };
-
     const seat = createSeat(100, 100);
 
-    seat.setControlsVisibility({
-      mt: false,
-      mb: false,
-      ml: false,
-      mr: false,
-    });
 
     newCanvas.add(seat);
     newCanvas.selection = true;
@@ -108,6 +122,7 @@ const SeatCanvas = () => {
     };
   }, []);
 
+  // :::::::::::::::::::::: Create multiple rows seat
   useEffect(() => {
     if (!canvas) return;
 
@@ -132,31 +147,10 @@ const SeatCanvas = () => {
 
       for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
-          const seat = new CustomRect({
-            left: startPoint.x + j * 60,
-            top: startPoint.y + i * 60,
-            fill: 'orange',
-            width: 50,
-            height: 50,
-            selectable: true,
-            borderColor: 'green',
-            borderDashArray: [2, 4],
-            padding: 2,
-            cornerColor: 'lightblue',
-            cornerSize: 5,
-            cornerStrokeColor: 'blue',
-            transparentCorners: false,
-            rx: 0.25,
-            ry: 0.25,
-            id: uuidv4()
-          });
 
-          seat.setControlsVisibility({
-            mt: false,
-            mb: false,
-            ml: false,
-            mr: false,
-          });
+          const left = startPoint.x + j * 60;
+          const top = startPoint.y + i * 60;
+          const seat = createSeat(left, top);
 
           canvas.add(seat);
         }
