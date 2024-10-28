@@ -148,7 +148,7 @@ const SeatCanvas = () => {
         const objWidth = (obj.width ?? 0) * (obj.scaleX ?? 1);
         const objHeight = (obj.height ?? 0) * (obj.scaleY ?? 1);
 
-        // Set boundaries
+        // ::::::::::::::::::: Set boundaries
         obj.left = Math.max(0, Math.min(obj.left ?? 0, canvasWidth ?? 0 - objWidth));
         obj.top = Math.max(0, Math.min(obj.top ?? 0, canvasHeight ?? 0 - objHeight));
       }
