@@ -38,13 +38,12 @@ const Button: React.FC<ButtonProps> = ({ icon, tooltip, ...props }) => {
       >
         {icon}
       </button>
-      {/* {showTooltip && ( */}
+      
       <div 
         className={`absolute left-1/2 transform -translate-x-1/2 ${showTooltip? 'top-[calc(100%+0.5rem)] opacity-100' : 'top-[100%] opacity-0'} px-2 py-1 bg-gray-200 text-gray-900 text-[0.625rem] rounded whitespace-nowrap shadow-md ease-250`}
       >
         {tooltip}
       </div>
-      {/* )} */}
     </div>
   )
 }
