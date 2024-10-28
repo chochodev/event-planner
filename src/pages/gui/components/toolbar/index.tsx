@@ -8,7 +8,7 @@ import {
   LayoutGrid,
   Layout,
   Plus,
-  RotateCw,
+  Grid2x2Plus,
   Undo,
   Redo,
   Scissors,
@@ -18,7 +18,6 @@ import {
   ZoomIn,
   ZoomOut,
   QrCode,
-  Grid2x2Plus,
 } from 'lucide-react'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -39,11 +38,13 @@ const Button: React.FC<ButtonProps> = ({ icon, tooltip, ...props }) => {
       >
         {icon}
       </button>
-      {showTooltip && (
-        <div className="absolute top-[calc(100%+0.5rem)] left-1/2 transform -translate-x-1/2 px-2 py-1 bg-gray-200 text-gray-900 text-[0.625rem] rounded whitespace-nowrap ease-250">
-          {tooltip}
-        </div>
-      )}
+      {/* {showTooltip && ( */}
+      <div 
+        className={`absolute left-1/2 transform -translate-x-1/2 ${showTooltip? 'top-[calc(100%+0.5rem)] opacity-100' : 'top-[100%] opacity-0'} px-2 py-1 bg-gray-200 text-gray-900 text-[0.625rem] rounded whitespace-nowrap shadow-md ease-250`}
+      >
+        {tooltip}
+      </div>
+      {/* )} */}
     </div>
   )
 }
