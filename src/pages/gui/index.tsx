@@ -62,23 +62,21 @@ const SeatCanvas = () => {
     return seat;    
   };
   
-  // :::::::::::::::::::::: Edit compound selected controls (ActiveSelection)
+  // ::::::::::::::::::: Customize controls for the compound selection (ActiveSelection)
   useEffect(() => {
     if (!canvas) return;
   
-    const handleSelection = (event: any) => {
+    const handleSelection = () => {
       const activeObject = canvas.getActiveObject();
       
       if (activeObject && activeObject.type === 'activeSelection') {
-        // ::::::::::::::::::: Customize controls for the compound selection (ActiveSelection)
         activeObject.setControlsVisibility({
           mt: false,
           mb: false,
           ml: false,
           mr: false,
         });
-  
-        // :::::::::::::::: Style the compound selection controls
+
         activeObject.borderColor = 'green';
         activeObject.borderDashArray = [2, 4];
         activeObject.padding = 4;
