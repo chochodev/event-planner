@@ -10,7 +10,7 @@ class CustomRect extends fabric.Rect {
 
   constructor(options: any) {
     super(options);
-    this.id = uuidv4(); // Assign a UUID to this object
+    this.id = uuidv4();
   }
 }
 
@@ -20,7 +20,7 @@ class CustomCircle extends fabric.Circle {
 
   constructor(options: any) {
     super(options);
-    this.id = uuidv4(); // Assign a UUID to this object
+    this.id = uuidv4();
   }
 }
 
@@ -61,6 +61,45 @@ const SeatCanvas = () => {
     
     return seat;    
   };
+  
+  // :::::::::::::::::::::: Edit compound selected controls (ActiveSelection)
+  useEffect(() => {
+    if (!canvas) return;
+  
+    const handleSelection = (event: any) => {
+      const activeObject = canvas.getActiveObject();
+      
+      if (activeObject && activeObject.type === 'activeSelection') {
+        // ::::::::::::::::::: Customize controls for the compound selection (ActiveSelection)
+        activeObject.setControlsVisibility({
+          mt: false,
+          mb: false,
+          ml: false,
+          mr: false,
+        });
+  
+        // :::::::::::::::: Style the compound selection controls
+        activeObject.borderColor = 'green';
+        activeObject.borderDashArray = [2, 4];
+        activeObject.padding = 4;
+        activeObject.cornerColor = 'lightblue';
+        activeObject.cornerSize = 8;
+        activeObject.cornerStrokeColor = 'blue';
+        
+        canvas.requestRenderAll();
+      }
+    };
+  
+    // ::::::::::::::::::::: Event: listens to event & Calls the functions
+    canvas.on('selection:created', handleSelection);
+    canvas.on('selection:updated', handleSelection);
+  
+    // ::::::::::::::::::::: Unmount: handles components appropriately on unmount
+    return () => {
+      canvas.off('selection:created', handleSelection);
+      canvas.off('selection:updated', handleSelection);
+    };
+  }, [canvas]);
 
   // ::::::::::::::::::: Create a simple seat object
   useEffect(() => {
@@ -136,15 +175,18 @@ const SeatCanvas = () => {
     const handleMouseUp = (event: fabric.IEvent) => {
       if (!isCreatingFloorPlan || !startPointRef.current) return;
 
+      // ::::::::::::::::::: Get the end position of the cursor highlight
       const endPoint = canvas.getPointer(event.e);
       const startPoint = startPointRef.current;
 
+      // ::::::::::::::::::: Get the dimensions of the highlighted space
       const width = Math.abs(endPoint.x - startPoint.x);
       const height = Math.abs(endPoint.y - startPoint.y);
 
       const rows = Math.floor(height / 60);
       const cols = Math.floor(width / 60);
 
+      // :::::::::::::::::: Create set objects in rows & columns
       for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
 
@@ -156,19 +198,26 @@ const SeatCanvas = () => {
         }
       }
 
+      // ::::::::::::::::: Render all & Reset the cursor position state
       canvas.renderAll();
       startPointRef.current = null;
+
+      // ::::::::::::::: Reset the floor mode
+      toggleFloorPlanMode();
     };
 
+    // ::::::::::::::::::::: Listens to client's event & Call the functions
     canvas.on('mouse:down', handleMouseDown);
     canvas.on('mouse:up', handleMouseUp);
 
+    // :::::::::::::::::::: Removes the events on component unmount
     return () => {
       canvas.off('mouse:down', handleMouseDown);
       canvas.off('mouse:up', handleMouseUp);
     };
   }, [canvas, isCreatingFloorPlan]);
 
+  // ::::::::::::::::::: Function: toggle the create multiple seats mode
   const toggleFloorPlanMode = () => {
     setIsCreatingFloorPlan(!isCreatingFloorPlan);
   };
