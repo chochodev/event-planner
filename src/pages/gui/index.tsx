@@ -1,18 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { fabric } from 'fabric';
 import Toolbar from './components/toolbar';
 import Sidebar from './components/sidebar';
+import { useEventGuiStore } from '@/zustand/store';
 import { v4 as uuidv4 } from 'uuid';
 
-// :::::::::::::::::: Custom Rect object
-class CustomRect extends fabric.Rect {
-  readonly id: string;
-
-  constructor(options: any) {
-    super(options);
-    this.id = uuidv4();
-  }
-}
 
 // :::::::::::::::::: Custom Circle object
 class CustomCircle extends fabric.Circle {
@@ -24,153 +16,94 @@ class CustomCircle extends fabric.Circle {
   }
 }
 
-const SeatCanvas = () => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const canvasParent = useRef<HTMLDivElement>(null);
-  const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
-  const [isCreatingFloorPlan, setIsCreatingFloorPlan] = useState(false);
-  const startPointRef = useRef<{ x: number; y: number } | null>(null);
+// ::::::::::::::: Create seat object
+const createSeat = (left: number, top: number) => {
+  const seat = new CustomCircle({
+    left,
+    top,
+    fill: 'transparent',
+    stroke: 1,
+    radius: 10,
+    selectable: true,
+    borderColor: 'green',
+    borderDashArray: [2, 4],
+    padding: 2,
+    cornerColor: 'lightblue',
+    cornerSize: 5,
+    cornerStrokeColor: 'blue',
+    transparentCorners: false,
+    rx: 0.25,
+    ry: 0.25,
+    // id: uuidv4()
+  });
 
-  // ::::::::::::::: Create seat object
-  const createSeat = (left: number, top: number) => {
-    const seat = new CustomCircle({
-      left,
-      top,
-      fill: 'transparent',
-      stroke: 1,
-      radius: 10,
-      selectable: true,
-      borderColor: 'green',
-      borderDashArray: [2, 4],
-      padding: 2,
-      cornerColor: 'lightblue',
-      cornerSize: 5,
-      cornerStrokeColor: 'blue',
-      transparentCorners: false,
-      rx: 0.25,
-      ry: 0.25,
-      id: uuidv4()
-    });
+  seat.setControlsVisibility({
+    mt: false,
+    mb: false,
+    ml: false,
+    mr: false,
+  });
+  
+  return seat;    
+};
 
-    seat.setControlsVisibility({
-      mt: false,
-      mb: false,
-      ml: false,
-      mr: false,
-    });
-    
-    return seat;    
+// ::::::::::::::::::::: MAIN JSX FUNCTION
+const SeatCanvas: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const canvasParent = useRef<HTMLDivElement>(null)
+  const {
+    canvas,
+    setCanvas,
+    seats,
+    addSeat,
+    isCreatingFloorPlan,
+    setIsCreatingFloorPlan,
+  } = useEventGuiStore();
+  
+  // ::::::::::::::::::: Function: toggle the create multiple seats mode
+  const toggleFloorPlanMode = () => {
+    setIsCreatingFloorPlan(!isCreatingFloorPlan);
   };
-  
-  // ::::::::::::::::::: Customize controls for the compound selection (ActiveSelection)
+
   useEffect(() => {
-    if (!canvas) return;
-  
-    const handleSelection = () => {
-      const activeObject = canvas.getActiveObject();
-      
-      if (activeObject && activeObject.type === 'activeSelection') {
-        activeObject.setControlsVisibility({
-          mt: false,
-          mb: false,
-          ml: false,
-          mr: false,
-        });
+    if (!canvasRef.current || !canvasParent.current) return
 
-        activeObject.borderColor = 'green';
-        activeObject.borderDashArray = [2, 4];
-        activeObject.padding = 4;
-        activeObject.cornerColor = 'lightblue';
-        activeObject.cornerSize = 8;
-        activeObject.cornerStrokeColor = 'blue';
-        
-        canvas.requestRenderAll();
-      }
-    };
-  
-    // ::::::::::::::::::::: Event: listens to event & Calls the functions
-    canvas.on('selection:created', handleSelection);
-    canvas.on('selection:updated', handleSelection);
-  
-    // ::::::::::::::::::::: Unmount: handles components appropriately on unmount
-    return () => {
-      canvas.off('selection:created', handleSelection);
-      canvas.off('selection:updated', handleSelection);
-    };
-  }, [canvas]);
+    const newCanvas = new fabric.Canvas(canvasRef.current)
+    setCanvas(newCanvas)
 
-  // ::::::::::::::::::: Create a simple seat object
-  useEffect(() => {
-    if (!canvasRef.current || !canvasParent.current) return;
-
-    const newCanvas = new fabric.Canvas(canvasRef.current);
-    setCanvas(newCanvas);
-    
-    // :::::::::::::::::: Canvas height and width
     const resizeCanvas = () => {
       if (canvasParent.current) {
-        const parent = canvasParent.current;
-
-        if (parent) {
-          const { width, height } = parent.getBoundingClientRect();
-          newCanvas.setDimensions({ width, height }, {cssOnly: false});
-        }
+        const parent = canvasParent.current
+        const { width, height } = parent.getBoundingClientRect()
+        newCanvas.setDimensions({ width, height }, { cssOnly: false })
       }
-    };
+    }
 
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    const seat = createSeat(100, 100);
-
-
-    newCanvas.add(seat);
-    newCanvas.selection = true;
-    
-    // Listen for object selection
-    newCanvas.on('selection:created', () => {
-      const activeObject = newCanvas.getActiveObject();
-  
-      if (activeObject) {
-        console.log('Selected object:', activeObject);
-        // Now you can pass activeObject to the sidebar for changes
-      } else {
-        console.log('No object selected');
-      }
-    });
-
-    // :::::::::::::::::::: Keeps the object in bound (in the canvas)
-    newCanvas.on('object:moving', (event) => {
-      const obj = event.target;
-      const { width: canvasWidth, height: canvasHeight } = newCanvas;
-
-      if (obj) {
-        const objWidth = (obj.width ?? 0) * (obj.scaleX ?? 1);
-        const objHeight = (obj.height ?? 0) * (obj.scaleY ?? 1);
-
-        // ::::::::::::::::::: Set boundaries
-        obj.left = Math.max(0, Math.min(obj.left ?? 0, canvasWidth ?? 0 - objWidth));
-        obj.top = Math.max(0, Math.min(obj.top ?? 0, canvasHeight ?? 0 - objHeight));
-      }
-    });
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
 
     return () => {
-      newCanvas.dispose();
-    };
-  }, []);
+      window.removeEventListener('resize', resizeCanvas)
+      newCanvas.dispose()
+    }
+  }, [setCanvas])
 
   // :::::::::::::::::::::: Create multiple rows seat
+  const startPointRef = useRef<{ x: number; y: number } | null>(null);
+
   useEffect(() => {
-    if (!canvas) return;
+    if (!canvas) return
 
     const handleMouseDown = (event: fabric.IEvent) => {
-      if (!isCreatingFloorPlan) return;
-
+      if (!isCreatingFloorPlan) return
+      
       const pointer = canvas.getPointer(event.e);
       startPointRef.current = { x: pointer.x, y: pointer.y };
-    };
+    }
 
     const handleMouseUp = (event: fabric.IEvent) => {
+      if (!isCreatingFloorPlan) return
+      
       if (!isCreatingFloorPlan || !startPointRef.current) return;
 
       // ::::::::::::::::::: Get the end position of the cursor highlight
@@ -213,15 +146,17 @@ const SeatCanvas = () => {
       canvas.off('mouse:down', handleMouseDown);
       canvas.off('mouse:up', handleMouseUp);
     };
-  }, [canvas, isCreatingFloorPlan]);
-
-  // ::::::::::::::::::: Function: toggle the create multiple seats mode
-  const toggleFloorPlanMode = () => {
-    setIsCreatingFloorPlan(!isCreatingFloorPlan);
-  };
+  }, [canvas, isCreatingFloorPlan, addSeat])
 
   return (
-    <div className='relative size-full bg-gray-200'>
+    <div className="relative size-full bg-gray-200">
+      <Toolbar />
+      <div className="flex justify-between w-full">
+        <div className="w-full max-w-[45rem] mx-auto bg-gray-100" ref={canvasParent}>
+          <canvas className="size-full" style={{ width: '100%', height: '100%' }} ref={canvasRef} />
+        </div>
+        <Sidebar />
+      </div>
       <button
         onClick={toggleFloorPlanMode}
         className={`fixed bottom-4 right-4 px-4 py-2 rounded ${
@@ -230,15 +165,8 @@ const SeatCanvas = () => {
       >
         {isCreatingFloorPlan ? 'Exit Floor Plan Mode' : 'Create Floor Plan'}
       </button>
-      <Toolbar />
-      <div className='flex justify-between w-full'>
-        <div className='w-full max-w-[45rem] mx-auto bg-gray-100' ref={canvasParent}>
-          <canvas className='size-full' style={{width: '100%', height: '100%'}} ref={canvasRef} />
-        </div>
-        <Sidebar />
-      </div>
     </div>
-  );
-};
+  )
+}
 
-export default SeatCanvas;
+export default SeatCanvas
