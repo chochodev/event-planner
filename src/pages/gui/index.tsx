@@ -153,7 +153,11 @@ const SeatCanvas: React.FC = () => {
       <Toolbar />
       <div className="flex justify-between w-full">
         <div className="w-full max-w-[45rem] mx-auto bg-gray-100" ref={canvasParent}>
-          <canvas className="size-full" style={{ width: '100%', height: '100%' }} ref={canvasRef} />
+          <canvas 
+            className="size-full" 
+            style={{ width: '100%', height: '100%' }} 
+            ref={canvasRef} 
+          />
         </div>
         <Sidebar />
       </div>
