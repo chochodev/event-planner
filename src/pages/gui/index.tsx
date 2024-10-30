@@ -257,14 +257,6 @@ const SeatCanvas = () => {
 
   return (
     <div className='relative size-full bg-gray-200'>
-      <button
-        onClick={toggleMultipleSeatMode}
-        className={`fixed bottom-4 right-4 px-4 py-2 rounded ${
-          toolMode==='multiple-seat' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'
-        }`}
-      >
-        {toolMode==='multiple-seat' ? 'Exit Floor Plan Mode' : 'Create Floor Plan'}
-      </button>
       <Toolbar />
       <div className='flex justify-between w-full'>
         <div className='w-full max-w-[45rem] mx-auto bg-gray-100' ref={canvasParent}>
