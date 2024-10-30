@@ -39,7 +39,12 @@ const Toolbar: React.FC = () => {
     { icon: FileIcon, tooltip: "New File", onClick: () => {}, state: false },
     { icon: FolderOpen, tooltip: "Open File", onClick: () => {}, state: false },
     { icon: Save, tooltip: "Save File", onClick: () => {}, state: false },
-    { icon: MousePointer, tooltip: "Select", onClick: () => {}, state: false },
+    { 
+      icon: MousePointer, 
+      tooltip: "Select", 
+      onClick: () => {setToolMode('select')},
+      state: toolMode === 'select' 
+    },
     { icon: Move, tooltip: "Move", onClick: () => {}, state: false },
     { icon: LayoutGrid, tooltip: "Grid View", onClick: () => {}, state: false },
     { icon: Layout, tooltip: "Layout View", onClick: () => {}, state: false },
