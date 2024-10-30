@@ -88,7 +88,7 @@ const SeatCanvas: React.FC = () => {
     }
   }, [setCanvas])
 
-  // :::::::::::::::::::::: Create multiple rows seat
+  // :::::::::::::::::::::: CREATE MULTIPLE SEAT OBJECTS
   const startPointRef = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
