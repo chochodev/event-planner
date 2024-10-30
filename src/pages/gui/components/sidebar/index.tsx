@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { ChevronDown, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useEventGuiStore } from '@/zustand/store';
+import { CustomFabricObject, UpdateableProperties } from '@/types/fabric-types';
 
 const Sidebar = () => {
   const { canvas } = useEventGuiStore();
-  const [selectedObject, setSelectedObject] = useState<fabric.Object | null>(null);
+  const [selectedObject, setSelectedObject] = useState<CustomFabricObject | null>(null);
   const [objectType, setObjectType] = useState<'circle' | 'rect' | 'i-text' | null>(null);
   
   // Properties state
@@ -24,7 +25,7 @@ const Sidebar = () => {
     if (!canvas) return;
 
     const updateSelectedObject = () => {
-      const activeObject = canvas.getActiveObject();
+      const activeObject = canvas.getActiveObject() as CustomFabricObject;
       setSelectedObject(activeObject || null);
       setObjectType(activeObject?.type as any || null);
 
@@ -38,13 +39,13 @@ const Sidebar = () => {
 
         // Update type-specific properties
         if (activeObject.type === 'circle') {
-          setRadius((activeObject as fabric.Circle).radius || 10);
+          setRadius(activeObject.radius || 10);
         } else if (activeObject.type === 'rect') {
           setWidth(activeObject.width || 100);
           setHeight(activeObject.height || 100);
         } else if (activeObject.type === 'i-text') {
-          setText((activeObject as fabric.IText).text || '');
-          setFontSize((activeObject as fabric.IText).fontSize || 20);
+          setText(activeObject.text || '');
+          setFontSize(activeObject.fontSize || 20);
         }
       }
     };
@@ -64,7 +65,7 @@ const Sidebar = () => {
   }, [canvas]);
 
   // Update object properties
-  const updateObject = (updates: Partial<fabric.Object>) => {
+  const updateObject = (updates: UpdateableProperties) => {
     if (!selectedObject || !canvas) return;
     
     selectedObject.set(updates);
