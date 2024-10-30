@@ -148,6 +148,67 @@ const SeatCanvas: React.FC = () => {
     };
   }, [canvas, isCreatingFloorPlan, addSeat])
 
+
+  // :::::::::::::::::::::::: ADDITIONAL BEHAIVOR TO CANVAS SEAT OBJECTS
+  useEffect(() => {
+    if (!canvasRef.current || !canvasParent.current) return;
+
+    const newCanvas = new fabric.Canvas(canvasRef.current);
+    setCanvas(newCanvas);
+    
+    // :::::::::::::::::: Canvas height and width
+    const resizeCanvas = () => {
+      if (canvasParent.current) {
+        const parent = canvasParent.current;
+
+        if (parent) {
+          const { width, height } = parent.getBoundingClientRect();
+          newCanvas.setDimensions({ width, height }, {cssOnly: false});
+        }
+      }
+    };
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const seat = createSeat(100, 100);
+
+
+    newCanvas.add(seat);
+    newCanvas.selection = true;
+    
+    // Listen for object selection
+    newCanvas.on('selection:created', () => {
+      const activeObject = newCanvas.getActiveObject();
+  
+      if (activeObject) {
+        console.log('Selected object:', activeObject);
+        // Now you can pass activeObject to the sidebar for changes
+      } else {
+        console.log('No object selected');
+      }
+    });
+
+    // :::::::::::::::::::: Keeps the object in bound (in the canvas)
+    newCanvas.on('object:moving', (event) => {
+      const obj = event.target;
+      const { width: canvasWidth, height: canvasHeight } = newCanvas;
+
+      if (obj) {
+        const objWidth = (obj.width ?? 0) * (obj.scaleX ?? 1);
+        const objHeight = (obj.height ?? 0) * (obj.scaleY ?? 1);
+
+        // ::::::::::::::::::: Set boundaries
+        obj.left = Math.max(0, Math.min(obj.left ?? 0, canvasWidth ?? 0 - objWidth));
+        obj.top = Math.max(0, Math.min(obj.top ?? 0, canvasHeight ?? 0 - objHeight));
+      }
+    });
+
+    return () => {
+      newCanvas.dispose();
+    };
+  }, []);
+
   return (
     <div className="relative size-full bg-gray-200">
       <Toolbar />
