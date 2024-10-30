@@ -27,12 +27,9 @@ const SeatCanvas = () => {
     toolMode,
     setToolMode
   } = useEventGuiStore();
-
-
-  // const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
-  // const [isMultipleSeatMode, setIsMultipleSeatMode] = useState(false);
+  
   const startPointRef = useRef<{ x: number; y: number } | null>(null);
-
+  
   // ::::::::::::::: Create seat object
   const createSeat = (left: number, top: number) => {
     const seat = new CustomCircle({
