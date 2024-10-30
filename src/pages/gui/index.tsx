@@ -3,27 +3,8 @@ import { fabric } from 'fabric';
 import Toolbar from './components/toolbar';
 import Sidebar from './components/sidebar';
 import { useEventGuiStore } from '@/zustand/store';
-import { v4 as uuidv4 } from 'uuid';
+import { createText, createRect, createSeat } from './components/createObject';
 
-// :::::::::::::::::: Custom Rect object
-class CustomRect extends fabric.Rect {
-  readonly id: string;
-
-  constructor(options: any) {
-    super(options);
-    this.id = uuidv4();
-  }
-}
-
-// :::::::::::::::::: Custom Circle object
-class CustomCircle extends fabric.Circle {
-  readonly id: string;
-
-  constructor(options: any) {
-    super(options);
-    this.id = uuidv4();
-  }
-}
 
 // ::::::::::::::::::::: MAIN JSX FUNCTION
 const SeatCanvas = () => {
@@ -39,37 +20,6 @@ const SeatCanvas = () => {
   } = useEventGuiStore();
   
   const startPointRef = useRef<{ x: number; y: number } | null>(null);
-  
-  // ::::::::::::::: Create seat object
-  const createSeat = (left: number, top: number) => {
-    const seat = new CustomCircle({
-      left,
-      top,
-      fill: 'transparent',
-      stroke: 1,
-      radius: 10,
-      selectable: true,
-      borderColor: 'green',
-      borderDashArray: [2, 4],
-      padding: 2,
-      cornerColor: 'lightblue',
-      cornerSize: 5,
-      cornerStrokeColor: 'blue',
-      transparentCorners: false,
-      rx: 0.25,
-      ry: 0.25,
-      id: uuidv4()
-    });
-
-    seat.setControlsVisibility({
-      mt: false,
-      mb: false,
-      ml: false,
-      mr: false,
-    });
-    
-    return seat;    
-  };
   
   // ::::::::::::::::::: Customize controls for the compound selection (ActiveSelection)
   useEffect(() => {
@@ -266,7 +216,7 @@ const SeatCanvas = () => {
     };
   }, [canvas, toolAction]);
 
-  
+
   // :::::::::::::::::::::: Add single seat, draw rectangle, or add text
   useEffect(() => {
     if (!canvas) return;
@@ -279,25 +229,16 @@ const SeatCanvas = () => {
         canvas.add(seat);
         canvas.renderAll();
       } else if (toolMode === 'shape-square') {
-        const rect = new fabric.Rect({
-          left: pointer.x,
-          top: pointer.y,
-          fill: 'transparent',
-          stroke: 'black',
-          strokeWidth: 1,
-          width: 0,
-          height: 0
-        });
+        const rect = createRect(pointer.x, pointer.y);
+        rect.set({ width: 0, height: 0 }); // Initial size for drawing
         canvas.add(rect);
         canvas.setActiveObject(rect);
         startPointRef.current = { x: pointer.x, y: pointer.y };
-      } else if (toolMode === 'text') {
-        const text = new fabric.IText('Type here', {
-          left: pointer.x,
-          top: pointer.y,
-          fontSize: 20,
-          fill: 'black'
-        });
+      }
+
+      // For text creation:
+      else if (toolMode === 'text') {
+        const text = createText(pointer.x, pointer.y);
         canvas.add(text);
         canvas.setActiveObject(text);
         text.enterEditing();
