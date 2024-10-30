@@ -36,21 +36,26 @@ const Toolbar: React.FC = () => {
 
   // ::::::::::::::::::: Buttons data
   const buttonGroups = [
-    { icon: FileIcon, tooltip: "New File", onClick: () => {} },
-    { icon: FolderOpen, tooltip: "Open File", onClick: () => {} },
-    { icon: Save, tooltip: "Save File", onClick: () => {} },
-    { icon: MousePointer, tooltip: "Select", onClick: () => {} },
-    { icon: Move, tooltip: "Move", onClick: () => {} },
-    { icon: LayoutGrid, tooltip: "Grid View", onClick: () => {} },
-    { icon: Layout, tooltip: "Layout View", onClick: () => {} },
-    { icon: Plus, tooltip: "Add Seat", onClick: () => {} },
-    { icon: Grid2x2Plus, tooltip: "Add Rows", onClick: toggleFloorPlanMode },
-    { icon: Undo, tooltip: "Undo", onClick: () => {} },
-    { icon: Redo, tooltip: "Redo", onClick: () => {} },
-    { icon: Scissors, tooltip: "Cut", onClick: () => {} },
-    { icon: Copy, tooltip: "Copy", onClick: () => {} },
-    { icon: Clipboard, tooltip: "Paste", onClick: () => {} },
-    { icon: Trash2, tooltip: "Delete", onClick: () => {} },
+    { icon: FileIcon, tooltip: "New File", onClick: () => {}, state: false },
+    { icon: FolderOpen, tooltip: "Open File", onClick: () => {}, state: false },
+    { icon: Save, tooltip: "Save File", onClick: () => {}, state: false },
+    { icon: MousePointer, tooltip: "Select", onClick: () => {}, state: false },
+    { icon: Move, tooltip: "Move", onClick: () => {}, state: false },
+    { icon: LayoutGrid, tooltip: "Grid View", onClick: () => {}, state: false },
+    { icon: Layout, tooltip: "Layout View", onClick: () => {}, state: false },
+    { icon: Plus, tooltip: "Add Seat", onClick: () => {}, state: false },
+    { 
+      icon: Grid2x2Plus, 
+      tooltip: "Add Rows", 
+      onClick: toggleFloorPlanMode, 
+      state: isMultipleSeatMode 
+    },
+    { icon: Undo, tooltip: "Undo", onClick: () => {}, state: false },
+    { icon: Redo, tooltip: "Redo", onClick: () => {}, state: false },
+    { icon: Scissors, tooltip: "Cut", onClick: () => {}, state: false },
+    { icon: Copy, tooltip: "Copy", onClick: () => {}, state: false },
+    { icon: Clipboard, tooltip: "Paste", onClick: () => {}, state: false },
+    { icon: Trash2, tooltip: "Delete", onClick: () => {}, state: false },
   ];
   
   
@@ -75,6 +80,7 @@ const Toolbar: React.FC = () => {
             icon={<item.icon className="h-4 w-4" />}
             tooltip={item.tooltip}
             onClick={item.onClick}
+            state={item.state}
           />
         </>
       ))}
@@ -87,7 +93,8 @@ const Toolbar: React.FC = () => {
         icon={
           <ZoomOut className="h-4 w-4" />
         } 
-        tooltip="Zoom Out" onClick={() => setZoomLevel(zoomLevel - 10)} 
+        tooltip="Zoom Out" 
+        onClick={() => setZoomLevel(zoomLevel - 10)}
       />
         <div className="flex items-center justify-center w-12 h-8 text-sm font-medium">
           {zoomLevel}%
@@ -117,6 +124,7 @@ export default Toolbar
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ReactNode
   tooltip: string
+  state?: boolean
 }
 
 const Button: React.FC<ButtonProps> = ({ icon, tooltip, ...props }) => {
@@ -125,7 +133,7 @@ const Button: React.FC<ButtonProps> = ({ icon, tooltip, ...props }) => {
   return (
     <div className="relative">
       <button
-        className="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 ease-250"
+        className={`p-2 rounded-md hover:bg-gray-200 ${props.state? 'focus:outline-none focus:ring-2 focus:ring-gray-400' : 'ring-1 ring-gray-100' } ease-250`}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         {...props}
