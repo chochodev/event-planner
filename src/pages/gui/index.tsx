@@ -134,6 +134,8 @@ const SeatCanvas = () => {
     };
   }, [canvas]);
 
+  
+  // :::::::::::::::::::::::: ADDITIONAL BEHAIVOR TO CANVAS SEAT OBJECTS
   // ::::::::::::::::::: Create a simple seat object
   useEffect(() => {
     if (!canvasRef.current || !canvasParent.current) return;
@@ -158,17 +160,15 @@ const SeatCanvas = () => {
 
     const seat = createSeat(100, 100);
 
-
     newCanvas.add(seat);
     newCanvas.selection = true;
     
-    // Listen for object selection
+    // :::::::::::::::::::::::: Listen for object selection
     newCanvas.on('selection:created', () => {
       const activeObject = newCanvas.getActiveObject();
   
       if (activeObject) {
         console.log('Selected object:', activeObject);
-        // Now you can pass activeObject to the sidebar for changes
       } else {
         console.log('No object selected');
       }

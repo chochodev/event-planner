@@ -56,13 +56,13 @@ const SeatCanvas: React.FC = () => {
     setCanvas,
     seats,
     addSeat,
-    toolMode,
-    setToolMode
+    isCreatingFloorPlan,
+    setIsCreatingFloorPlan,
   } = useEventGuiStore();
   
   // ::::::::::::::::::: Function: toggle the create multiple seats mode
-  const toggleMultipleSeatMode = () => {
-    setToolMode(toolMode === 'select'? 'multiple-seat' : 'select');
+  const toggleFloorPlanMode = () => {
+    setIsCreatingFloorPlan(!isCreatingFloorPlan);
   };
 
   useEffect(() => {
@@ -95,16 +95,16 @@ const SeatCanvas: React.FC = () => {
     if (!canvas) return
 
     const handleMouseDown = (event: fabric.IEvent) => {
-      if (!isMultipleSeatMode) return
+      if (!isCreatingFloorPlan) return
       
       const pointer = canvas.getPointer(event.e);
       startPointRef.current = { x: pointer.x, y: pointer.y };
     }
 
     const handleMouseUp = (event: fabric.IEvent) => {
-      if (!isMultipleSeatMode) return
+      if (!isCreatingFloorPlan) return
       
-      if (!isMultipleSeatMode || !startPointRef.current) return;
+      if (!isCreatingFloorPlan || !startPointRef.current) return;
 
       // ::::::::::::::::::: Get the end position of the cursor highlight
       const endPoint = canvas.getPointer(event.e);
@@ -134,7 +134,7 @@ const SeatCanvas: React.FC = () => {
       startPointRef.current = null;
 
       // ::::::::::::::: Reset the floor mode
-      toggleMultipleSeatMode();
+      toggleFloorPlanMode();
     };
 
     // ::::::::::::::::::::: Listens to client's event & Call the functions
@@ -146,7 +146,7 @@ const SeatCanvas: React.FC = () => {
       canvas.off('mouse:down', handleMouseDown);
       canvas.off('mouse:up', handleMouseUp);
     };
-  }, [canvas, isMultipleSeatMode, addSeat]);
+  }, [canvas, isCreatingFloorPlan, addSeat]);
 
 
   // ::::::::::::::::::: Customize controls for the compound selection (ActiveSelection)
@@ -193,59 +193,59 @@ const SeatCanvas: React.FC = () => {
     if (!canvasRef.current || !canvasParent.current) return;
 
     const newCanvas = new fabric.Canvas(canvasRef.current);
-    // setCanvas(newCanvas);
+    setCanvas(newCanvas);
     
     // :::::::::::::::::: Canvas height and width
-    // const resizeCanvas = () => {
-    //   if (canvasParent.current) {
-    //     const parent = canvasParent.current;
+    const resizeCanvas = () => {
+      if (canvasParent.current) {
+        const parent = canvasParent.current;
 
-    //     if (parent) {
-    //       const { width, height } = parent.getBoundingClientRect();
-    //       newCanvas.setDimensions({ width, height }, {cssOnly: false});
-    //     }
-    //   }
-    // };
+        if (parent) {
+          const { width, height } = parent.getBoundingClientRect();
+          newCanvas.setDimensions({ width, height }, {cssOnly: false});
+        }
+      }
+    };
 
-    // resizeCanvas();
-    // window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-    // const seat = createSeat(100, 100);
+    const seat = createSeat(100, 100);
 
 
-    // newCanvas.add(seat);
-    // newCanvas.selection = true;
+    newCanvas.add(seat);
+    newCanvas.selection = true;
     
     // Listen for object selection
-    // newCanvas.on('selection:created', () => {
-    //   const activeObject = newCanvas.getActiveObject();
+    newCanvas.on('selection:created', () => {
+      const activeObject = newCanvas.getActiveObject();
   
-    //   if (activeObject) {
-    //     console.log('Selected object:', activeObject);
-    //     // Now you can pass activeObject to the sidebar for changes
-    //   } else {
-    //     console.log('No object selected');
-    //   }
-    // });
+      if (activeObject) {
+        console.log('Selected object:', activeObject);
+        // Now you can pass activeObject to the sidebar for changes
+      } else {
+        console.log('No object selected');
+      }
+    });
 
     // :::::::::::::::::::: Keeps the object in bound (in the canvas)
-    // newCanvas.on('object:moving', (event) => {
-    //   const obj = event.target;
-    //   const { width: canvasWidth, height: canvasHeight } = newCanvas;
+    newCanvas.on('object:moving', (event) => {
+      const obj = event.target;
+      const { width: canvasWidth, height: canvasHeight } = newCanvas;
 
-    //   if (obj) {
-    //     const objWidth = (obj.width ?? 0) * (obj.scaleX ?? 1);
-    //     const objHeight = (obj.height ?? 0) * (obj.scaleY ?? 1);
+      if (obj) {
+        const objWidth = (obj.width ?? 0) * (obj.scaleX ?? 1);
+        const objHeight = (obj.height ?? 0) * (obj.scaleY ?? 1);
 
-    //     // ::::::::::::::::::: Set boundaries
-    //     obj.left = Math.max(0, Math.min(obj.left ?? 0, canvasWidth ?? 0 - objWidth));
-    //     obj.top = Math.max(0, Math.min(obj.top ?? 0, canvasHeight ?? 0 - objHeight));
-    //   }
-    // });
+        // ::::::::::::::::::: Set boundaries
+        obj.left = Math.max(0, Math.min(obj.left ?? 0, canvasWidth ?? 0 - objWidth));
+        obj.top = Math.max(0, Math.min(obj.top ?? 0, canvasHeight ?? 0 - objHeight));
+      }
+    });
 
-  //   return () => {
-  //     newCanvas.dispose();
-  //   };
+    return () => {
+      newCanvas.dispose();
+    };
   }, []);
 
   return (
@@ -262,12 +262,12 @@ const SeatCanvas: React.FC = () => {
         <Sidebar />
       </div>
       <button
-        onClick={toggleMultipleSeatMode}
+        onClick={toggleFloorPlanMode}
         className={`fixed bottom-4 right-4 px-4 py-2 rounded ${
-          toolMode==='multiple-seat' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'
+          isCreatingFloorPlan ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'
         }`}
       >
-        {toolMode==='multiple-seat' ? 'Exit Floor Plan Mode' : 'Create Floor Plan'}
+        {isCreatingFloorPlan ? 'Exit Floor Plan Mode' : 'Create Floor Plan'}
       </button>
     </div>
   )
