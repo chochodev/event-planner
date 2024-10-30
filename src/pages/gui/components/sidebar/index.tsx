@@ -73,7 +73,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="w-[20rem] bg-gray-50 p-4 space-y-4">
+    <div className="w-[20rem] min-h-screen bg-gray-50 p-4 space-y-4">
       <div className="bg-white rounded-md shadow">
         <div className="flex items-center justify-between p-2 bg-gray-200 rounded-t-md">
           <span className="font-semibold">Zones</span>
@@ -242,7 +242,7 @@ const Sidebar = () => {
               />
               <input
                 type="text"
-                value={stroke.toUpperCase()}
+                value={String(stroke).toUpperCase()}
                 onChange={(e) => updateObject({ stroke: e.target.value })}
                 className="ml-2 px-2 py-1 w-full border rounded-md"
               />
