@@ -21,6 +21,7 @@ interface Zone {
 }
 
 type Mode = 'select' | 'one-seat' | 'multiple-seat' | 'shape-square' | 'text'
+type Action = 'delete' | 'copy' | 'move' | 'paste'
 
 interface EventGuiState {
   canvas: fabric.Canvas | null
@@ -31,9 +32,11 @@ interface EventGuiState {
   deleteSeat: (id: string) => void
   selectedSeatIds: string[]
 
-  // ::::::::::: mode
+  // ::::::::::: Mode
   toolMode: Mode
   setToolMode: (mode: Mode) => void
+
+  // ::::::::::: Action
 
   setSelectedSeatIds: (ids: string[]) => void
   isMultipleSeatMode: boolean

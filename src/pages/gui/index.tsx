@@ -215,7 +215,7 @@ const SeatCanvas = () => {
     if (!canvas) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Delete' || event.key === 'Ctrl+Z') {
+      if (event.key === 'Delete' || (event.ctrlKey && event.key.toLowerCase() === 'd')) {
         const activeObject = canvas.getActiveObject();
         if (activeObject) {
           canvas.remove(activeObject);
@@ -225,12 +225,14 @@ const SeatCanvas = () => {
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
+    if (toolAction === 'delete') {
+      window.addEventListener('keydown', handleKeyDown);
+    }
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [canvas]);
+  }, [canvas, toolMode]);
 
   // :::::::::::::::::::::: Add single seat, draw rectangle, or add text
   useEffect(() => {
