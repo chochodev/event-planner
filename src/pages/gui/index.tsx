@@ -233,7 +233,7 @@ const SeatCanvas = () => {
       // ::::::::::::: For shape (square)
       else if (toolMode === 'shape-square') {
         const rect = createRect(pointer.x, pointer.y);
-        rect.set({ width: 0, height: 0 }); // Initial size for drawing
+        rect.set({ width: 0, height: 0 });
         canvas.add(rect);
         canvas.setActiveObject(rect);
         startPointRef.current = { x: pointer.x, y: pointer.y };
@@ -249,10 +249,12 @@ const SeatCanvas = () => {
       }
     };
 
+    // ::::::::::::::::::: Resizes rect on select (current)
     const handleMouseMove = (event: fabric.IEvent) => {
       if (toolMode === 'shape-square' && startPointRef.current) {
         const pointer = canvas.getPointer(event.e);
         const activeObject = canvas.getActiveObject() as fabric.Rect;
+
         if (activeObject && activeObject.type === 'rect') {
           const width = Math.abs(pointer.x - startPointRef.current.x);
           const height = Math.abs(pointer.y - startPointRef.current.y);
