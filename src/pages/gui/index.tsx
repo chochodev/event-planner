@@ -57,8 +57,8 @@ const SeatCanvas = () => {
     setCanvas,
     seats,
     addSeat,
-    isMultipleSeatMode,
-    setIsMultipleSeatMode,
+    toolMode,
+    setToolMode
   } = useEventGuiStore();
 
 
@@ -199,14 +199,14 @@ const SeatCanvas = () => {
     if (!canvas) return;
 
     const handleMouseDown = (event: fabric.IEvent) => {
-      if (!isMultipleSeatMode) return;
+      if (!(toolMode==='multiple-seat')) return;
 
       const pointer = canvas.getPointer(event.e);
       startPointRef.current = { x: pointer.x, y: pointer.y };
     };
 
     const handleMouseUp = (event: fabric.IEvent) => {
-      if (!isMultipleSeatMode || !startPointRef.current) return;
+      if (!(toolMode==='multiple-seat') || !startPointRef.current) return;
 
       // ::::::::::::::::::: Get the end position of the cursor highlight
       const endPoint = canvas.getPointer(event.e);
@@ -236,7 +236,7 @@ const SeatCanvas = () => {
       startPointRef.current = null;
 
       // ::::::::::::::: Reset the floor mode
-      toggleFloorPlanMode();
+      toggleMultipleSeatMode();
     };
 
     // ::::::::::::::::::::: Listens to client's event & Call the functions
@@ -248,22 +248,22 @@ const SeatCanvas = () => {
       canvas.off('mouse:down', handleMouseDown);
       canvas.off('mouse:up', handleMouseUp);
     };
-  }, [canvas, isMultipleSeatMode]);
+  }, [canvas, toolMode]);
 
   // ::::::::::::::::::: Function: toggle the create multiple seats mode
-  const toggleFloorPlanMode = () => {
-    setIsMultipleSeatMode(!isMultipleSeatMode);
+  const toggleMultipleSeatMode = () => {
+    setToolMode(toolMode === 'select'? 'multiple-seat' : 'select');
   };
 
   return (
     <div className='relative size-full bg-gray-200'>
       <button
-        onClick={toggleFloorPlanMode}
+        onClick={toggleMultipleSeatMode}
         className={`fixed bottom-4 right-4 px-4 py-2 rounded ${
-          isMultipleSeatMode ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'
+          toolMode==='multiple-seat' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'
         }`}
       >
-        {isMultipleSeatMode ? 'Exit Floor Plan Mode' : 'Create Floor Plan'}
+        {toolMode==='multiple-seat' ? 'Exit Floor Plan Mode' : 'Create Floor Plan'}
       </button>
       <Toolbar />
       <div className='flex justify-between w-full'>

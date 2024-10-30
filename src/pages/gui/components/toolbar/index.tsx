@@ -24,14 +24,14 @@ import {
 const Toolbar: React.FC = () => {
   const { 
     zoomLevel, 
-    setZoomLevel, 
-    isMultipleSeatMode,
-    setIsMultipleSeatMode
+    setZoomLevel,
+    toolMode,
+    setToolMode
   } = useEventGuiStore();
 
   // ::::::::::::::::::: Function: toggle create multiple seats mode
-  const toggleFloorPlanMode = () => {
-    setIsMultipleSeatMode(!isMultipleSeatMode);
+  const toggleMultipleSeatMode = () => {
+    setToolMode(toolMode === 'select'? 'multiple-seat' : 'select');
   };
 
   // ::::::::::::::::::: Buttons data
@@ -47,8 +47,8 @@ const Toolbar: React.FC = () => {
     { 
       icon: Grid2x2Plus, 
       tooltip: "Add Rows", 
-      onClick: toggleFloorPlanMode, 
-      state: isMultipleSeatMode 
+      onClick: toggleMultipleSeatMode, 
+      state: toolMode === 'multiple-seat'
     },
     { icon: Undo, tooltip: "Undo", onClick: () => {}, state: false },
     { icon: Redo, tooltip: "Redo", onClick: () => {}, state: false },

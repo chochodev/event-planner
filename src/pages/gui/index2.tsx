@@ -56,13 +56,13 @@ const SeatCanvas: React.FC = () => {
     setCanvas,
     seats,
     addSeat,
-    isMultipleSeatMode,
-    setIsMultipleSeatMode,
+    toolMode,
+    setToolMode
   } = useEventGuiStore();
   
   // ::::::::::::::::::: Function: toggle the create multiple seats mode
-  const toggleFloorPlanMode = () => {
-    setIsMultipleSeatMode(!isMultipleSeatMode);
+  const toggleMultipleSeatMode = () => {
+    setToolMode(toolMode === 'select'? 'multiple-seat' : 'select');
   };
 
   useEffect(() => {
@@ -134,7 +134,7 @@ const SeatCanvas: React.FC = () => {
       startPointRef.current = null;
 
       // ::::::::::::::: Reset the floor mode
-      toggleFloorPlanMode();
+      toggleMultipleSeatMode();
     };
 
     // ::::::::::::::::::::: Listens to client's event & Call the functions
@@ -262,12 +262,12 @@ const SeatCanvas: React.FC = () => {
         <Sidebar />
       </div>
       <button
-        onClick={toggleFloorPlanMode}
+        onClick={toggleMultipleSeatMode}
         className={`fixed bottom-4 right-4 px-4 py-2 rounded ${
-          isMultipleSeatMode ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'
+          toolMode==='multiple-seat' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'
         }`}
       >
-        {isMultipleSeatMode ? 'Exit Floor Plan Mode' : 'Create Floor Plan'}
+        {toolMode==='multiple-seat' ? 'Exit Floor Plan Mode' : 'Create Floor Plan'}
       </button>
     </div>
   )
