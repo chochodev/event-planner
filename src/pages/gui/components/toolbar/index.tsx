@@ -19,40 +19,109 @@ import {
   ZoomIn,
   ZoomOut,
   QrCode,
-} from 'lucide-react'
+} from 'lucide-react';
 
 const Toolbar: React.FC = () => {
-  const { zoomLevel, setZoomLevel } = useEventGuiStore()
+  const { 
+    zoomLevel, 
+    setZoomLevel, 
+    isMultipleSeatMode,
+    setIsMultipleSeatMode
+  } = useEventGuiStore();
+
+  // ::::::::::::::::::: Function: toggle create multiple seats mode
+  const toggleFloorPlanMode = () => {
+    setIsMultipleSeatMode(!isMultipleSeatMode);
+  };
+
+  // ::::::::::::::::::: Buttons data
+  const buttonGroups = [
+    [
+      { icon: FileIcon, tooltip: "New File", onClick: () => {} },
+      { icon: FolderOpen, tooltip: "Open File", onClick: () => {} },
+      { icon: Save, tooltip: "Save File", onClick: () => {} },
+    ],
+    [
+      { icon: MousePointer, tooltip: "Select", onClick: () => {} },
+      { icon: Move, tooltip: "Move", onClick: () => {} },
+      { icon: LayoutGrid, tooltip: "Grid View", onClick: () => {} },
+      { icon: Layout, tooltip: "Layout View", onClick: () => {} },
+    ],
+    [
+      { icon: Plus, tooltip: "Add Seat", onClick: () => {} },
+      { icon: Grid2x2Plus, tooltip: "Add Rows", onClick: toggleFloorPlanMode },
+    ],
+    [
+      { icon: Undo, tooltip: "Undo", onClick: () => {} },
+      { icon: Redo, tooltip: "Redo", onClick: () => {} },
+    ],
+    [
+      { icon: Scissors, tooltip: "Cut", onClick: () => {} },
+      { icon: Copy, tooltip: "Copy", onClick: () => {} },
+      { icon: Clipboard, tooltip: "Paste", onClick: () => {} },
+      { icon: Trash2, tooltip: "Delete", onClick: () => {} },
+    ]
+  ];
+  
+  
 
   return (
-    <div className="sticky top-0 left-0 z-[200] flex items-center gap-1 w-full bg-white px-[1rem] py-[0.375rem] shadow">
-      <Button icon={<FileIcon className="h-4 w-4" />} tooltip="New File" />
-      <Button icon={<FolderOpen className="h-4 w-4" />} tooltip="Open File" />
-      <Button icon={<Save className="h-4 w-4" />} tooltip="Save File" />
+    <div 
+      className="sticky top-0 left-0 z-[200] flex items-center gap-1 w-full bg-white px-[1rem] py-[0.375rem] shadow"
+    >
+      {buttonGroups.map((group, groupIndex) => (
+        <React.Fragment key={groupIndex}>
+
+          {/* :::::::::::::: add seperator */}
+          {groupIndex !== 0 && <Separator />}
+
+          {/* :::::::::::::: add space */}
+          {[1,5].includes(groupIndex) && 
+            <div className='flex-1' />
+          }
+          
+          {/* ::::::::::::::: buttons */}
+          {group.map((item, buttonIndex) => (
+            <Button
+              key={buttonIndex}
+              icon={<item.icon className="h-4 w-4" />}
+              tooltip={item.tooltip}
+              onClick={item.onClick}
+            />
+          ))}
+        </React.Fragment>
+      ))}
+      
+      {/* :::::::::::::: add seperator */}
+      <Separator />
+
+      {/* :::::::::::::: zoom button */}
+      <Button 
+        icon={
+          <ZoomOut className="h-4 w-4" />
+        } 
+        tooltip="Zoom Out" onClick={() => setZoomLevel(zoomLevel - 10)} 
+      />
+        <div className="flex items-center justify-center w-12 h-8 text-sm font-medium">
+          {zoomLevel}%
+        </div>
+      <Button 
+        icon={
+          <ZoomIn className="h-4 w-4" />
+        } 
+        tooltip="Zoom In" onClick={() => setZoomLevel(zoomLevel + 10)} 
+      />
+
+      {/* ::::::::::::::: add space */}
       <div className='flex-1' />
-      <Button icon={<MousePointer className="h-4 w-4" />} tooltip="Select" />
-      <Button icon={<Move className="h-4 w-4" />} tooltip="Move" />
-      <Button icon={<LayoutGrid className="h-4 w-4" />} tooltip="Grid View" />
-      <Button icon={<Layout className="h-4 w-4" />} tooltip="Layout View" />
-      <Separator />
-      <Button icon={<Plus className="h-4 w-4" />} tooltip="Add Seat" />
-      <Button icon={<Grid2x2Plus className="h-4 w-4" />} tooltip="Add Rows" />
-      <Separator />
-      <Button icon={<Undo className="h-4 w-4" />} tooltip="Undo" />
-      <Button icon={<Redo className="h-4 w-4" />} tooltip="Redo" />
-      <Separator />
-      <Button icon={<Scissors className="h-4 w-4" />} tooltip="Cut" />
-      <Button icon={<Copy className="h-4 w-4" />} tooltip="Copy" />
-      <Button icon={<Clipboard className="h-4 w-4" />} tooltip="Paste" />
-      <Button icon={<Trash2 className="h-4 w-4" />} tooltip="Delete" />
-      <Separator />
-      <Button icon={<ZoomOut className="h-4 w-4" />} tooltip="Zoom Out" onClick={() => setZoomLevel(zoomLevel - 10)} />
-      <div className="flex items-center justify-center w-12 h-8 text-sm font-medium">
-        {zoomLevel}%
-      </div>
-      <Button icon={<ZoomIn className="h-4 w-4" />} tooltip="Zoom In" onClick={() => setZoomLevel(zoomLevel + 10)} />
-      <div className='flex-1' />
-      <Button icon={<QrCode className="h-4 w-4" />} tooltip="QR Code" />
+
+      {/* ::::::::::::::: qr code button */}
+      <Button 
+        icon={
+          <QrCode className="h-4 w-4" />
+        } 
+        tooltip="QR Code" 
+      />
     </div>
   )
 }
