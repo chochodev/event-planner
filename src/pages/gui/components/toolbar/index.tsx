@@ -43,7 +43,7 @@ const Toolbar: React.FC = () => {
       icon: MousePointer, 
       tooltip: "Select", 
       onClick: () => {setToolMode('select')},
-      state: toolMode === 'select' 
+      state: toolMode === 'select'
     },
     { icon: Move, tooltip: "Move", onClick: () => {}, state: false },
     { icon: LayoutGrid, tooltip: "Grid View", onClick: () => {}, state: false },
@@ -70,24 +70,24 @@ const Toolbar: React.FC = () => {
       className="sticky top-0 left-0 z-[200] flex items-center gap-1 w-full bg-white px-[1rem] py-[0.5rem] shadow"
     >
       {buttonGroups.map((item, index) => (
-        <>
+        <React.Fragment key={index}>
           {/* :::::::::::::: add seperator */}
-          {[7,9,11].includes(index)  && <Separator />}
+          {[7,9,11].includes(index)  && <Separator key={`seperator-${index}`} />}
 
           {/* :::::::::::::: add space */}
           {3 === index && 
-            <div className='flex-1' />
+            <div className='flex-1' key={`space-${index}`} />
           }
           
           {/* ::::::::::::::: buttons */}
           <Button
-            key={index}
+            key={`button-${index}`}
             icon={<item.icon className="h-4 w-4" />}
             tooltip={item.tooltip}
             onClick={item.onClick}
             state={item.state}
           />
-        </>
+        </React.Fragment>
       ))}
       
       {/* :::::::::::::: add seperator */}

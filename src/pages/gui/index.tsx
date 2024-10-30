@@ -16,37 +16,6 @@ class CustomCircle extends fabric.Circle {
   }
 }
 
-// ::::::::::::::: Create seat object
-const createSeat = (left: number, top: number) => {
-  const seat = new CustomCircle({
-    left,
-    top,
-    fill: 'transparent',
-    stroke: 1,
-    radius: 10,
-    selectable: true,
-    borderColor: 'green',
-    borderDashArray: [2, 4],
-    padding: 2,
-    cornerColor: 'lightblue',
-    cornerSize: 5,
-    cornerStrokeColor: 'blue',
-    transparentCorners: false,
-    rx: 0.25,
-    ry: 0.25,
-    // id: uuidv4()
-  });
-
-  seat.setControlsVisibility({
-    mt: false,
-    mb: false,
-    ml: false,
-    mr: false,
-  });
-  
-  return seat;    
-};
-
 
 // ::::::::::::::::::::: MAIN JSX FUNCTION
 const SeatCanvas = () => {
@@ -55,8 +24,6 @@ const SeatCanvas = () => {
   const {
     canvas,
     setCanvas,
-    seats,
-    addSeat,
     toolMode,
     setToolMode
   } = useEventGuiStore();
@@ -158,10 +125,11 @@ const SeatCanvas = () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
+    // :::::::::::::::::::::::: sample seat object created on the canvas
     const seat = createSeat(100, 100);
 
     newCanvas.add(seat);
-    newCanvas.selection = true;
+    // newCanvas.selection = true;
     
     // :::::::::::::::::::::::: Listen for object selection
     newCanvas.on('selection:created', () => {
@@ -178,14 +146,14 @@ const SeatCanvas = () => {
     newCanvas.on('object:moving', (event) => {
       const obj = event.target;
       const { width: canvasWidth, height: canvasHeight } = newCanvas;
-
+      
       if (obj) {
         const objWidth = (obj.width ?? 0) * (obj.scaleX ?? 1);
         const objHeight = (obj.height ?? 0) * (obj.scaleY ?? 1);
-
+        
         // ::::::::::::::::::: Set boundaries
-        obj.left = Math.max(0, Math.min(obj.left ?? 0, canvasWidth ?? 0 - objWidth));
-        obj.top = Math.max(0, Math.min(obj.top ?? 0, canvasHeight ?? 0 - objHeight));
+        obj.left = Math.max(0, Math.min((obj.left ?? 0), (canvasWidth ?? 0) - objWidth));
+        obj.top = Math.max(0, Math.min((obj.top ?? 0), (canvasHeight ?? 0) - objHeight));
       }
     });
 
@@ -260,7 +228,9 @@ const SeatCanvas = () => {
       <Toolbar />
       <div className='flex justify-between w-full'>
         <div className='w-full max-w-[45rem] mx-auto bg-gray-100' ref={canvasParent}>
-          <canvas className='size-full' style={{width: '100%', height: '100%'}} ref={canvasRef} />
+          <canvas
+            ref={canvasRef} 
+          />
         </div>
         <Sidebar />
       </div>
