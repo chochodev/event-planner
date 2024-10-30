@@ -29,8 +29,8 @@ interface EventGuiState {
   deleteSeat: (id: string) => void
   selectedSeatIds: string[]
   setSelectedSeatIds: (ids: string[]) => void
-  isCreatingFloorPlan: boolean
-  setIsCreatingFloorPlan: (isCreating: boolean) => void
+  isMultipleSeatMode: boolean
+  setIsMultipleSeatMode: (isCreating: boolean) => void
   zones: Zone[]
   addZone: (name: string) => void
   updateZone: (id: string, updates: Partial<Zone>) => void
@@ -65,9 +65,9 @@ export const useEventGuiStore = create<EventGuiState>((set) => ({
   setSelectedSeatIds: (ids) => set({ selectedSeatIds: ids }),
 
   // ::::::::::::::::::: Multiple seat creation mode state
-  isCreatingFloorPlan: false,
+  isMultipleSeatMode: false,
   // ::::::::::::::::::: Modifier: Multiple seat creation mode state function
-  setIsCreatingFloorPlan: (isCreating) => set({ isCreatingFloorPlan: isCreating }),
+  setIsMultipleSeatMode: (isCreating) => set({ isMultipleSeatMode: isCreating }),
   
   // ::::::::::::::::::: Zone states
   zones: [{ id: uuidv4(), name: 'Ground floor', isChecked: true }],

@@ -57,13 +57,13 @@ const SeatCanvas = () => {
     setCanvas,
     seats,
     addSeat,
-    isCreatingFloorPlan,
-    setIsCreatingFloorPlan,
+    isMultipleSeatMode,
+    setIsMultipleSeatMode,
   } = useEventGuiStore();
 
 
   // const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
-  // const [isCreatingFloorPlan, setIsCreatingFloorPlan] = useState(false);
+  // const [isMultipleSeatMode, setIsMultipleSeatMode] = useState(false);
   const startPointRef = useRef<{ x: number; y: number } | null>(null);
 
   // ::::::::::::::: Create seat object
@@ -199,14 +199,14 @@ const SeatCanvas = () => {
     if (!canvas) return;
 
     const handleMouseDown = (event: fabric.IEvent) => {
-      if (!isCreatingFloorPlan) return;
+      if (!isMultipleSeatMode) return;
 
       const pointer = canvas.getPointer(event.e);
       startPointRef.current = { x: pointer.x, y: pointer.y };
     };
 
     const handleMouseUp = (event: fabric.IEvent) => {
-      if (!isCreatingFloorPlan || !startPointRef.current) return;
+      if (!isMultipleSeatMode || !startPointRef.current) return;
 
       // ::::::::::::::::::: Get the end position of the cursor highlight
       const endPoint = canvas.getPointer(event.e);
@@ -248,11 +248,11 @@ const SeatCanvas = () => {
       canvas.off('mouse:down', handleMouseDown);
       canvas.off('mouse:up', handleMouseUp);
     };
-  }, [canvas, isCreatingFloorPlan]);
+  }, [canvas, isMultipleSeatMode]);
 
   // ::::::::::::::::::: Function: toggle the create multiple seats mode
   const toggleFloorPlanMode = () => {
-    setIsCreatingFloorPlan(!isCreatingFloorPlan);
+    setIsMultipleSeatMode(!isMultipleSeatMode);
   };
 
   return (
@@ -260,10 +260,10 @@ const SeatCanvas = () => {
       <button
         onClick={toggleFloorPlanMode}
         className={`fixed bottom-4 right-4 px-4 py-2 rounded ${
-          isCreatingFloorPlan ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'
+          isMultipleSeatMode ? 'bg-red-500 text-white' : 'bg-blue-500 text-white'
         }`}
       >
-        {isCreatingFloorPlan ? 'Exit Floor Plan Mode' : 'Create Floor Plan'}
+        {isMultipleSeatMode ? 'Exit Floor Plan Mode' : 'Create Floor Plan'}
       </button>
       <Toolbar />
       <div className='flex justify-between w-full'>
