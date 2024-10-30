@@ -228,7 +228,10 @@ const SeatCanvas = () => {
         const seat = createSeat(pointer.x, pointer.y);
         canvas.add(seat);
         canvas.renderAll();
-      } else if (toolMode === 'shape-square') {
+      } 
+
+      // ::::::::::::: For shape (square)
+      else if (toolMode === 'shape-square') {
         const rect = createRect(pointer.x, pointer.y);
         rect.set({ width: 0, height: 0 }); // Initial size for drawing
         canvas.add(rect);
@@ -236,7 +239,7 @@ const SeatCanvas = () => {
         startPointRef.current = { x: pointer.x, y: pointer.y };
       }
 
-      // For text creation:
+      // ::::::::::::::: For text 
       else if (toolMode === 'text') {
         const text = createText(pointer.x, pointer.y);
         canvas.add(text);
