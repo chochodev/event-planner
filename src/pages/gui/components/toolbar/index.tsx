@@ -36,31 +36,21 @@ const Toolbar: React.FC = () => {
 
   // ::::::::::::::::::: Buttons data
   const buttonGroups = [
-    [
-      { icon: FileIcon, tooltip: "New File", onClick: () => {} },
-      { icon: FolderOpen, tooltip: "Open File", onClick: () => {} },
-      { icon: Save, tooltip: "Save File", onClick: () => {} },
-    ],
-    [
-      { icon: MousePointer, tooltip: "Select", onClick: () => {} },
-      { icon: Move, tooltip: "Move", onClick: () => {} },
-      { icon: LayoutGrid, tooltip: "Grid View", onClick: () => {} },
-      { icon: Layout, tooltip: "Layout View", onClick: () => {} },
-    ],
-    [
-      { icon: Plus, tooltip: "Add Seat", onClick: () => {} },
-      { icon: Grid2x2Plus, tooltip: "Add Rows", onClick: toggleFloorPlanMode },
-    ],
-    [
-      { icon: Undo, tooltip: "Undo", onClick: () => {} },
-      { icon: Redo, tooltip: "Redo", onClick: () => {} },
-    ],
-    [
-      { icon: Scissors, tooltip: "Cut", onClick: () => {} },
-      { icon: Copy, tooltip: "Copy", onClick: () => {} },
-      { icon: Clipboard, tooltip: "Paste", onClick: () => {} },
-      { icon: Trash2, tooltip: "Delete", onClick: () => {} },
-    ]
+    { icon: FileIcon, tooltip: "New File", onClick: () => {} },
+    { icon: FolderOpen, tooltip: "Open File", onClick: () => {} },
+    { icon: Save, tooltip: "Save File", onClick: () => {} },
+    { icon: MousePointer, tooltip: "Select", onClick: () => {} },
+    { icon: Move, tooltip: "Move", onClick: () => {} },
+    { icon: LayoutGrid, tooltip: "Grid View", onClick: () => {} },
+    { icon: Layout, tooltip: "Layout View", onClick: () => {} },
+    { icon: Plus, tooltip: "Add Seat", onClick: () => {} },
+    { icon: Grid2x2Plus, tooltip: "Add Rows", onClick: toggleFloorPlanMode },
+    { icon: Undo, tooltip: "Undo", onClick: () => {} },
+    { icon: Redo, tooltip: "Redo", onClick: () => {} },
+    { icon: Scissors, tooltip: "Cut", onClick: () => {} },
+    { icon: Copy, tooltip: "Copy", onClick: () => {} },
+    { icon: Clipboard, tooltip: "Paste", onClick: () => {} },
+    { icon: Trash2, tooltip: "Delete", onClick: () => {} },
   ];
   
   
@@ -69,27 +59,24 @@ const Toolbar: React.FC = () => {
     <div 
       className="sticky top-0 left-0 z-[200] flex items-center gap-1 w-full bg-white px-[1rem] py-[0.375rem] shadow"
     >
-      {buttonGroups.map((group, groupIndex) => (
-        <React.Fragment key={groupIndex}>
-
+      {buttonGroups.map((item, index) => (
+        <>
           {/* :::::::::::::: add seperator */}
-          {groupIndex !== 0 && <Separator />}
+          {[7,9,11].includes(index)  && <Separator />}
 
           {/* :::::::::::::: add space */}
-          {[1,5].includes(groupIndex) && 
+          {3 === index && 
             <div className='flex-1' />
           }
           
           {/* ::::::::::::::: buttons */}
-          {group.map((item, buttonIndex) => (
-            <Button
-              key={buttonIndex}
-              icon={<item.icon className="h-4 w-4" />}
-              tooltip={item.tooltip}
-              onClick={item.onClick}
-            />
-          ))}
-        </React.Fragment>
+          <Button
+            key={index}
+            icon={<item.icon className="h-4 w-4" />}
+            tooltip={item.tooltip}
+            onClick={item.onClick}
+          />
+        </>
       ))}
       
       {/* :::::::::::::: add seperator */}
