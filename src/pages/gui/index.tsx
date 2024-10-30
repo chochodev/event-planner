@@ -5,7 +5,6 @@ import Sidebar from './components/sidebar';
 import { useEventGuiStore } from '@/zustand/store';
 import { v4 as uuidv4 } from 'uuid';
 
-
 // :::::::::::::::::: Custom Circle object
 class CustomCircle extends fabric.Circle {
   readonly id: string;
@@ -15,7 +14,6 @@ class CustomCircle extends fabric.Circle {
     this.id = uuidv4();
   }
 }
-
 
 // ::::::::::::::::::::: MAIN JSX FUNCTION
 const SeatCanvas = () => {
@@ -98,7 +96,6 @@ const SeatCanvas = () => {
     };
   }, [canvas]);
 
-  
   // :::::::::::::::::::::::: ADDITIONAL BEHAIVOR TO CANVAS SEAT OBJECTS
   // ::::::::::::::::::: Create a simple seat object
   useEffect(() => {
@@ -126,7 +123,6 @@ const SeatCanvas = () => {
     const seat = createSeat(100, 100);
 
     newCanvas.add(seat);
-    // newCanvas.selection = true;
     
     // :::::::::::::::::::::::: Listen for object selection
     newCanvas.on('selection:created', () => {
@@ -164,14 +160,14 @@ const SeatCanvas = () => {
     if (!canvas) return;
 
     const handleMouseDown = (event: fabric.IEvent) => {
-      if (!(toolMode==='multiple-seat')) return;
+      if (!(toolMode === 'multiple-seat')) return;
 
       const pointer = canvas.getPointer(event.e);
       startPointRef.current = { x: pointer.x, y: pointer.y };
     };
 
     const handleMouseUp = (event: fabric.IEvent) => {
-      if (!(toolMode==='multiple-seat') || !startPointRef.current) return;
+      if (!(toolMode === 'multiple-seat') || !startPointRef.current) return;
 
       // ::::::::::::::::::: Get the end position of the cursor highlight
       const endPoint = canvas.getPointer(event.e);
@@ -187,7 +183,6 @@ const SeatCanvas = () => {
       // :::::::::::::::::: Create set objects in rows & columns
       for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
-
           const left = startPoint.x + j * 60;
           const top = startPoint.y + i * 60;
           const seat = createSeat(left, top);
@@ -201,7 +196,7 @@ const SeatCanvas = () => {
       startPointRef.current = null;
 
       // ::::::::::::::: Reset the floor mode
-      toggleMultipleSeatMode();
+      setToolMode('select');
     };
 
     // ::::::::::::::::::::: Listens to client's event & Call the functions
@@ -215,10 +210,99 @@ const SeatCanvas = () => {
     };
   }, [canvas, toolMode]);
 
-  // ::::::::::::::::::: Function: toggle the create multiple seats mode
-  const toggleMultipleSeatMode = () => {
-    setToolMode(toolMode === 'select'? 'multiple-seat' : 'select');
-  };
+  // :::::::::::::::::::::: Delete selected object
+  useEffect(() => {
+    if (!canvas) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Delete' || event.key === 'Backspace') {
+        const activeObject = canvas.getActiveObject();
+        if (activeObject) {
+          canvas.remove(activeObject);
+          canvas.discardActiveObject();
+          canvas.renderAll();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [canvas]);
+
+  // :::::::::::::::::::::: Add single seat, draw rectangle, or add text
+  useEffect(() => {
+    if (!canvas) return;
+
+    const handleMouseDown = (event: fabric.IEvent) => {
+      const pointer = canvas.getPointer(event.e);
+
+      if (toolMode === 'one-seat') {
+        const seat = createSeat(pointer.x, pointer.y);
+        canvas.add(seat);
+        canvas.renderAll();
+      } else if (toolMode === 'shape-square') {
+        const rect = new fabric.Rect({
+          left: pointer.x,
+          top: pointer.y,
+          fill: 'transparent',
+          stroke: 'black',
+          strokeWidth: 1,
+          width: 0,
+          height: 0
+        });
+        canvas.add(rect);
+        canvas.setActiveObject(rect);
+        startPointRef.current = { x: pointer.x, y: pointer.y };
+      } else if (toolMode === 'text') {
+        const text = new fabric.IText('Type here', {
+          left: pointer.x,
+          top: pointer.y,
+          fontSize: 20,
+          fill: 'black'
+        });
+        canvas.add(text);
+        canvas.setActiveObject(text);
+        text.enterEditing();
+        text.selectAll();
+      }
+    };
+
+    const handleMouseMove = (event: fabric.IEvent) => {
+      if (toolMode === 'shape-square' && startPointRef.current) {
+        const pointer = canvas.getPointer(event.e);
+        const activeObject = canvas.getActiveObject() as fabric.Rect;
+        if (activeObject && activeObject.type === 'rect') {
+          const width = Math.abs(pointer.x - startPointRef.current.x);
+          const height = Math.abs(pointer.y - startPointRef.current.y);
+          activeObject.set({
+            width: width,
+            height: height
+          });
+          canvas.renderAll();
+        }
+      }
+    };
+
+    const handleMouseUp = () => {
+      if (toolMode === 'shape-square') {
+        startPointRef.current = null;
+      }
+      setToolMode('select');
+    };
+
+    canvas.on('mouse:down', handleMouseDown);
+    canvas.on('mouse:move', handleMouseMove);
+    canvas.on('mouse:up', handleMouseUp);
+
+    return () => {
+      canvas.off('mouse:down', handleMouseDown);
+      canvas.off('mouse:move', handleMouseMove);
+      canvas.off('mouse:up', handleMouseUp);
+    };
+  }, [canvas, toolMode]);
 
   return (
     <div className='relative size-full bg-gray-200'>

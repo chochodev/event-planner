@@ -5,7 +5,6 @@ import {
   FolderOpen,
   Save,
   MousePointer,
-  Move,
   LayoutGrid,
   Layout,
   Plus,
@@ -20,6 +19,7 @@ import {
   ZoomOut,
   QrCode,
 } from 'lucide-react';
+import { RiText, RiShapeLine } from "react-icons/ri";
 
 const Toolbar: React.FC = () => {
   const { 
@@ -31,7 +31,7 @@ const Toolbar: React.FC = () => {
 
   // ::::::::::::::::::: Function: toggle create multiple seats mode
   const toggleMultipleSeatMode = () => {
-    setToolMode(toolMode === 'select'? 'multiple-seat' : 'select');
+    setToolMode(toolMode === 'multiple-seat'? 'select' : 'multiple-seat');
   };
 
   // ::::::::::::::::::: Buttons data
@@ -45,10 +45,26 @@ const Toolbar: React.FC = () => {
       onClick: () => {setToolMode('select')},
       state: toolMode === 'select'
     },
-    { icon: Move, tooltip: "Move", onClick: () => {}, state: false },
     { icon: LayoutGrid, tooltip: "Grid View", onClick: () => {}, state: false },
     { icon: Layout, tooltip: "Layout View", onClick: () => {}, state: false },
-    { icon: Plus, tooltip: "Add Seat", onClick: () => {}, state: false },
+    { 
+      icon: RiText, 
+      tooltip: "Add Text", 
+      onClick: () => {setToolMode('text')}, 
+      state: toolMode === 'text'
+    },
+    { 
+      icon: RiShapeLine, 
+      tooltip: "Add Square", 
+      onClick: () => {setToolMode('shape-square')}, 
+      state: toolMode === 'shape-square'
+    },
+    { 
+      icon: Plus, 
+      tooltip: "Add Seat", 
+      onClick: () => {setToolMode('one-seat')}, 
+      state: toolMode === 'one-seat' 
+    },
     { 
       icon: Grid2x2Plus, 
       tooltip: "Add Rows", 
@@ -72,7 +88,7 @@ const Toolbar: React.FC = () => {
       {buttonGroups.map((item, index) => (
         <React.Fragment key={index}>
           {/* :::::::::::::: add seperator */}
-          {[7,9,11].includes(index)  && <Separator key={`seperator-${index}`} />}
+          {[6,10,12].includes(index)  && <Separator key={`seperator-${index}`} />}
 
           {/* :::::::::::::: add space */}
           {3 === index && 
@@ -138,7 +154,7 @@ const Button: React.FC<ButtonProps> = ({ icon, tooltip, ...props }) => {
   return (
     <div className="relative">
       <button
-        className={`p-2 rounded-md hover:bg-gray-200/60 ${props.state? 'ring-1 ring-gray-500 shadow-md shadow-gray-400' : '' } ease-250`}
+        className={`p-2 rounded-md hover:bg-gray-200/60 ${props.state? 'ring-1 ring-gray-400 shadow-sm shadow-gray-400' : '' } ease-250`}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         {...props}
