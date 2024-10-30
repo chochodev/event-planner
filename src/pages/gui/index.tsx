@@ -2,17 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { fabric } from 'fabric';
 import Toolbar from './components/toolbar';
 import Sidebar from './components/sidebar';
+import { useEventGuiStore } from '@/zustand/store';
 import { v4 as uuidv4 } from 'uuid';
 
-// :::::::::::::::::: Custom Rect object
-class CustomRect extends fabric.Rect {
-  readonly id: string;
-
-  constructor(options: any) {
-    super(options);
-    this.id = uuidv4();
-  }
-}
 
 // :::::::::::::::::: Custom Circle object
 class CustomCircle extends fabric.Circle {
