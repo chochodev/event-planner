@@ -26,7 +26,9 @@ const Toolbar: React.FC = () => {
     zoomLevel, 
     setZoomLevel,
     toolMode,
-    setToolMode
+    setToolMode,
+    toolAction,
+    setToolAction,
   } = useEventGuiStore();
 
   // ::::::::::::::::::: Function: toggle create multiple seats mode
@@ -76,7 +78,12 @@ const Toolbar: React.FC = () => {
     { icon: Scissors, tooltip: "Cut", onClick: () => {}, state: false },
     { icon: Copy, tooltip: "Copy", onClick: () => {}, state: false },
     { icon: Clipboard, tooltip: "Paste", onClick: () => {}, state: false },
-    { icon: Trash2, tooltip: "Delete", onClick: () => {}, state: false },
+    { 
+      icon: Trash2, 
+      tooltip: "Delete", 
+      onClick: () => {setToolAction('delete')}, 
+      state: false // toolAction === 'delete' 
+    },
   ];
   
   

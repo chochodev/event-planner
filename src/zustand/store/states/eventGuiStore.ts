@@ -21,7 +21,7 @@ interface Zone {
 }
 
 type Mode = 'select' | 'one-seat' | 'multiple-seat' | 'shape-square' | 'text'
-type Action = 'delete' | 'copy' | 'move' | 'paste'
+type Action = null | 'delete' | 'copy' | 'move' | 'paste'
 
 interface EventGuiState {
   canvas: fabric.Canvas | null
@@ -37,6 +37,8 @@ interface EventGuiState {
   setToolMode: (mode: Mode) => void
 
   // ::::::::::: Action
+  toolAction: Action
+  setToolAction: (action: Action) => void
 
   setSelectedSeatIds: (ids: string[]) => void
   isMultipleSeatMode: boolean
@@ -98,4 +100,8 @@ export const useEventGuiStore = create<EventGuiState>((set) => ({
   // ::::::::::::::::::: Mode state
   toolMode: 'select',
   setToolMode: (mode: Mode) => set({toolMode: mode}),
+
+  // ::::::::::::::::::: Action state
+  toolAction: null,
+  setToolAction: (action: Action) => set({toolAction: action}),
 }))

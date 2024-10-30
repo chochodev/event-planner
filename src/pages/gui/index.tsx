@@ -23,7 +23,9 @@ const SeatCanvas = () => {
     canvas,
     setCanvas,
     toolMode,
-    setToolMode
+    setToolMode,
+    toolAction,
+    setToolAction,
   } = useEventGuiStore();
   
   const startPointRef = useRef<{ x: number; y: number } | null>(null);
