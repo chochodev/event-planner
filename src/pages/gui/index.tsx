@@ -80,7 +80,7 @@ const SeatCanvas = () => {
         activeObject.borderDashArray = [2, 4];
         activeObject.padding = 4;
         activeObject.cornerColor = 'lightblue';
-        activeObject.cornerSize = 8;
+        activeObject.cornerSize = 7;
         activeObject.cornerStrokeColor = 'blue';
         
         canvas.requestRenderAll();
@@ -212,29 +212,49 @@ const SeatCanvas = () => {
     };
   }, [canvas, toolMode]);
 
+
   // :::::::::::::::::::::: Delete selected object
   useEffect(() => {
     if (!canvas) return;
 
+    // ::::::::::::::::::: Delete function
+    const deleteFunction = () => {
+      const activeObject = canvas.getActiveObject();
+      if (!activeObject) return;
+  
+      // :::::::::::::::: multiple selection
+      if (activeObject.type === 'activeSelection') {
+        const activeSelection = activeObject as fabric.ActiveSelection;
+        const objects = [...activeSelection.getObjects()];
+        objects.forEach(obj => canvas.remove(obj));
+      } // :::::::::::::::::::: single object
+        else {
+        canvas.remove(activeObject);
+      }
+  
+      canvas.discardActiveObject();
+      canvas.renderAll();
+    }
+
+    // :::::::::::::::::: Delete on keyboard event
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Delete' || (event.ctrlKey && event.key.toLowerCase() === 'd')) {
-        const activeObject = canvas.getActiveObject();
-        if (activeObject) {
-          canvas.remove(activeObject);
-          canvas.discardActiveObject();
-          canvas.renderAll();
-        }
+        deleteFunction();
       }
     };
 
+    // ::::::::::::::::::: Delete on button trigger
     if (toolAction === 'delete') {
-      window.addEventListener('keydown', handleKeyDown);
+      deleteFunction();
+      setToolAction(null);
     }
+
+    window.addEventListener('keydown', handleKeyDown);
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [canvas, toolMode]);
+  }, [canvas, toolAction]);
 
   // :::::::::::::::::::::: Add single seat, draw rectangle, or add text
   useEffect(() => {
