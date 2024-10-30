@@ -20,6 +20,8 @@ interface Zone {
   isChecked: boolean
 }
 
+type Mode = 'select' | 'one-seat' | 'multiple-seat' | 'shape-square' | 'text'
+
 interface EventGuiState {
   canvas: fabric.Canvas | null
   setCanvas: (canvas: fabric.Canvas) => void
@@ -28,6 +30,11 @@ interface EventGuiState {
   updateSeat: (id: string, updates: Partial<Seat>) => void
   deleteSeat: (id: string) => void
   selectedSeatIds: string[]
+
+  // ::::::::::: mode
+  toolMode: Mode
+  setToolMode: (mode: Mode) => void
+
   setSelectedSeatIds: (ids: string[]) => void
   isMultipleSeatMode: boolean
   setIsMultipleSeatMode: (isCreating: boolean) => void
@@ -43,7 +50,6 @@ export const useEventGuiStore = create<EventGuiState>((set) => ({
   
   // ::::::::::::::::::: Canvas state
   canvas: null,
-  // ::::::::::::::::::: Modifier: canvas state function 
   setCanvas: (canvas) => set({ canvas }),
   
   // ::::::::::::::::::: Seat states
@@ -61,12 +67,10 @@ export const useEventGuiStore = create<EventGuiState>((set) => ({
 
   // ::::::::::::::::::: Selected Seat ID
   selectedSeatIds: [],
-  // ::::::::::::::::::: Modifier: Selected Seat function
   setSelectedSeatIds: (ids) => set({ selectedSeatIds: ids }),
 
   // ::::::::::::::::::: Multiple seat creation mode state
   isMultipleSeatMode: false,
-  // ::::::::::::::::::: Modifier: Multiple seat creation mode state function
   setIsMultipleSeatMode: (isCreating) => set({ isMultipleSeatMode: isCreating }),
   
   // ::::::::::::::::::: Zone states
@@ -86,6 +90,9 @@ export const useEventGuiStore = create<EventGuiState>((set) => ({
   
   // ::::::::::::::::::: Zoom level state
   zoomLevel: 100,
-  // ::::::::::::::::::: Modifier: Zoom level function
   setZoomLevel: (level) => set({ zoomLevel: level }),
+
+  // ::::::::::::::::::: Mode state
+  toolMode: 'select',
+  setToolMode: (mode: Mode) => set({toolMode: mode}),
 }))
