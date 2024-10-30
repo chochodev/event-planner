@@ -16,11 +16,54 @@ class CustomCircle extends fabric.Circle {
   }
 }
 
+// ::::::::::::::: Create seat object
+const createSeat = (left: number, top: number) => {
+  const seat = new CustomCircle({
+    left,
+    top,
+    fill: 'transparent',
+    stroke: 1,
+    radius: 10,
+    selectable: true,
+    borderColor: 'green',
+    borderDashArray: [2, 4],
+    padding: 2,
+    cornerColor: 'lightblue',
+    cornerSize: 5,
+    cornerStrokeColor: 'blue',
+    transparentCorners: false,
+    rx: 0.25,
+    ry: 0.25,
+    // id: uuidv4()
+  });
+
+  seat.setControlsVisibility({
+    mt: false,
+    mb: false,
+    ml: false,
+    mr: false,
+  });
+  
+  return seat;    
+};
+
+
+// ::::::::::::::::::::: MAIN JSX FUNCTION
 const SeatCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasParent = useRef<HTMLDivElement>(null);
-  const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
-  const [isCreatingFloorPlan, setIsCreatingFloorPlan] = useState(false);
+  const {
+    canvas,
+    setCanvas,
+    seats,
+    addSeat,
+    isCreatingFloorPlan,
+    setIsCreatingFloorPlan,
+  } = useEventGuiStore();
+
+
+  // const [canvas, setCanvas] = useState<fabric.Canvas | null>(null);
+  // const [isCreatingFloorPlan, setIsCreatingFloorPlan] = useState(false);
   const startPointRef = useRef<{ x: number; y: number } | null>(null);
 
   // ::::::::::::::: Create seat object
