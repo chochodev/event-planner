@@ -62,7 +62,7 @@ const Toolbar: React.FC = () => {
 
   return (
     <div 
-      className="sticky top-0 left-0 z-[200] flex items-center gap-1 w-full bg-white px-[1rem] py-[0.375rem] shadow"
+      className="sticky top-0 left-0 z-[200] flex items-center gap-1 w-full bg-white px-[1rem] py-[0.5rem] shadow"
     >
       {buttonGroups.map((item, index) => (
         <>
@@ -133,7 +133,7 @@ const Button: React.FC<ButtonProps> = ({ icon, tooltip, ...props }) => {
   return (
     <div className="relative">
       <button
-        className={`p-2 rounded-md hover:bg-gray-200/60 ${props.state? 'ring-1 ring-gray-300 shadow-md shadow-neutral-400' : '' } ease-250`}
+        className={`p-2 rounded-md hover:bg-gray-200/60 ${props.state? 'ring-1 ring-gray-500 shadow-md shadow-gray-400' : '' } ease-250`}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         {...props}
