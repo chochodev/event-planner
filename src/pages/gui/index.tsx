@@ -215,7 +215,7 @@ const SeatCanvas = () => {
     if (!canvas) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Delete' || event.key === 'Backspace') {
+      if (event.key === 'Delete' || event.key === 'Ctrl+Z') {
         const activeObject = canvas.getActiveObject();
         if (activeObject) {
           canvas.remove(activeObject);
