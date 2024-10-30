@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Plus } from 'lucide-react';
+import { ChevronDown, Plus } from 'lucide-react';
 import { useEventGuiStore } from '@/zustand/store';
 import { CustomFabricObject, UpdateableProperties } from '@/types/fabric-types';
 
@@ -13,7 +13,7 @@ const Sidebar = () => {
   const [radius, setRadius] = useState(10);
   const [width, setWidth] = useState(100);
   const [height, setHeight] = useState(100);
-  const [fill, setFill] = useState('transparent');
+  const [fill, setFill] = useState<string | null>('transparent');
   const [stroke, setStroke] = useState('#000000');
   const [text, setText] = useState('');
   const [fontSize, setFontSize] = useState(20);
@@ -34,7 +34,7 @@ const Sidebar = () => {
         setRotation(activeObject.angle || 0);
         setLeft(activeObject.left || 0);
         setTop(activeObject.top || 0);
-        setFill(activeObject.fill as string || 'transparent');
+        setFill(activeObject.fill as string | null || 'transparent');
         setStroke(activeObject.stroke as string || '#000000');
 
         // Update type-specific properties
@@ -218,13 +218,13 @@ const Sidebar = () => {
             <div className="flex items-center mt-1">
               <input
                 type="color"
-                value={fill === 'transparent' ? '#ffffff' : fill}
+                value={fill === 'transparent' ? '#ffffff' : fill || '#ffffff'}
                 onChange={(e) => updateObject({ fill: e.target.value })}
                 className="w-8 h-8 rounded-md border"
               />
               <input
                 type="text"
-                value={fill === 'transparent' ? 'transparent' : fill.toUpperCase()}
+                value={fill === 'transparent' ? 'transparent' : (fill || '').toUpperCase()}
                 onChange={(e) => updateObject({ fill: e.target.value })}
                 className="ml-2 px-2 py-1 w-full border rounded-md"
               />
