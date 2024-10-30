@@ -1,16 +1,75 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronDown, Plus } from 'lucide-react';
+import { useEventGuiStore } from '@/zustand/store';
 
 const Sidebar = () => {
-  const [rotation, setRotation] = useState(0)
-  const [radius, setRadius] = useState(24.76418786)
-  const [color, setColor] = useState('#CCCCCC')
-  const [borderColor, setBorderColor] = useState('#000000')
-  const [text, setText] = useState('')
-  const [textSize, setTextSize] = useState(16)
-  const [textPositionX, setTextPositionX] = useState(0)
-  const [textPositionY, setTextPositionY] = useState(0)
-  const [textColor, setTextColor] = useState('#000000')
+  const { canvas } = useEventGuiStore();
+  const [selectedObject, setSelectedObject] = useState<fabric.Object | null>(null);
+  const [objectType, setObjectType] = useState<'circle' | 'rect' | 'i-text' | null>(null);
+  
+  // Properties state
+  const [rotation, setRotation] = useState(0);
+  const [radius, setRadius] = useState(10);
+  const [width, setWidth] = useState(100);
+  const [height, setHeight] = useState(100);
+  const [fill, setFill] = useState('transparent');
+  const [stroke, setStroke] = useState('#000000');
+  const [text, setText] = useState('');
+  const [fontSize, setFontSize] = useState(20);
+  const [left, setLeft] = useState(0);
+  const [top, setTop] = useState(0);
+
+  // Listen for object selection
+  useEffect(() => {
+    if (!canvas) return;
+
+    const updateSelectedObject = () => {
+      const activeObject = canvas.getActiveObject();
+      setSelectedObject(activeObject || null);
+      setObjectType(activeObject?.type as any || null);
+
+      if (activeObject) {
+        // Update common properties
+        setRotation(activeObject.angle || 0);
+        setLeft(activeObject.left || 0);
+        setTop(activeObject.top || 0);
+        setFill(activeObject.fill as string || 'transparent');
+        setStroke(activeObject.stroke as string || '#000000');
+
+        // Update type-specific properties
+        if (activeObject.type === 'circle') {
+          setRadius((activeObject as fabric.Circle).radius || 10);
+        } else if (activeObject.type === 'rect') {
+          setWidth(activeObject.width || 100);
+          setHeight(activeObject.height || 100);
+        } else if (activeObject.type === 'i-text') {
+          setText((activeObject as fabric.IText).text || '');
+          setFontSize((activeObject as fabric.IText).fontSize || 20);
+        }
+      }
+    };
+
+    canvas.on('selection:created', updateSelectedObject);
+    canvas.on('selection:updated', updateSelectedObject);
+    canvas.on('selection:cleared', () => {
+      setSelectedObject(null);
+      setObjectType(null);
+    });
+
+    return () => {
+      canvas.off('selection:created', updateSelectedObject);
+      canvas.off('selection:updated', updateSelectedObject);
+      canvas.off('selection:cleared');
+    };
+  }, [canvas]);
+
+  // Update object properties
+  const updateObject = (updates: Partial<fabric.Object>) => {
+    if (!selectedObject || !canvas) return;
+    
+    selectedObject.set(updates);
+    canvas.renderAll();
+  };
 
   return (
     <div className="w-[20rem] bg-gray-50 p-4 space-y-4">
@@ -27,145 +86,171 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-md shadow p-4 space-y-4">
-        <h3 className="font-semibold">Shape</h3>
-        
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Rotation</label>
-          <div className="flex items-center mt-1">
-            <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => setRotation(r => r - 1)}>-</button>
-            <input
-              type="number"
-              value={rotation}
-              onChange={(e) => setRotation(Number(e.target.value))}
-              className="w-full px-2 py-1 text-center border-t border-b"
-            />
-            <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => setRotation(r => r + 1)}>+</button>
+      {selectedObject && (
+        <div className="bg-white rounded-md shadow p-4 space-y-4">
+          <h3 className="font-semibold">Properties</h3>
+          
+          {/* Common Properties */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Rotation</label>
+            <div className="flex items-center mt-1">
+              <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ angle: rotation - 1 })}>-</button>
+              <input
+                type="number"
+                value={rotation}
+                onChange={(e) => updateObject({ angle: Number(e.target.value) })}
+                className="w-full px-2 py-1 text-center border-t border-b"
+              />
+              <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ angle: rotation + 1 })}>+</button>
+            </div>
+          </div>
+
+          {/* Position Controls */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Position X</label>
+            <div className="flex items-center mt-1">
+              <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ left: left - 1 })}>-</button>
+              <input
+                type="number"
+                value={left}
+                onChange={(e) => updateObject({ left: Number(e.target.value) })}
+                className="w-full px-2 py-1 text-center border-t border-b"
+              />
+              <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ left: left + 1 })}>+</button>
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Position Y</label>
+            <div className="flex items-center mt-1">
+              <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ top: top - 1 })}>-</button>
+              <input
+                type="number"
+                value={top}
+                onChange={(e) => updateObject({ top: Number(e.target.value) })}
+                className="w-full px-2 py-1 text-center border-t border-b"
+              />
+              <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ top: top + 1 })}>+</button>
+            </div>
+          </div>
+
+          {/* Circle-specific controls */}
+          {objectType === 'circle' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Radius</label>
+              <div className="flex items-center mt-1">
+                <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ radius: radius - 1 })}>-</button>
+                <input
+                  type="number"
+                  value={radius}
+                  onChange={(e) => updateObject({ radius: Number(e.target.value) })}
+                  className="w-full px-2 py-1 text-center border-t border-b"
+                />
+                <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ radius: radius + 1 })}>+</button>
+              </div>
+            </div>
+          )}
+
+          {/* Rectangle-specific controls */}
+          {objectType === 'rect' && (
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Width</label>
+                <div className="flex items-center mt-1">
+                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ width: width - 1 })}>-</button>
+                  <input
+                    type="number"
+                    value={width}
+                    onChange={(e) => updateObject({ width: Number(e.target.value) })}
+                    className="w-full px-2 py-1 text-center border-t border-b"
+                  />
+                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ width: width + 1 })}>+</button>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Height</label>
+                <div className="flex items-center mt-1">
+                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ height: height - 1 })}>-</button>
+                  <input
+                    type="number"
+                    value={height}
+                    onChange={(e) => updateObject({ height: Number(e.target.value) })}
+                    className="w-full px-2 py-1 text-center border-t border-b"
+                  />
+                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ height: height + 1 })}>+</button>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Text-specific controls */}
+          {objectType === 'i-text' && (
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Text</label>
+                <input
+                  type="text"
+                  value={text}
+                  onChange={(e) => updateObject({ text: e.target.value })}
+                  className="mt-1 px-2 py-1 w-full border rounded-md"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Font Size</label>
+                <div className="flex items-center mt-1">
+                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ fontSize: fontSize - 1 })}>-</button>
+                  <input
+                    type="number"
+                    value={fontSize}
+                    onChange={(e) => updateObject({ fontSize: Number(e.target.value) })}
+                    className="w-full px-2 py-1 text-center border-t border-b"
+                  />
+                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ fontSize: fontSize + 1 })}>+</button>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Color controls for all objects */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Fill Color</label>
+            <div className="flex items-center mt-1">
+              <input
+                type="color"
+                value={fill === 'transparent' ? '#ffffff' : fill}
+                onChange={(e) => updateObject({ fill: e.target.value })}
+                className="w-8 h-8 rounded-md border"
+              />
+              <input
+                type="text"
+                value={fill === 'transparent' ? 'transparent' : fill.toUpperCase()}
+                onChange={(e) => updateObject({ fill: e.target.value })}
+                className="ml-2 px-2 py-1 w-full border rounded-md"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Border Color</label>
+            <div className="flex items-center mt-1">
+              <input
+                type="color"
+                value={stroke}
+                onChange={(e) => updateObject({ stroke: e.target.value })}
+                className="w-8 h-8 rounded-md border"
+              />
+              <input
+                type="text"
+                value={stroke.toUpperCase()}
+                onChange={(e) => updateObject({ stroke: e.target.value })}
+                className="ml-2 px-2 py-1 w-full border rounded-md"
+              />
+            </div>
           </div>
         </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Radius</label>
-          <div className="flex items-center mt-1">
-            <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => setRadius(r => r - 1)}>-</button>
-            <input
-              type="number"
-              value={radius.toFixed(8)}
-              onChange={(e) => setRadius(Number(e.target.value))}
-              className="w-full px-2 py-1 text-center border-t border-b"
-            />
-            <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => setRadius(r => r + 1)}>+</button>
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Color</label>
-          <div className="flex items-center mt-1">
-            <input
-              type="color"
-              value={color}
-              onChange={(e) => setColor(e.target.value)}
-              className="w-8 h-8 rounded-md border"
-            />
-            <input
-              type="text"
-              value={color.toUpperCase()}
-              onChange={(e) => setColor(e.target.value)}
-              className="ml-2 px-2 py-1 w-full border rounded-md"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Border</label>
-          <div className="flex items-center mt-1">
-            <input
-              type="color"
-              value={borderColor}
-              onChange={(e) => setBorderColor(e.target.value)}
-              className="w-8 h-8 rounded-md border"
-            />
-            <input
-              type="text"
-              value={borderColor.toUpperCase()}
-              onChange={(e) => setBorderColor(e.target.value)}
-              className="ml-2 px-2 py-1 w-full border rounded-md"
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Text</label>
-          <input
-            type="text"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            className="mt-1 px-2 py-1 w-full border rounded-md"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Text size</label>
-          <div className="flex items-center mt-1">
-            <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => setTextSize(s => s - 1)}>-</button>
-            <input
-              type="number"
-              value={textSize}
-              onChange={(e) => setTextSize(Number(e.target.value))}
-              className="w-full px-2 py-1 text-center border-t border-b"
-            />
-            <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => setTextSize(s => s + 1)}>+</button>
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Text position (x)</label>
-          <div className="flex items-center mt-1">
-            <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => setTextPositionX(x => x - 1)}>-</button>
-            <input
-              type="number"
-              value={textPositionX}
-              onChange={(e) => setTextPositionX(Number(e.target.value))}
-              className="w-full px-2 py-1 text-center border-t border-b"
-            />
-            <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => setTextPositionX(x => x + 1)}>+</button>
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Text position (y)</label>
-          <div className="flex items-center mt-1">
-            <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => setTextPositionY(y => y - 1)}>-</button>
-            <input
-              type="number"
-              value={textPositionY}
-              onChange={(e) => setTextPositionY(Number(e.target.value))}
-              className="w-full px-2 py-1 text-center border-t border-b"
-            />
-            <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => setTextPositionY(y => y + 1)}>+</button>
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Text color</label>
-          <div className="flex items-center mt-1">
-            <input
-              type="color"
-              value={textColor}
-              onChange={(e) => setTextColor(e.target.value)}
-              className="w-8 h-8 rounded-md border"
-            />
-            <input
-              type="text"
-              value={textColor.toUpperCase()}
-              onChange={(e) => setTextColor(e.target.value)}
-              className="ml-2 px-2 py-1 w-full border rounded-md"
-            />
-          </div>
-        </div>
-      </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default Sidebar;
