@@ -5,6 +5,16 @@ import Sidebar from './components/sidebar';
 import { useEventGuiStore } from '@/zustand/store';
 import { v4 as uuidv4 } from 'uuid';
 
+// :::::::::::::::::: Custom Rect object
+class CustomRect extends fabric.Rect {
+  readonly id: string;
+
+  constructor(options: any) {
+    super(options);
+    this.id = uuidv4();
+  }
+}
+
 // :::::::::::::::::: Custom Circle object
 class CustomCircle extends fabric.Circle {
   readonly id: string;
@@ -256,6 +266,7 @@ const SeatCanvas = () => {
     };
   }, [canvas, toolAction]);
 
+  
   // :::::::::::::::::::::: Add single seat, draw rectangle, or add text
   useEffect(() => {
     if (!canvas) return;
