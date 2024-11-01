@@ -60,15 +60,15 @@ const Sidebar = () => {
         });
       }
 
-      console.log('object is being updated!!');
+      // console.log('object is being updated!!');
     };
 
     canvas.on('selection:created', updateSelectedObject);
     canvas.on('selection:updated', updateSelectedObject);
     canvas.on('object:moving', updateSelectedObject);
-    // canvas.on('object:rotating', updateSelectedObject);
-    // canvas.on('object:scaling', updateSelectedObject);
-    // canvas.on('object:modified', updateSelectedObject);
+    canvas.on('object:rotating', updateSelectedObject);
+    canvas.on('object:scaling', updateSelectedObject);
+    canvas.on('object:modified', updateSelectedObject);
     canvas.on('selection:cleared', () => {
       setSelectedObject(null);
       setObjectType(null);
@@ -120,7 +120,7 @@ const Sidebar = () => {
           
           {/* Common Properties */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">Angle</label>
+            <label className="block text-sm font-medium text-gray-700">Angle (&deg;)</label>
             <div className="flex items-center mt-1">
               <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ angle: toFloat(properties.angle) - 1 })}>-</button>
               <input
@@ -137,28 +137,28 @@ const Sidebar = () => {
           <div>
             <label className="block text-sm font-medium text-gray-700">Position X</label>
             <div className="flex items-center mt-1">
-              <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ left: properties.left - 1 })}>-</button>
+              <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ left: toFloat(properties.left) - 1 })}>-</button>
               <input
                 type="number"
-                value={properties.left}
+                value={toFloat(properties.left)}
                 onChange={(e) => updateObject({ left: Number(e.target.value) })}
                 className="w-full px-2 py-1 text-center border-t border-b"
               />
-              <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ left: properties.left + 1 })}>+</button>
+              <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ left: toFloat(properties.left) + 1 })}>+</button>
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700">Position Y</label>
             <div className="flex items-center mt-1">
-              <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ top: properties.top - 1 })}>-</button>
+              <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ top: toFloat(properties.top) - 1 })}>-</button>
               <input
                 type="number"
-                value={properties.top}
+                value={toFloat(properties.top)}
                 onChange={(e) => updateObject({ top: Number(e.target.value) })}
                 className="w-full px-2 py-1 text-center border-t border-b"
               />
-              <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ top: properties.top + 1 })}>+</button>
+              <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ top: toFloat(properties.top) + 1 })}>+</button>
             </div>
           </div>
 
@@ -167,14 +167,14 @@ const Sidebar = () => {
             <div>
               <label className="block text-sm font-medium text-gray-700">Radius</label>
               <div className="flex items-center mt-1">
-                <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ radius: properties.radius - 1 })}>-</button>
+                <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ radius: toFloat(properties.radius) - 1 })}>-</button>
                 <input
                   type="number"
-                  value={properties.radius}
+                  value={toFloat(properties.radius)}
                   onChange={(e) => updateObject({ radius: Number(e.target.value) })}
                   className="w-full px-2 py-1 text-center border-t border-b"
                 />
-                <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ radius: properties.radius + 1 })}>+</button>
+                <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ radius: toFloat(properties.radius) + 1 })}>+</button>
               </div>
             </div>
           )}
@@ -185,27 +185,27 @@ const Sidebar = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700">Width</label>
                 <div className="flex items-center mt-1">
-                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ width: properties.width - 1 })}>-</button>
+                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ width: toFloat(properties.width) - 1 })}>-</button>
                   <input
                     type="number"
-                    value={properties.width}
+                    value={toFloat(properties.width)}
                     onChange={(e) => updateObject({ width: Number(e.target.value) })}
                     className="w-full px-2 py-1 text-center border-t border-b"
                   />
-                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ width: properties.width + 1 })}>+</button>
+                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ width: toFloat(properties.width) + 1 })}>+</button>
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Height</label>
                 <div className="flex items-center mt-1">
-                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ height: properties.height - 1 })}>-</button>
+                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ height: toFloat(properties.height) - 1 })}>-</button>
                   <input
                     type="number"
-                    value={properties.height}
+                    value={toFloat(properties.height)}
                     onChange={(e) => updateObject({ height: Number(e.target.value) })}
                     className="w-full px-2 py-1 text-center border-t border-b"
                   />
-                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ height: properties.height + 1 })}>+</button>
+                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ height: toFloat(properties.height) + 1 })}>+</button>
                 </div>
               </div>
             </>
@@ -226,14 +226,14 @@ const Sidebar = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700">Font Size</label>
                 <div className="flex items-center mt-1">
-                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ fontSize: properties.fontSize - 1 })}>-</button>
+                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ fontSize: toFloat(properties.fontSize) - 1 })}>-</button>
                   <input
                     type="number"
-                    value={properties.fontSize}
+                    value={toFloat(properties.fontSize)}
                     onChange={(e) => updateObject({ fontSize: Number(e.target.value) })}
                     className="w-full px-2 py-1 text-center border-t border-b"
                   />
-                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ fontSize: properties.fontSize + 1 })}>+</button>
+                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ fontSize: toFloat(properties.fontSize) + 1 })}>+</button>
                 </div>
               </div>
             </>
