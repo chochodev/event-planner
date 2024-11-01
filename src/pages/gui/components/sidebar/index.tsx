@@ -137,6 +137,7 @@ const Sidebar = () => {
     { value: 'sans-serif', label: 'Sans-serif' },
     { value: 'serif', label: 'Serif' },
     { value: 'monospace', label: 'Monospace' },
+    { value: 'poppins', label: 'Poppins' },
   ];
 
   return (
