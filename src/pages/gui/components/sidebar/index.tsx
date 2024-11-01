@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Plus } from 'lucide-react';
+import { LuPlus } from "react-icons/lu";
 import { useEventGuiStore } from '@/zustand/store';
 import { CustomFabricObject, UpdateableProperties } from '@/types/fabric-types';
 
@@ -78,7 +78,7 @@ const Sidebar = () => {
         <div className="flex items-center justify-between p-2 bg-gray-200 rounded-t-md">
           <span className="font-semibold">Zones</span>
           <button className="text-gray-600 hover:text-gray-800">
-            <Plus size={20} />
+            <LuPlus size={20} />
           </button>
         </div>
         <div className="p-2 flex items-center space-x-2">
