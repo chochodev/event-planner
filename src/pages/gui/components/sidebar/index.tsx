@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ChevronDown, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useEventGuiStore } from '@/zustand/store';
 import { CustomFabricObject, UpdateableProperties } from '@/types/fabric-types';
 
