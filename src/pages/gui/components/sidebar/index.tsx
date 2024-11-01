@@ -246,14 +246,14 @@ const Sidebar = () => {
               <input
                 type="color"
                 value={
-                  properties?.fill === 'transparent' ? '#ffffff' : properties.fill?.toString() || '#ffffff'
+                  properties?.fill === 'transparent' ? '#ffffff' : String(properties.fill) || '#ffffff'
                 }
                 onChange={(e) => updateObject({ fill: e.target.value })}
                 className="w-8 h-8 rounded-md border"
               />
               <input
                 type="text"
-                value={properties.fill === 'transparent' ? 'transparent' : (properties.fill?.toString() || '').toUpperCase()}
+                value={properties.fill === 'transparent' ? 'transparent' : (String(properties.fill) || '').toUpperCase()}
                 onChange={(e) => updateObject({ fill: e.target.value })}
                 className="ml-2 px-2 py-1 w-full border rounded-md"
               />
