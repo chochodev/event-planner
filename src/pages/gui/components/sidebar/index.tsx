@@ -118,7 +118,7 @@ const Sidebar = () => {
         <div className="bg-white rounded-md shadow p-4 space-y-4">
           <h3 className="font-semibold">Properties</h3>
           
-          {/* Common Properties */}
+          {/* ::::::::::::::::::::: Common Properties */}
           <div>
             <label className="block text-sm font-medium text-gray-700">Angle (&deg;)</label>
             <div className="flex items-center mt-1">
@@ -133,7 +133,7 @@ const Sidebar = () => {
             </div>
           </div>
 
-          {/* Position Controls */}
+          {/* ::::::::::::::::::::: Position Controls */}
           <div>
             <label className="block text-sm font-medium text-gray-700">Position X</label>
             <div className="flex items-center mt-1">
@@ -162,7 +162,7 @@ const Sidebar = () => {
             </div>
           </div>
 
-          {/* Circle-specific controls */}
+          {/* ::::::::::::::::::::: Circle-specific controls */}
           {objectType === 'circle' && (
             <div>
               <label className="block text-sm font-medium text-gray-700">Radius</label>
@@ -179,7 +179,7 @@ const Sidebar = () => {
             </div>
           )}
 
-          {/* Rectangle-specific controls */}
+          {/* ::::::::::::::::::::: Rectangle-specific controls */}
           {objectType === 'rect' && (
             <>
               <div>
@@ -211,7 +211,7 @@ const Sidebar = () => {
             </>
           )}
 
-          {/* Text-specific controls */}
+          {/* ::::::::::::::::::::: Text-specific controls */}
           {objectType === 'i-text' && (
             <>
               <div>
@@ -239,7 +239,7 @@ const Sidebar = () => {
             </>
           )}
 
-          {/* Color controls for all objects */}
+          {/* ::::::::::::::::::::: Color controls for all objects */}
           <div>
             <label className="block text-sm font-medium text-gray-700">Fill Color</label>
             <div className="flex items-center mt-1">
