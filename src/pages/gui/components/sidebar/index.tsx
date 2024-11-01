@@ -13,6 +13,8 @@ interface Properties {
   stroke: string | Pattern | Gradient | undefined;
   text: string;
   fontSize: number;
+  fontWeight: string;
+  fontFamily: string;
   left: number;
   top: number;
 }
@@ -32,6 +34,8 @@ const Sidebar = () => {
     stroke: '#000000' as string | undefined,
     text: '',
     fontSize: 20,
+    fontWeight: 'normal',
+    fontFamily: 'sans-serif',
     left: 0,
     top: 0
   });
@@ -44,8 +48,6 @@ const Sidebar = () => {
       const activeObject = canvas.getActiveObject() as CustomFabricObject;
       setSelectedObject(activeObject || null);
       setObjectType(activeObject?.type as any || null);
-      
-      console.log('stroke color before: ', activeObject?.stroke);
 
       if (activeObject) {
         setProperties({
@@ -53,18 +55,16 @@ const Sidebar = () => {
           radius: ((activeObject as any).radius * (activeObject as any).scaleX) || 10,
           width: activeObject.width || 100,
           height: activeObject.height || 100,
-          fill: activeObject.fill? String(activeObject.fill) : 'transparent',
+          fill: activeObject.fill? String(activeObject.fill).toUpperCase() === 'BLACK'? '#000000' : String(activeObject.fill) : 'transparent',
           stroke: activeObject.stroke? (Number(activeObject.stroke) === 1? '#000000' : String(activeObject.stroke)) : '#000000',
           text: (activeObject as any).text || '',
           fontSize: (activeObject as any).fontSize || 20,
+          fontWeight: (activeObject as any).fontWeight || 'normal',
+          fontFamily: (activeObject as any).fontFamily || 'sans-serif',
           left: activeObject.left || 0,
           top: activeObject.top || 0
         });
       }
-
-      console.log('stroke color after: ', activeObject?.stroke, '\ntype: ', typeof(activeObject?.stroke));
-
-      // console.table({'object radius: ': (activeObject as any).radius, '\nproperty radius: ': properties.radius, '\nscale x: ': (activeObject as any).scaleX});
     };
 
     const eventsToListen = [ 
@@ -105,6 +105,15 @@ const Sidebar = () => {
     };
   
     selectedObject.set(safeUpdates);
+    
+    // Prevent text size from increasing with scale
+    if (selectedObject.type === 'i-text') {
+      selectedObject.set({
+        scaleX: 1,
+        scaleY: 1,
+      });
+    }
+    
     canvas.renderAll();
 
     setProperties(prev => ({
@@ -255,6 +264,29 @@ const Sidebar = () => {
                   <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ fontSize: toFloat(properties.fontSize) + 1 })}>+</button>
                 </div>
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Font Weight</label>
+                <select
+                  value={properties.fontWeight}
+                  onChange={(e) => updateObject({ fontWeight: e.target.value })}
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                >
+                  <option value="normal">Normal</option>
+                  <option value="bold">Bold</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Font Family</label>
+                <select
+                  value={properties.fontFamily}
+                  onChange={(e) => updateObject({ fontFamily: e.target.value })}
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                >
+                  <option value="sans-serif">Sans-serif</option>
+                  <option value="serif">Serif</option>
+                  <option value="monospace">Monospace</option>
+                </select>
+              </div>
             </>
           )}
 
@@ -273,7 +305,8 @@ const Sidebar = () => {
               <input
                 type="text"
                 value={
-                  properties.fill === 'transparent' ? 'transparent' : (properties.fill?.toString() || '').toUpperCase()
+                  properties.fill === 'transparent' ? 
+                  'transparent' : (properties.fill?.toString() || '').toUpperCase()
                 }
                 onChange={(e) => updateObject({ fill: e.target.value })}
                 className="ml-2 px-2 py-1 w-full border rounded-md"
@@ -281,7 +314,7 @@ const Sidebar = () => {
             </div>
           </div>
 
-          <div>
+          {selectedObject?.type !== 'i-text' && <div>
             <label className="block text-sm font-medium text-gray-700">Border Color</label>
             <div className="flex items-center mt-1">
               <input
@@ -295,13 +328,14 @@ const Sidebar = () => {
               <input
                 type="text"
                 value={
-                  properties.stroke === 'transparent' ? 'transparent' : (properties.stroke?.toString() || '').toUpperCase()
+                  properties.stroke === 'transparent' ?
+                  'transparent' : (properties.stroke?.toString() || '').toUpperCase()
                 }
                 onChange={(e) => updateObject({ stroke: e.target.value })}
                 className="ml-2 px-2 py-1 w-full border rounded-md"
               />
             </div>
-          </div>
+          </div>}
         </div>
       )}
     </div>
