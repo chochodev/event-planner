@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { fabric } from 'fabric';
 import Toolbar from './components/toolbar';
 import Sidebar from './components/sidebar';
@@ -83,6 +83,7 @@ const SeatCanvas = () => {
 
     // :::::::::::::::::::::::: sample seat object created on the canvas
     const seat = createSeat(100, 100);
+    seat.angle = 45;
 
     newCanvas.add(seat);
     
@@ -91,9 +92,9 @@ const SeatCanvas = () => {
       const activeObject = newCanvas.getActiveObject();
   
       if (activeObject) {
-        console.log('Selected object:', activeObject);
+        // console.log('Selected object:', activeObject);
       } else {
-        console.log('No object selected');
+        // console.log('No object selected');
       }
     });
 

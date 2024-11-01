@@ -1,26 +1,42 @@
 import { useEffect, useState } from 'react';
 import { LuPlus } from "react-icons/lu";
 import { useEventGuiStore } from '@/zustand/store';
+import { Pattern, Gradient } from 'fabric/fabric-impl';
 import { CustomFabricObject, UpdateableProperties } from '@/types/fabric-types';
+
+interface Properties {
+  angle: number;
+  radius: number;
+  width: number;
+  height: number;
+  fill: string | Pattern | Gradient | undefined;
+  stroke: string;
+  text: string;
+  fontSize: number;
+  left: number;
+  top: number;
+}
 
 const Sidebar = () => {
   const { canvas } = useEventGuiStore();
   const [selectedObject, setSelectedObject] = useState<CustomFabricObject | null>(null);
   const [objectType, setObjectType] = useState<'circle' | 'rect' | 'i-text' | null>(null);
   
-  // Properties state
-  const [rotation, setRotation] = useState(0);
-  const [radius, setRadius] = useState(10);
-  const [width, setWidth] = useState(100);
-  const [height, setHeight] = useState(100);
-  const [fill, setFill] = useState<string | null>('transparent');
-  const [stroke, setStroke] = useState('#000000');
-  const [text, setText] = useState('');
-  const [fontSize, setFontSize] = useState(20);
-  const [left, setLeft] = useState(0);
-  const [top, setTop] = useState(0);
+  // ::::::::::::::::::: Properties state
+  const [properties, setProperties] = useState<Properties>({
+    angle: 0,
+    radius: 10,
+    width: 100,
+    height: 100,
+    fill: 'transparent' as string | undefined,
+    stroke: '#000000',
+    text: '',
+    fontSize: 20,
+    left: 0,
+    top: 0
+  });
 
-  // Listen for object selection
+  // ::::::::::::::::::::::: Listen for object selection
   useEffect(() => {
     if (!canvas) return;
 
@@ -30,28 +46,29 @@ const Sidebar = () => {
       setObjectType(activeObject?.type as any || null);
 
       if (activeObject) {
-        // Update common properties
-        setRotation(activeObject.angle || 0);
-        setLeft(activeObject.left || 0);
-        setTop(activeObject.top || 0);
-        setFill(activeObject.fill as string | null || 'transparent');
-        setStroke(activeObject.stroke as string || '#000000');
-
-        // Update type-specific properties
-        if (activeObject.type === 'circle') {
-          setRadius(activeObject.radius || 10);
-        } else if (activeObject.type === 'rect') {
-          setWidth(activeObject.width || 100);
-          setHeight(activeObject.height || 100);
-        } else if (activeObject.type === 'i-text') {
-          setText(activeObject.text || '');
-          setFontSize(activeObject.fontSize || 20);
-        }
+        setProperties({
+          angle: activeObject.angle || 0,
+          radius: (activeObject as any).radius || 10,
+          width: activeObject.width || 100,
+          height: activeObject.height || 100,
+          fill: activeObject.fill as string | null || 'transparent',
+          stroke: activeObject.stroke as string || '#000000',
+          text: (activeObject as any).text || '',
+          fontSize: (activeObject as any).fontSize || 20,
+          left: activeObject.left || 0,
+          top: activeObject.top || 0
+        });
       }
+
+      console.log('object is being updated!!');
     };
 
-    canvas.on('selection:created', updateSelectedObject);
-    canvas.on('selection:updated', updateSelectedObject);
+    canvas.off('selection:created', updateSelectedObject);
+    canvas.off('selection:updated', updateSelectedObject);
+    canvas.off('object:moving', updateSelectedObject);
+    canvas.off('object:rotating', updateSelectedObject);
+    canvas.off('object:scaling', updateSelectedObject);
+    canvas.off('object:modified', updateSelectedObject);
     canvas.on('selection:cleared', () => {
       setSelectedObject(null);
       setObjectType(null);
@@ -65,12 +82,22 @@ const Sidebar = () => {
   }, [canvas]);
 
   // Update object properties
-  const updateObject = (updates: UpdateableProperties) => {
+  const updateObject = (updates: Partial<Properties>) => {
     if (!selectedObject || !canvas) return;
     
     selectedObject.set(updates);
     canvas.renderAll();
+
+    setProperties(prev => ({
+      ...prev,
+      ...updates
+    }));
   };
+
+  // ::::::::::::::: Check if a number is float && return a number or float in 2 dp
+  const toFloat = (num: number) => {
+    return num % 1 !== 0? Number(num.toFixed(2)) : num;
+  }
 
   return (
     <div className="w-[20rem] min-h-screen bg-gray-50 p-4 space-y-4">
@@ -93,16 +120,16 @@ const Sidebar = () => {
           
           {/* Common Properties */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">Rotation</label>
+            <label className="block text-sm font-medium text-gray-700">Angle</label>
             <div className="flex items-center mt-1">
-              <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ angle: rotation - 1 })}>-</button>
+              <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ angle: toFloat(properties.angle) - 1 })}>-</button>
               <input
                 type="number"
-                value={rotation}
+                value={toFloat(properties.angle)}
                 onChange={(e) => updateObject({ angle: Number(e.target.value) })}
                 className="w-full px-2 py-1 text-center border-t border-b"
               />
-              <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ angle: rotation + 1 })}>+</button>
+              <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ angle: toFloat(properties.angle) + 1 })}>+</button>
             </div>
           </div>
 
@@ -110,28 +137,28 @@ const Sidebar = () => {
           <div>
             <label className="block text-sm font-medium text-gray-700">Position X</label>
             <div className="flex items-center mt-1">
-              <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ left: left - 1 })}>-</button>
+              <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ left: properties.left - 1 })}>-</button>
               <input
                 type="number"
-                value={left}
+                value={properties.left}
                 onChange={(e) => updateObject({ left: Number(e.target.value) })}
                 className="w-full px-2 py-1 text-center border-t border-b"
               />
-              <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ left: left + 1 })}>+</button>
+              <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ left: properties.left + 1 })}>+</button>
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700">Position Y</label>
             <div className="flex items-center mt-1">
-              <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ top: top - 1 })}>-</button>
+              <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ top: properties.top - 1 })}>-</button>
               <input
                 type="number"
-                value={top}
+                value={properties.top}
                 onChange={(e) => updateObject({ top: Number(e.target.value) })}
                 className="w-full px-2 py-1 text-center border-t border-b"
               />
-              <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ top: top + 1 })}>+</button>
+              <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ top: properties.top + 1 })}>+</button>
             </div>
           </div>
 
@@ -140,14 +167,14 @@ const Sidebar = () => {
             <div>
               <label className="block text-sm font-medium text-gray-700">Radius</label>
               <div className="flex items-center mt-1">
-                <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ radius: radius - 1 })}>-</button>
+                <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ radius: properties.radius - 1 })}>-</button>
                 <input
                   type="number"
-                  value={radius}
+                  value={properties.radius}
                   onChange={(e) => updateObject({ radius: Number(e.target.value) })}
                   className="w-full px-2 py-1 text-center border-t border-b"
                 />
-                <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ radius: radius + 1 })}>+</button>
+                <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ radius: properties.radius + 1 })}>+</button>
               </div>
             </div>
           )}
@@ -158,27 +185,27 @@ const Sidebar = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700">Width</label>
                 <div className="flex items-center mt-1">
-                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ width: width - 1 })}>-</button>
+                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ width: properties.width - 1 })}>-</button>
                   <input
                     type="number"
-                    value={width}
+                    value={properties.width}
                     onChange={(e) => updateObject({ width: Number(e.target.value) })}
                     className="w-full px-2 py-1 text-center border-t border-b"
                   />
-                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ width: width + 1 })}>+</button>
+                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ width: properties.width + 1 })}>+</button>
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Height</label>
                 <div className="flex items-center mt-1">
-                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ height: height - 1 })}>-</button>
+                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ height: properties.height - 1 })}>-</button>
                   <input
                     type="number"
-                    value={height}
+                    value={properties.height}
                     onChange={(e) => updateObject({ height: Number(e.target.value) })}
                     className="w-full px-2 py-1 text-center border-t border-b"
                   />
-                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ height: height + 1 })}>+</button>
+                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ height: properties.height + 1 })}>+</button>
                 </div>
               </div>
             </>
@@ -191,7 +218,7 @@ const Sidebar = () => {
                 <label className="block text-sm font-medium text-gray-700">Text</label>
                 <input
                   type="text"
-                  value={text}
+                  value={properties.text}
                   onChange={(e) => updateObject({ text: e.target.value })}
                   className="mt-1 px-2 py-1 w-full border rounded-md"
                 />
@@ -199,14 +226,14 @@ const Sidebar = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-700">Font Size</label>
                 <div className="flex items-center mt-1">
-                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ fontSize: fontSize - 1 })}>-</button>
+                  <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ fontSize: properties.fontSize - 1 })}>-</button>
                   <input
                     type="number"
-                    value={fontSize}
+                    value={properties.fontSize}
                     onChange={(e) => updateObject({ fontSize: Number(e.target.value) })}
                     className="w-full px-2 py-1 text-center border-t border-b"
                   />
-                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ fontSize: fontSize + 1 })}>+</button>
+                  <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ fontSize: properties.fontSize + 1 })}>+</button>
                 </div>
               </div>
             </>
@@ -218,13 +245,13 @@ const Sidebar = () => {
             <div className="flex items-center mt-1">
               <input
                 type="color"
-                value={fill === 'transparent' ? '#ffffff' : fill || '#ffffff'}
+                value={properties.fill === 'transparent' ? '#ffffff' : properties.fill || '#ffffff'}
                 onChange={(e) => updateObject({ fill: e.target.value })}
                 className="w-8 h-8 rounded-md border"
               />
               <input
                 type="text"
-                value={fill === 'transparent' ? 'transparent' : (fill || '').toUpperCase()}
+                value={properties.fill === 'transparent' ? 'transparent' : (properties.fill || '').toUpperCase()}
                 onChange={(e) => updateObject({ fill: e.target.value })}
                 className="ml-2 px-2 py-1 w-full border rounded-md"
               />
@@ -236,13 +263,13 @@ const Sidebar = () => {
             <div className="flex items-center mt-1">
               <input
                 type="color"
-                value={stroke}
+                value={properties.stroke}
                 onChange={(e) => updateObject({ stroke: e.target.value })}
                 className="w-8 h-8 rounded-md border"
               />
               <input
                 type="text"
-                value={String(stroke).toUpperCase()}
+                value={String(properties.stroke).toUpperCase()}
                 onChange={(e) => updateObject({ stroke: e.target.value })}
                 className="ml-2 px-2 py-1 w-full border rounded-md"
               />
