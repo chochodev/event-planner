@@ -15,6 +15,7 @@ interface SelectProps {
 const Select: React.FC<SelectProps> = ({ options, value, onChange, placeholder = 'Select an option' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
+  const [dropdownPosition, setDropdownPosition] = useState<'top' | 'bottom'>('bottom');
 
   const handleToggle = () => setIsOpen(!isOpen);
 
@@ -38,10 +39,31 @@ const Select: React.FC<SelectProps> = ({ options, value, onChange, placeholder =
 
   const selectedOption = options.find(option => option.value === value);
 
+  // :::::::::::::::::::: Set dropdown position based on bottom space
+  const calculateDropdownPosition = () => {
+    if (selectRef.current) {
+      const { bottom } = selectRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // :::::::::::::::::::::: Check if there is enough space below
+      if (windowHeight - bottom < 150) {
+        setDropdownPosition('top');
+      } else {
+        setDropdownPosition('bottom');
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      calculateDropdownPosition();
+    }
+  }, [isOpen]);
+
   return (
     <div ref={selectRef} className="relative">
       <div
-        className="flex items-center justify-between w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        className="flex items-center justify-between w-full px-3 py-2 text-sm bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
         onClick={handleToggle}
       >
         <span className="block truncate">
@@ -53,30 +75,30 @@ const Select: React.FC<SelectProps> = ({ options, value, onChange, placeholder =
           </svg>
         </span>
       </div>
-      {isOpen && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
-          <ul className="py-1 overflow-auto text-base max-h-60 focus:outline-none sm:text-sm">
-            {options.map((option) => (
-              <li
-                key={option.value}
-                className={`cursor-pointer select-none relative py-2 pl-3 pr-9 hover:bg-blue-100 ${
-                  value === option.value ? 'bg-blue-50 text-blue-600' : 'text-gray-900'
-                }`}
-                onClick={() => handleOptionClick(option.value)}
-              >
-                <span className="block truncate">{option.label}</span>
-                {value === option.value && (
-                  <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-blue-600">
-                    <svg className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {/* {isOpen && ( */}
+      <div className={`absolute z-10 w-full mt-1 bg-white border-solid border border-gray-300 shadow-lg rounded-[8px] overflow-hidden ${dropdownPosition === 'top' ? 'bottom-full mb-1' : 'top-full mt-1'} ${isOpen? 'opacity-100 user-select-auto visible' : 'select-none user-select-none invisible opacity-0'} ease-250` }>
+        <ul className="overflow-auto text-base max-h-60 focus:outline-none sm:text-sm">
+          {options.map((option) => (
+            <li
+              key={option.value}
+              className={`cursor-pointer select-none relative py-2 pl-3 pr-9 ${
+                value === option.value ? 'bg-gray-100 text-gray-600' : 'text-gray-900 hover:bg-gray-50'
+              }`}
+              onClick={() => handleOptionClick(option.value)}
+            >
+              <span className="block truncate">{option.label}</span>
+              {value === option.value && (
+                <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-600">
+                  <svg className="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+      {/* )} */}
     </div>
   );
 };
