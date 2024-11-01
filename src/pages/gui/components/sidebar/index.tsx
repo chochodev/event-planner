@@ -48,11 +48,11 @@ const Sidebar = () => {
       if (activeObject) {
         setProperties({
           angle: activeObject.angle || 0,
-          radius: (activeObject as any).radius || 10,
+          radius: ((activeObject as any).radius * (activeObject as any).scaleX) || 10,
           width: activeObject.width || 100,
           height: activeObject.height || 100,
-          fill: activeObject.fill as string | null || 'transparent',
-          stroke: activeObject.stroke as string || '#000000',
+          fill: activeObject.fill? String(activeObject.fill) : 'transparent',
+          stroke: activeObject.stroke? String(activeObject.stroke) : '#000000',
           text: (activeObject as any).text || '',
           fontSize: (activeObject as any).fontSize || 20,
           left: activeObject.left || 0,
@@ -60,7 +60,7 @@ const Sidebar = () => {
         });
       }
 
-      // console.log('object is being updated!!');
+      console.table({'object radius: ': (activeObject as any).radius, '\nproperty radius: ': properties.radius, '\nscale x: ': (activeObject as any).scaleX});
     };
 
     canvas.on('selection:created', updateSelectedObject);
@@ -79,9 +79,9 @@ const Sidebar = () => {
       canvas.off('selection:updated', updateSelectedObject);
       canvas.off('selection:cleared');
     };
-  }, [canvas]);
+  }, [canvas, properties.radius]);
 
-  // Update object properties
+  // :::::::::::::::::: Update object properties
   const updateObject = (updates: Partial<Properties>) => {
     if (!selectedObject || !canvas) return;
     
