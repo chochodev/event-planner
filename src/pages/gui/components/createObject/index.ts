@@ -109,6 +109,7 @@ export const createText = (left: number, top: number, text: string = 'Type here'
     cornerSize: 5,
     cornerStrokeColor: 'blue',
     transparentCorners: false,
+    fontFamily: 'sans-serif',
     id: uuidv4()
   });
 
