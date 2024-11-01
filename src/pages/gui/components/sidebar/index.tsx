@@ -3,6 +3,7 @@ import { LuPlus } from "react-icons/lu";
 import { useEventGuiStore } from '@/zustand/store';
 import { Pattern, Gradient } from 'fabric/fabric-impl';
 import { CustomFabricObject } from '@/types/fabric-types';
+import Select from '@/components/select';
 
 interface Properties {
   angle: number;
@@ -127,6 +128,17 @@ const Sidebar = () => {
     return num % 1 !== 0? Number(num.toFixed(2)) : num;
   }
 
+  const fontWeightOptions = [
+    { value: 'normal', label: 'Normal' },
+    { value: 'bold', label: 'Bold' },
+  ];
+
+  const fontFamilyOptions = [
+    { value: 'sans-serif', label: 'Sans-serif' },
+    { value: 'serif', label: 'Serif' },
+    { value: 'monospace', label: 'Monospace' },
+  ];
+
   return (
     <div className="w-[20rem] min-h-screen bg-gray-50 p-4 space-y-4">
       <div className="bg-white rounded-md shadow">
@@ -225,7 +237,7 @@ const Sidebar = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Height</label>
-                <div className="flex items-center mt-1">
+                <div className="flex items-center  mt-1">
                   <button className="px-2 py-1 bg-gray-200 rounded-l-md" onClick={() => updateObject({ height: toFloat(properties.height) - 1 })}>-</button>
                   <input
                     type="number"
@@ -266,26 +278,19 @@ const Sidebar = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Font Weight</label>
-                <select
+                <Select
+                  options={fontWeightOptions}
                   value={properties.fontWeight}
-                  onChange={(e) => updateObject({ fontWeight: e.target.value })}
-                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                >
-                  <option value="normal">Normal</option>
-                  <option value="bold">Bold</option>
-                </select>
+                  onChange={(value) => updateObject({ fontWeight: value })}
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">Font Family</label>
-                <select
+                <Select
+                  options={fontFamilyOptions}
                   value={properties.fontFamily}
-                  onChange={(e) => updateObject({ fontFamily: e.target.value })}
-                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-                >
-                  <option value="sans-serif">Sans-serif</option>
-                  <option value="serif">Serif</option>
-                  <option value="monospace">Monospace</option>
-                </select>
+                  onChange={(value) => updateObject({ fontFamily: value })}
+                />
               </div>
             </>
           )}
