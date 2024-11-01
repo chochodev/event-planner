@@ -287,7 +287,7 @@ const SeatCanvas = () => {
   }, [canvas, toolMode]);
 
   return (
-    <div className='relative size-screen bg-gray-200'>
+    <div className='relative size-full bg-gray-200'>
       <Toolbar />
       <div className='flex justify-between w-full'>
         <div className='w-full max-w-[45rem] mx-auto bg-gray-100' ref={canvasParent}>
