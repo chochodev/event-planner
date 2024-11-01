@@ -46,7 +46,7 @@ const Select: React.FC<SelectProps> = ({ options, value, onChange, placeholder =
       const windowHeight = window.innerHeight;
 
       // :::::::::::::::::::::: Check if there is enough space below
-      if (windowHeight - bottom < 150) {
+      if (windowHeight - bottom < 120) {
         setDropdownPosition('top');
       } else {
         setDropdownPosition('bottom');
