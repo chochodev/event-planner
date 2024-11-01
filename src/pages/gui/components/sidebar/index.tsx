@@ -253,7 +253,9 @@ const Sidebar = () => {
               />
               <input
                 type="text"
-                value={properties.fill === 'transparent' ? 'transparent' : (properties.fill?.toString() || '').toUpperCase()}
+                value={
+                  properties.fill === 'transparent' ? 'transparent' : (properties.fill?.toString() || '').toUpperCase()
+                }
                 onChange={(e) => updateObject({ fill: e.target.value })}
                 className="ml-2 px-2 py-1 w-full border rounded-md"
               />
@@ -265,13 +267,17 @@ const Sidebar = () => {
             <div className="flex items-center mt-1">
               <input
                 type="color"
-                value={properties.stroke}
+                value={
+                  properties.fill === 'transparent' ? 'transparent' : (properties.fill?.toString() || '').toUpperCase()
+                }
                 onChange={(e) => updateObject({ stroke: e.target.value })}
                 className="w-8 h-8 rounded-md border"
               />
               <input
                 type="text"
-                value={String(properties.stroke).toUpperCase()}
+                value={
+                  properties.stroke === 'transparent' ? 'transparent' : (properties.stroke?.toString() || '').toUpperCase()
+                }
                 onChange={(e) => updateObject({ stroke: e.target.value })}
                 className="ml-2 px-2 py-1 w-full border rounded-md"
               />
