@@ -66,9 +66,9 @@ const Sidebar = () => {
     canvas.off('selection:created', updateSelectedObject);
     canvas.off('selection:updated', updateSelectedObject);
     canvas.off('object:moving', updateSelectedObject);
-    canvas.off('object:rotating', updateSelectedObject);
-    canvas.off('object:scaling', updateSelectedObject);
-    canvas.off('object:modified', updateSelectedObject);
+    // canvas.off('object:rotating', updateSelectedObject);
+    // canvas.off('object:scaling', updateSelectedObject);
+    // canvas.off('object:modified', updateSelectedObject);
     canvas.on('selection:cleared', () => {
       setSelectedObject(null);
       setObjectType(null);
@@ -246,14 +246,14 @@ const Sidebar = () => {
               <input
                 type="color"
                 value={
-                  properties?.fill === 'transparent' ? '#ffffff' : String(properties.fill) || '#ffffff'
+                  properties?.fill === 'transparent' ? '#ffffff' : properties.fill?.toString() || '#ffffff'
                 }
                 onChange={(e) => updateObject({ fill: e.target.value })}
                 className="w-8 h-8 rounded-md border"
               />
               <input
                 type="text"
-                value={properties.fill === 'transparent' ? 'transparent' : (String(properties.fill) || '').toUpperCase()}
+                value={properties.fill === 'transparent' ? 'transparent' : (properties.fill?.toString() || '').toUpperCase()}
                 onChange={(e) => updateObject({ fill: e.target.value })}
                 className="ml-2 px-2 py-1 w-full border rounded-md"
               />
