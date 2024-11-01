@@ -10,7 +10,7 @@ interface Properties {
   width: number;
   height: number;
   fill: string | Pattern | Gradient | undefined;
-  stroke: string;
+  stroke: string | Pattern | Gradient | undefined;
   text: string;
   fontSize: number;
   left: number;
@@ -29,7 +29,7 @@ const Sidebar = () => {
     width: 100,
     height: 100,
     fill: 'transparent' as string | undefined,
-    stroke: '#000000',
+    stroke: '#000000' as string | undefined,
     text: '',
     fontSize: 20,
     left: 0,
@@ -44,6 +44,8 @@ const Sidebar = () => {
       const activeObject = canvas.getActiveObject() as CustomFabricObject;
       setSelectedObject(activeObject || null);
       setObjectType(activeObject?.type as any || null);
+      
+      console.log('stroke color before: ', activeObject?.stroke);
 
       if (activeObject) {
         setProperties({
@@ -52,7 +54,7 @@ const Sidebar = () => {
           width: activeObject.width || 100,
           height: activeObject.height || 100,
           fill: activeObject.fill? String(activeObject.fill) : 'transparent',
-          stroke: activeObject.stroke? String(activeObject.stroke) : '#000000',
+          stroke: activeObject.stroke? (Number(activeObject.stroke) === 1? '#000000' : String(activeObject.stroke)) : '#000000',
           text: (activeObject as any).text || '',
           fontSize: (activeObject as any).fontSize || 20,
           left: activeObject.left || 0,
@@ -60,7 +62,9 @@ const Sidebar = () => {
         });
       }
 
-      console.table({'object radius: ': (activeObject as any).radius, '\nproperty radius: ': properties.radius, '\nscale x: ': (activeObject as any).scaleX});
+      console.log('stroke color after: ', activeObject?.stroke, '\ntype: ', typeof(activeObject?.stroke));
+
+      // console.table({'object radius: ': (activeObject as any).radius, '\nproperty radius: ': properties.radius, '\nscale x: ': (activeObject as any).scaleX});
     };
 
     canvas.on('selection:created', updateSelectedObject);
@@ -84,8 +88,14 @@ const Sidebar = () => {
   // :::::::::::::::::: Update object properties
   const updateObject = (updates: Partial<Properties>) => {
     if (!selectedObject || !canvas) return;
-    
-    selectedObject.set(updates);
+
+    // ::::::::::::::: To make sure stroke is always string
+    const safeUpdates: Partial<CustomFabricObject> = {
+      ...updates,
+      stroke: typeof updates.stroke === 'string' ? updates.stroke : undefined
+    };
+  
+    selectedObject.set(safeUpdates);
     canvas.renderAll();
 
     setProperties(prev => ({
@@ -268,7 +278,7 @@ const Sidebar = () => {
               <input
                 type="color"
                 value={
-                  properties.fill === 'transparent' ? 'transparent' : (properties.fill?.toString() || '').toUpperCase()
+                  properties?.stroke === 'transparent' ? '#ffffff' : properties.stroke?.toString() || '#000000'
                 }
                 onChange={(e) => updateObject({ stroke: e.target.value })}
                 className="w-8 h-8 rounded-md border"
