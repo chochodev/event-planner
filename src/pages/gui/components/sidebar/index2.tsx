@@ -63,12 +63,9 @@ const Sidebar = () => {
       console.log('object is being updated!!');
     };
 
-    canvas.off('selection:created', updateSelectedObject);
-    canvas.off('selection:updated', updateSelectedObject);
-    canvas.off('object:moving', updateSelectedObject);
-    // canvas.off('object:rotating', updateSelectedObject);
-    // canvas.off('object:scaling', updateSelectedObject);
-    // canvas.off('object:modified', updateSelectedObject);
+    canvas.on('selection:created', updateSelectedObject);
+    canvas.on('selection:updated', updateSelectedObject);
+    canvas.on('object:moving', updateSelectedObject);
     canvas.on('selection:cleared', () => {
       setSelectedObject(null);
       setObjectType(null);
@@ -92,6 +89,16 @@ const Sidebar = () => {
       ...prev,
       ...updates
     }));
+    
+    // setProperties(prev => {
+    //   const newProperties = { ...prev };
+    //   (Object.keys(updates) as Array<keyof typeof updates>).forEach(key => {
+    //     if (key in newProperties) {
+    //       (newProperties as any)[key] = updates[key];
+    //     }
+    //   });
+    //   return newProperties;
+    // });
   };
 
   // ::::::::::::::: Check if a number is float && return a number or float in 2 dp
@@ -245,15 +252,13 @@ const Sidebar = () => {
             <div className="flex items-center mt-1">
               <input
                 type="color"
-                value={
-                  properties?.fill === 'transparent' ? '#ffffff' : properties.fill?.toString() || '#ffffff'
-                }
+                value={properties.fill === 'transparent' ? '#ffffff' : properties.fill || '#ffffff'}
                 onChange={(e) => updateObject({ fill: e.target.value })}
                 className="w-8 h-8 rounded-md border"
               />
               <input
                 type="text"
-                value={properties.fill === 'transparent' ? 'transparent' : (properties.fill?.toString() || '').toUpperCase()}
+                value={properties.fill === 'transparent' ? 'transparent' : (properties.fill || '').toUpperCase()}
                 onChange={(e) => updateObject({ fill: e.target.value })}
                 className="ml-2 px-2 py-1 w-full border rounded-md"
               />

@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
 import { useEventGuiStore } from '@/zustand/store';
 import {
-  FileIcon,
-  FolderOpen,
-  Save,
-  MousePointer,
-  LayoutGrid,
-  Layout,
-  Plus,
-  Grid2x2Plus,
-  Undo,
-  Redo,
-  Scissors,
-  Copy,
-  Clipboard,
-  Trash2,
-  ZoomIn,
-  ZoomOut,
-  QrCode,
-} from 'lucide-react';
-import { RiText, RiShapeLine } from "react-icons/ri";
+  LuFile,
+  LuFolderOpen,
+  LuSave,
+  LuMousePointer,
+  LuLayoutGrid,
+  LuLayout,
+  LuPlus,
+  LuGrid,
+  LuUndo,
+  LuRedo,
+  LuScissors,
+  LuCopy,
+  LuTrash2,
+  LuZoomIn,
+  LuZoomOut,
+  LuQrCode,
+} from 'react-icons/lu';
+import { RiText, RiShapeLine, RiApps2AddLine } from "react-icons/ri";
 
 const Toolbar: React.FC = () => {
   const { 
@@ -38,17 +37,17 @@ const Toolbar: React.FC = () => {
 
   // ::::::::::::::::::: Buttons data
   const buttonGroups = [
-    { icon: FileIcon, tooltip: "New File", onClick: () => {}, state: false },
-    { icon: FolderOpen, tooltip: "Open File", onClick: () => {}, state: false },
-    { icon: Save, tooltip: "Save File", onClick: () => {}, state: false },
+    { icon: LuFile, tooltip: "New File", onClick: () => {}, state: false },
+    { icon: LuFolderOpen, tooltip: "Open File", onClick: () => {}, state: false },
+    { icon: LuSave, tooltip: "Save File", onClick: () => {}, state: false },
     { 
-      icon: MousePointer, 
+      icon: LuMousePointer, 
       tooltip: "Select", 
       onClick: () => {setToolMode('select')},
       state: toolMode === 'select'
     },
-    { icon: LayoutGrid, tooltip: "Grid View", onClick: () => {}, state: false },
-    { icon: Layout, tooltip: "Layout View", onClick: () => {}, state: false },
+    { icon: LuLayoutGrid, tooltip: "Grid View", onClick: () => {}, state: false },
+    { icon: LuLayout, tooltip: "Layout View", onClick: () => {}, state: false },
     { 
       icon: RiText, 
       tooltip: "Add Text", 
@@ -62,24 +61,24 @@ const Toolbar: React.FC = () => {
       state: toolMode === 'shape-square'
     },
     { 
-      icon: Plus, 
+      icon: LuPlus, 
       tooltip: "Add Seat", 
       onClick: () => {setToolMode('one-seat')}, 
       state: toolMode === 'one-seat' 
     },
     { 
-      icon: Grid2x2Plus, 
+      icon: LuGrid, 
       tooltip: "Add Rows", 
       onClick: toggleMultipleSeatMode, 
       state: toolMode === 'multiple-seat'
     },
-    { icon: Undo, tooltip: "Undo", onClick: () => {}, state: false },
-    { icon: Redo, tooltip: "Redo", onClick: () => {}, state: false },
-    { icon: Scissors, tooltip: "Cut", onClick: () => {}, state: false },
-    { icon: Copy, tooltip: "Copy", onClick: () => {}, state: false },
-    { icon: Clipboard, tooltip: "Paste", onClick: () => {}, state: false },
+    { icon: LuUndo, tooltip: "Undo", onClick: () => {}, state: false },
+    { icon: LuRedo, tooltip: "Redo", onClick: () => {}, state: false },
+    { icon: LuScissors, tooltip: "Cut", onClick: () => {}, state: false },
+    { icon: LuCopy, tooltip: "Copy", onClick: () => {}, state: false },
+    { icon: RiApps2AddLine, tooltip: "Paste", onClick: () => {}, state: false },
     { 
-      icon: Trash2, 
+      icon: LuTrash2, 
       tooltip: "Delete", 
       onClick: () => {setToolAction('delete')}, 
       state: false // toolAction === 'delete' 
@@ -119,7 +118,7 @@ const Toolbar: React.FC = () => {
       {/* :::::::::::::: zoom button */}
       <Button 
         icon={
-          <ZoomOut className="h-4 w-4" />
+          <LuZoomOut className="h-4 w-4" />
         } 
         tooltip="Zoom Out" 
         onClick={() => setZoomLevel(zoomLevel - 10)}
@@ -129,7 +128,7 @@ const Toolbar: React.FC = () => {
         </div>
       <Button 
         icon={
-          <ZoomIn className="h-4 w-4" />
+          <LuZoomIn className="h-4 w-4" />
         } 
         tooltip="Zoom In" onClick={() => setZoomLevel(zoomLevel + 10)} 
       />
@@ -140,7 +139,7 @@ const Toolbar: React.FC = () => {
       {/* ::::::::::::::: qr code button */}
       <Button 
         icon={
-          <QrCode className="h-4 w-4" />
+          <LuQrCode className="h-4 w-4" />
         } 
         tooltip="QR Code" 
       />
