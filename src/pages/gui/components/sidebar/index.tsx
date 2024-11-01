@@ -67,20 +67,29 @@ const Sidebar = () => {
       // console.table({'object radius: ': (activeObject as any).radius, '\nproperty radius: ': properties.radius, '\nscale x: ': (activeObject as any).scaleX});
     };
 
-    canvas.on('selection:created', updateSelectedObject);
-    canvas.on('selection:updated', updateSelectedObject);
-    canvas.on('object:moving', updateSelectedObject);
-    canvas.on('object:rotating', updateSelectedObject);
-    canvas.on('object:scaling', updateSelectedObject);
-    canvas.on('object:modified', updateSelectedObject);
+    const eventsToListen = [ 
+      'selection:created', 
+      'selection:updated', 
+      'object:moving', 
+      'object:rotating', 
+      'object:scaling', 
+      'object:modified'
+    ];
+    // ::::::::::::::: Loop through events to call update function on
+    eventsToListen.forEach(event => {
+      canvas.on(event, updateSelectedObject);
+    });
+
     canvas.on('selection:cleared', () => {
       setSelectedObject(null);
       setObjectType(null);
     });
 
     return () => {
-      canvas.off('selection:created', updateSelectedObject);
-      canvas.off('selection:updated', updateSelectedObject);
+      // :::::::::::::: Loop through events to clear
+      eventsToListen.forEach(event => {
+        canvas.off(event, updateSelectedObject);
+      });
       canvas.off('selection:cleared');
     };
   }, [canvas, properties.radius]);
