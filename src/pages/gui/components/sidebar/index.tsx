@@ -63,12 +63,12 @@ const Sidebar = () => {
       console.log('object is being updated!!');
     };
 
-    canvas.off('selection:created', updateSelectedObject);
-    canvas.off('selection:updated', updateSelectedObject);
-    canvas.off('object:moving', updateSelectedObject);
-    // canvas.off('object:rotating', updateSelectedObject);
-    // canvas.off('object:scaling', updateSelectedObject);
-    // canvas.off('object:modified', updateSelectedObject);
+    canvas.on('selection:created', updateSelectedObject);
+    canvas.on('selection:updated', updateSelectedObject);
+    canvas.on('object:moving', updateSelectedObject);
+    // canvas.on('object:rotating', updateSelectedObject);
+    // canvas.on('object:scaling', updateSelectedObject);
+    // canvas.on('object:modified', updateSelectedObject);
     canvas.on('selection:cleared', () => {
       setSelectedObject(null);
       setObjectType(null);
