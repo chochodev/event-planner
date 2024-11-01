@@ -167,7 +167,7 @@ const Sidebar = () => {
                 type="number"
                 value={toFloat(properties.angle)}
                 onChange={(e) => updateObject({ angle: Number(e.target.value) })}
-                className="w-full px-2 py-1 text-center border-t border-b"
+                className="w-full px-2 py-1 text-center border-t border-b shadow-sm"
               />
               <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ angle: toFloat(properties.angle) + 1 })}>+</button>
             </div>
@@ -182,7 +182,7 @@ const Sidebar = () => {
                 type="number"
                 value={toFloat(properties.left)}
                 onChange={(e) => updateObject({ left: Number(e.target.value) })}
-                className="w-full px-2 py-1 text-center border-t border-b"
+                className="w-full px-2 py-1 text-center border-t border-b shadow-sm"
               />
               <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ left: toFloat(properties.left) + 1 })}>+</button>
             </div>
@@ -196,7 +196,7 @@ const Sidebar = () => {
                 type="number"
                 value={toFloat(properties.top)}
                 onChange={(e) => updateObject({ top: Number(e.target.value) })}
-                className="w-full px-2 py-1 text-center border-t border-b"
+                className="w-full px-2 py-1 text-center border-t border-b shadow-sm"
               />
               <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ top: toFloat(properties.top) + 1 })}>+</button>
             </div>
@@ -212,7 +212,7 @@ const Sidebar = () => {
                   type="number"
                   value={toFloat(properties.radius)}
                   onChange={(e) => updateObject({ radius: Number(e.target.value) })}
-                  className="w-full px-2 py-1 text-center border-t border-b"
+                  className="w-full px-2 py-1 text-center border-t border-b shadow-sm"
                 />
                 <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ radius: toFloat(properties.radius) + 1 })}>+</button>
               </div>
@@ -230,7 +230,7 @@ const Sidebar = () => {
                     type="number"
                     value={toFloat(properties.width)}
                     onChange={(e) => updateObject({ width: Number(e.target.value) })}
-                    className="w-full px-2 py-1 text-center border-t border-b"
+                    className="w-full px-2 py-1 text-center border-t border-b shadow-sm"
                   />
                   <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ width: toFloat(properties.width) + 1 })}>+</button>
                 </div>
@@ -243,7 +243,7 @@ const Sidebar = () => {
                     type="number"
                     value={toFloat(properties.height)}
                     onChange={(e) => updateObject({ height: Number(e.target.value) })}
-                    className="w-full px-2 py-1 text-center border-t border-b"
+                    className="w-full px-2 py-1 text-center border-t border-b shadow-sm"
                   />
                   <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ height: toFloat(properties.height) + 1 })}>+</button>
                 </div>
@@ -271,7 +271,7 @@ const Sidebar = () => {
                     type="number"
                     value={toFloat(properties.fontSize)}
                     onChange={(e) => updateObject({ fontSize: Number(e.target.value) })}
-                    className="w-full px-2 py-1 text-center border-t border-b"
+                    className="w-full px-2 py-1 text-center border-t border-b shadow-sm"
                   />
                   <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ fontSize: toFloat(properties.fontSize) + 1 })}>+</button>
                 </div>
@@ -308,7 +308,7 @@ const Sidebar = () => {
                   updateObject({ fill: e.target.value });
                   updateObject({ stroke: properties.stroke });
                 }}
-                className="w-8 h-8 rounded-md border"
+                className="w-8 h-8 rounded-md border shadow-sm"
               />
               <input
                 type="text"
@@ -317,7 +317,7 @@ const Sidebar = () => {
                   'transparent' : (properties.fill?.toString() || '').toUpperCase()
                 }
                 onChange={(e) => updateObject({ fill: e.target.value })}
-                className="ml-2 px-2 py-1 w-full border rounded-md"
+                className="ml-2 px-2 py-1 w-full border rounded-md shadow-sm"
               />
             </div>
           </div>
@@ -331,7 +331,7 @@ const Sidebar = () => {
                   properties?.stroke === 'transparent' ? '#ffffff' : properties.stroke?.toString() || '#000000'
                 }
                 onChange={(e) => updateObject({ stroke: e.target.value })}
-                className="w-8 h-8 rounded-md border"
+                className="w-8 h-8 rounded-md border shadow-sm"
               />
               <input
                 type="text"
@@ -340,7 +340,7 @@ const Sidebar = () => {
                   'transparent' : (properties.stroke?.toString() || '').toUpperCase()
                 }
                 onChange={(e) => updateObject({ stroke: e.target.value })}
-                className="ml-2 px-2 py-1 w-full border rounded-md"
+                className="ml-2 px-2 py-1 w-full border rounded-md shadow-sm"
               />
             </div>
           </div>}
