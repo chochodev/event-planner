@@ -18,6 +18,7 @@ const Sidebar: React.FC = () => {
   const { properties, setProperties } = useObjectProperties(canvas, selectedObject);
   const { updateObject } = useObjectUpdater(selectedObject, canvas, setProperties);
 
+  // ::::::::::::::::::::::: Listen for object selection
   useEffect(() => {
     if (!canvas) return;
 
@@ -36,6 +37,7 @@ const Sidebar: React.FC = () => {
       'object:modified'
     ];
 
+    // ::::::::::::::: Loop through events to call update function on
     eventsToListen.forEach(event => {
       canvas.on(event, updateSelectedObject);
     });

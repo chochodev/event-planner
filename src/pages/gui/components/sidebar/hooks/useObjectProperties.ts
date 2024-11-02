@@ -18,7 +18,12 @@ export interface Properties {
   top: number;
 }
 
-export const useObjectProperties = (canvas: fabric.Canvas | null, selectedObject: CustomFabricObject | null) => {
+export const useObjectProperties = (
+  canvas: fabric.Canvas | null, 
+  selectedObject: CustomFabricObject | null
+) => {
+
+  // ::::::::::::::::::: Properties state
   const [properties, setProperties] = useState<Properties>({
     angle: 0,
     radius: 10,
@@ -34,6 +39,7 @@ export const useObjectProperties = (canvas: fabric.Canvas | null, selectedObject
     top: 0
   });
 
+  // ::::::::::::::::::::::: Listen for object selection
   useEffect(() => {
     if (!selectedObject) return;
 
@@ -45,7 +51,7 @@ export const useObjectProperties = (canvas: fabric.Canvas | null, selectedObject
       
       // ::::::::::: fill
       fill: selectedObject.fill? String(selectedObject.fill).toUpperCase() === 'BLACK'? '#000000' : String(selectedObject.fill) : 'transparent',
-      
+
       // ::::::::::: stroke
       stroke: selectedObject.stroke ? (Number(selectedObject.stroke) === 1? '#000000' : String(selectedObject.stroke)) : '#000000',
 
