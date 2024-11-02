@@ -1,4 +1,4 @@
-import { toFloat } from '../utils';
+import { toFloat, PropertiesType } from '@/utils';
 
 const fontWeightOptions = [
   { value: 'normal', label: 'Normal' },
@@ -12,7 +12,7 @@ const fontFamilyOptions = [
   { value: 'poppins', label: 'Poppins' },
 ];
 
-const TextProperties = ({ properties, updateObject, Select }) => (
+const TextProperties = ({ properties: PropertiesType, updateObject, Select }) => (
   <>
     <div>
       <label className="block text-sm font-medium text-gray-700">Text</label>

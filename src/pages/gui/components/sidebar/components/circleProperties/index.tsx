@@ -1,6 +1,6 @@
-import { toFloat } from '@/utils';
+import { toFloat, PropertiesType } from '@/utils';
 
-const CircleProperties = ({ properties, updateObject }) => (
+const CircleProperties = ({ properties:{ radius=10 }}: {properties: Partial<PropertiesType>, updateObject}) => (
   <div>
     <label className="block text-sm font-medium text-gray-700">Radius</label>
     <div className="flex items-center mt-1">

@@ -1,6 +1,6 @@
-import { toFloat } from '../utils';
+import { toFloat, PropertiesType } from '@/utils';
 
-const RectangleProperties = ({ properties, updateObject }) => (
+const RectangleProperties = ({ properties: PropertiesType, updateObject }) => (
   <>
     <div>
       <label className="block text-sm font-medium text-gray-700">Width</label>

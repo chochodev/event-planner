@@ -1,4 +1,4 @@
-const ColorProperties = ({ properties, updateObject, objectType }) => (
+const ColorProperties = ({ properties: PropertiesType, updateObject, objectType }) => (
   <>
     <div>
       <label className="block text-sm font-medium text-gray-700">Fill Color</label>
