@@ -1,4 +1,22 @@
 import { toFloat, PropertiesType } from '@/utils';
+// import { toFloat } from '../utils';
+
+interface Properties {
+  text: string;
+  fontSize: number;
+  fontWeight: string;
+  fontFamily: string;
+}
+
+interface TextPropertiesProps {
+  properties: Properties;
+  updateObject: (updates: Partial<Properties>) => void;
+  Select: React.ComponentType<{
+    options: Array<{ value: string; label: string }>;
+    value: string;
+    onChange: (value: string) => void;
+  }>;
+}
 
 const fontWeightOptions = [
   { value: 'normal', label: 'Normal' },
@@ -12,7 +30,7 @@ const fontFamilyOptions = [
   { value: 'poppins', label: 'Poppins' },
 ];
 
-const TextProperties = ({ properties: PropertiesType, updateObject, Select }) => (
+const TextProperties: React.FC<TextPropertiesProps> = ({ properties, updateObject, Select }) => (
   <>
     <div>
       <label className="block text-sm font-medium text-gray-700">Text</label>
@@ -33,8 +51,7 @@ const TextProperties = ({ properties: PropertiesType, updateObject, Select }) =>
           onChange={(e) => updateObject({ fontSize: Number(e.target.value) })}
           className="w-full px-2 py-1 text-center border-t border-b shadow-sm"
         />
-        <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ 
-          fontSize: toFloat(properties.fontSize) + 1 })}>+</button>
+        <button className="px-2 py-1 bg-gray-200 rounded-r-md" onClick={() => updateObject({ fontSize: toFloat(properties.fontSize) + 1 })}>+</button>
       </div>
     </div>
     <div>

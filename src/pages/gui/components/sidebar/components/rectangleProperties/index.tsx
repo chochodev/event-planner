@@ -1,6 +1,17 @@
 import { toFloat, PropertiesType } from '@/utils';
+// import { toFloat } from '../utils';
 
-const RectangleProperties = ({ properties: PropertiesType, updateObject }) => (
+interface Properties {
+  width: number;
+  height: number;
+}
+
+interface RectanglePropertiesProps {
+  properties: Properties;
+  updateObject: (updates: Partial<Properties>) => void;
+}
+
+const RectangleProperties: React.FC<RectanglePropertiesProps> = ({ properties, updateObject }) => (
   <>
     <div>
       <label className="block text-sm font-medium text-gray-700">Width</label>

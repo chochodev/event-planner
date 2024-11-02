@@ -1,6 +1,16 @@
 import { toFloat, PropertiesType } from '@/utils';
+// import { toFloat } from '../utils';
 
-const CircleProperties = ({ properties:{ radius=10 }}: {properties: Partial<PropertiesType>, updateObject}) => (
+interface Properties {
+  radius: number;
+}
+
+interface CirclePropertiesProps {
+  properties: Properties;
+  updateObject: (updates: Partial<Properties>) => void;
+}
+
+const CircleProperties: React.FC<CirclePropertiesProps> = ({ properties, updateObject }) => (
   <div>
     <label className="block text-sm font-medium text-gray-700">Radius</label>
     <div className="flex items-center mt-1">

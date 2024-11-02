@@ -1,4 +1,15 @@
-const ColorProperties = ({ properties: PropertiesType, updateObject, objectType }) => (
+interface Properties {
+  fill: string;
+  stroke: string;
+}
+
+interface ColorPropertiesProps {
+  properties: Properties;
+  updateObject: (updates: Partial<Properties>) => void;
+  objectType: string;
+}
+
+const ColorProperties: React.FC<ColorPropertiesProps> = ({ properties, updateObject, objectType }) => (
   <>
     <div>
       <label className="block text-sm font-medium text-gray-700">Fill Color</label>
