@@ -7,6 +7,7 @@ import useSelectionHandler from './hooks/useSelectionHandler';
 import useMultipleSeatCreator from './hooks/useMultipleSeatCreator';
 import useObjectDeletion from './hooks/useObjectDeletion';
 import useObjectCreator from './hooks/useObjectCreator';
+import useKeyboardShortcuts from './hooks/useKeyboardShortcuts';
 
 const SeatCanvas = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -24,6 +25,8 @@ const SeatCanvas = () => {
   useMultipleSeatCreator(canvas, toolMode, setToolMode);
   useObjectDeletion(canvas, toolAction);
   useObjectCreator(canvas, toolMode, setToolMode);
+  
+  useKeyboardShortcuts();
 
   return (
     <div className='relative size-full bg-gray-200'>

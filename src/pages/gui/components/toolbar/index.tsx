@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useEventGuiStore } from '@/zustand/store';
-import useClipboardActions from './hooks/useClipboardActions';
+import useClipboardActions from '../../hooks/useClipboardActions';
 import {
   LuFile,
   LuFolderOpen,

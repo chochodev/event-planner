@@ -53,6 +53,8 @@ interface EventGuiState {
   // :::::::::::::::: Clipboard 
   clipboard: fabric.Object[] | null
   setClipboard: (objects: fabric.Object[] | null) => void
+  lastClickedPoint: { x: number; y: number } | null
+  setLastClickedPoint: (point: { x: number; y: number } | null) => void
 }
 
 export const useEventGuiStore = create<EventGuiState>((set) => ({
@@ -112,4 +114,6 @@ export const useEventGuiStore = create<EventGuiState>((set) => ({
   // ::::::::::::::::::: Clipboard state
   clipboard: null,
   setClipboard: (objects) => set({ clipboard: objects }),
+  lastClickedPoint: null,
+  setLastClickedPoint: (point) => set({ lastClickedPoint: point }),
 }))
