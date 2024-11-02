@@ -1,20 +1,6 @@
 import { fabric } from 'fabric';
 import { CustomFabricObject } from '@/types/fabric-types';
-
-interface Properties {
-  angle?: number;
-  radius?: number;
-  width?: number;
-  height?: number;
-  fill?: string;
-  stroke?: string;
-  text?: string;
-  fontSize?: number;
-  fontWeight?: string;
-  fontFamily?: string;
-  left?: number;
-  top?: number;
-}
+import { Properties } from './useObjectProperties';
 
 export const useObjectUpdater = (
   selectedObject: CustomFabricObject | null, 

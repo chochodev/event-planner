@@ -3,15 +3,14 @@ import { LuPlus } from "react-icons/lu";
 import { useEventGuiStore } from '@/zustand/store';
 import { CustomFabricObject } from '@/types/fabric-types';
 import { Select } from '@/components';
-import { useObjectProperties } from './hooks/useObjectProperties';
-import { useObjectUpdater } from './hooks/useObjectUpdater';
-import CommonProperties from './components/CommonProperties';
-import CircleProperties from './components/CircleProperties';
-import RectangleProperties from './components/RectangleProperties';
-import TextProperties from './components/TextProperties';
-import ColorProperties from './components/ColorProperties';
+import { useObjectProperties, useObjectUpdater } from './hooks';
+import CommonProperties from './components/commonProperties';
+import CircleProperties from './components/circleProperties';
+import RectangleProperties from './components/rectangleProperties';
+import TextProperties from './components/textProperties';
+import ColorProperties from './components/colorProperties';
 
-const Sidebar = () => {
+const Sidebar: React.FC = () => {
   const { canvas } = useEventGuiStore();
   const [selectedObject, setSelectedObject] = useState<CustomFabricObject | null>(null);
   const [objectType, setObjectType] = useState<'circle' | 'rect' | 'i-text' | null>(null);
@@ -22,10 +21,10 @@ const Sidebar = () => {
   useEffect(() => {
     if (!canvas) return;
 
-    const updateSelectedObject = () => {
+    const updateSelectedObject  = () => {
       const activeObject = canvas.getActiveObject() as CustomFabricObject;
       setSelectedObject(activeObject || null);
-      setObjectType(activeObject?.type as any || null);
+      setObjectType(activeObject?.type as 'circle' | 'rect' | 'i-text' | null);
     };
 
     const eventsToListen = [ 
@@ -94,7 +93,7 @@ const Sidebar = () => {
           <ColorProperties 
             properties={properties} 
             updateObject={updateObject} 
-            objectType={objectType} 
+            objectType={objectType}
           />
         </div>
       )}
@@ -103,7 +102,6 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
 
 // import { useEffect, useState } from 'react';
 // import { LuPlus } from "react-icons/lu";

@@ -2,14 +2,29 @@ import { useState, useEffect } from 'react';
 import { fabric } from 'fabric';
 import { CustomFabricObject } from '@/types/fabric-types';
 
+export interface Properties {
+  angle: number;
+  radius: number;
+  width: number;
+  height: number;
+  fill: string;
+  stroke: string;
+  text: string;
+  fontSize: number;
+  fontWeight: string;
+  fontFamily: string;
+  left: number;
+  top: number;
+}
+
 export const useObjectProperties = (canvas: fabric.Canvas | null, selectedObject: CustomFabricObject | null) => {
-  const [properties, setProperties] = useState({
+  const [properties, setProperties] = useState<Properties>({
     angle: 0,
     radius: 10,
     width: 100,
     height: 100,
-    fill: 'transparent' as string | undefined,
-    stroke: '#000000' as string | undefined,
+    fill: 'transparent',
+    stroke: '#000000',
     text: '',
     fontSize: 20,
     fontWeight: 'normal',
