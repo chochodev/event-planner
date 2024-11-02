@@ -1,6 +1,6 @@
 import { useEffect, useState, createContext, ReactNode } from 'react';
 import PropTypes from 'prop-types';
-import axiosInstance from 'utils/axios';
+import axiosInstance from '@/utils/axios';
 import { useTokenState } from '@/zustand/store';
 import useFlashMessage from '@/utils/flashMessage';
 import axios from 'axios';
