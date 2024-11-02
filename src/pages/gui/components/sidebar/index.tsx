@@ -10,6 +10,8 @@ import RectangleProperties from './components/rectangleProperties';
 import TextProperties from './components/textProperties';
 import ColorProperties from './components/colorProperties';
 
+export type Mode = 'select' | 'one-seat' | 'multiple-seat' | 'shape-square' | 'text';
+
 const Sidebar: React.FC = () => {
   const { canvas } = useEventGuiStore();
   const [selectedObject, setSelectedObject] = useState<CustomFabricObject | null>(null);

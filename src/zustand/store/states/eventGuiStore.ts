@@ -20,7 +20,7 @@ interface Zone {
   isChecked: boolean
 }
 
-type Mode = 'select' | 'one-seat' | 'multiple-seat' | 'shape-square' | 'text'
+export type Mode = 'select' | 'one-seat' | 'multiple-seat' | 'shape-square' | 'text'
 type Action = null | 'delete' | 'copy' | 'move' | 'paste'
 
 interface EventGuiState {

@@ -1,8 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { fabric } from 'fabric';
 import { createSeat } from '../components/createObject';
+import { Mode } from '@/zustand/store/states/eventGuiStore';
 
-const useMultipleSeatCreator = (canvas: fabric.Canvas | null, toolMode: string, setToolMode: (mode: string) => void) => {
+const useMultipleSeatCreator = (
+  canvas: fabric.Canvas | null, 
+  toolMode: Mode, 
+  setToolMode: (mode: Mode) => void
+) => {
   const startPointRef = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
