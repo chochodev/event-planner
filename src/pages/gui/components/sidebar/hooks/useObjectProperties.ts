@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { fabric } from 'fabric';
+import { Pattern, Gradient } from 'fabric/fabric-impl';
 import { CustomFabricObject } from '@/types/fabric-types';
 
 export interface Properties {
@@ -7,8 +8,8 @@ export interface Properties {
   radius: number;
   width: number;
   height: number;
-  fill: string;
-  stroke: string;
+  fill: string | Pattern | Gradient | undefined;
+  stroke: string | Pattern | Gradient | undefined;
   text: string;
   fontSize: number;
   fontWeight: string;
@@ -23,8 +24,8 @@ export const useObjectProperties = (canvas: fabric.Canvas | null, selectedObject
     radius: 10,
     width: 100,
     height: 100,
-    fill: 'transparent',
-    stroke: '#000000',
+    fill: 'transparent' as string | undefined,
+    stroke: '#000000' as string | undefined,
     text: '',
     fontSize: 20,
     fontWeight: 'normal',
@@ -41,8 +42,13 @@ export const useObjectProperties = (canvas: fabric.Canvas | null, selectedObject
       radius: ((selectedObject as any).radius * (selectedObject as any).scaleX) || 10,
       width: selectedObject.width || 100,
       height: selectedObject.height || 100,
-      fill: selectedObject.fill ? String(selectedObject.fill).toUpperCase() === 'BLACK' ? '#000000' : String(selectedObject.fill) : 'transparent',
-      stroke: selectedObject.stroke ? (Number(selectedObject.stroke) === 1 ? '#000000' : String(selectedObject.stroke)) : '#000000',
+      
+      // ::::::::::: fill
+      fill: selectedObject.fill? String(selectedObject.fill).toUpperCase() === 'BLACK'? '#000000' : String(selectedObject.fill) : 'transparent',
+      
+      // ::::::::::: stroke
+      stroke: selectedObject.stroke ? (Number(selectedObject.stroke) === 1? '#000000' : String(selectedObject.stroke)) : '#000000',
+
       text: (selectedObject as any).text || '',
       fontSize: (selectedObject as any).fontSize || 20,
       fontWeight: (selectedObject as any).fontWeight || 'normal',
