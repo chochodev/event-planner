@@ -123,41 +123,5 @@ export const createText = (left: number, top: number, text: string = 'Type here'
   return textObject;
 };
 
-// :::::::::::::::::::::::: Create Seat object
-// import { fabric } from 'fabric';
-
-// export const createSeat = (left: number, top: number) => {
-//   return new fabric.Rect({
-//     left,
-//     top,
-//     fill: 'blue',
-//     width: 50,
-//     height: 50,
-//     originX: 'center',
-//     originY: 'center',
-//   });
-// };
-
-// export const createRect = (left: number, top: number) => {
-//   return new fabric.Rect({
-//     left,
-//     top,
-//     fill: 'transparent',
-//     stroke: 'black',
-//     strokeWidth: 1,
-//     width: 100,
-//     height: 100,
-//   });
-// };
-
-// export const createText = (left: number, top: number) => {
-//   return new fabric.IText('Text', {
-//     left,
-//     top,
-//     fontFamily: 'Arial',
-//     fill: 'black',
-//     fontSize: 20,
-//   });
-// };
 
 export { CustomRect, CustomCircle, CustomText };
