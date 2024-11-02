@@ -5,7 +5,7 @@ import {
   LuFolderOpen,
   LuSave,
   LuMousePointer,
-  LuLayoutGrid,
+  LuClipboardCheck,
   LuLayout,
   LuPlus,
   LuGrid,
@@ -46,7 +46,7 @@ const Toolbar: React.FC = () => {
       onClick: () => {setToolMode('select')},
       state: toolMode === 'select'
     },
-    { icon: LuLayoutGrid, tooltip: "Grid View", onClick: () => {}, state: false },
+    { icon: LuGrid, tooltip: "Grid View", onClick: () => {}, state: false },
     { icon: LuLayout, tooltip: "Layout View", onClick: () => {}, state: false },
     { 
       icon: RiText, 
@@ -67,7 +67,7 @@ const Toolbar: React.FC = () => {
       state: toolMode === 'one-seat' 
     },
     { 
-      icon: LuGrid, 
+      icon: RiApps2AddLine, 
       tooltip: "Add Rows", 
       onClick: toggleMultipleSeatMode, 
       state: toolMode === 'multiple-seat'
@@ -76,7 +76,7 @@ const Toolbar: React.FC = () => {
     { icon: LuRedo, tooltip: "Redo", onClick: () => {}, state: false },
     { icon: LuScissors, tooltip: "Cut", onClick: () => {}, state: false },
     { icon: LuCopy, tooltip: "Copy", onClick: () => {}, state: false },
-    { icon: RiApps2AddLine, tooltip: "Paste", onClick: () => {}, state: false },
+    { icon: LuClipboardCheck, tooltip: "Paste", onClick: () => {}, state: false },
     { 
       icon: LuTrash2, 
       tooltip: "Delete", 
