@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useEventGuiStore } from '@/zustand/store';
+import useClipboardActions from './hooks/useClipboardActions';
 import {
   LuFile,
   LuFolderOpen,
@@ -29,6 +30,8 @@ const Toolbar: React.FC = () => {
     toolAction,
     setToolAction,
   } = useEventGuiStore();
+
+  const { copySelectedObjects, cutSelectedObjects, pasteObjects } = useClipboardActions();
 
   // ::::::::::::::::::: Function: toggle create multiple seats mode
   const toggleMultipleSeatMode = () => {
@@ -74,9 +77,9 @@ const Toolbar: React.FC = () => {
     },
     { icon: LuUndo, tooltip: "Undo", onClick: () => {}, state: false },
     { icon: LuRedo, tooltip: "Redo", onClick: () => {}, state: false },
-    { icon: LuScissors, tooltip: "Cut", onClick: () => {}, state: false },
-    { icon: LuCopy, tooltip: "Copy", onClick: () => {}, state: false },
-    { icon: LuClipboardCheck, tooltip: "Paste", onClick: () => {}, state: false },
+    { icon: LuScissors, tooltip: "Cut", onClick: cutSelectedObjects, state: false },
+    { icon: LuCopy, tooltip: "Copy", onClick: copySelectedObjects, state: false },
+    { icon: LuClipboardCheck, tooltip: "Paste", onClick: pasteObjects, state: false },
     { 
       icon: LuTrash2, 
       tooltip: "Delete", 
@@ -85,8 +88,6 @@ const Toolbar: React.FC = () => {
     },
   ];
   
-  
-
   return (
     <div 
       className="sticky top-0 left-0 z-[200] flex items-center gap-1 w-full bg-white px-[1rem] py-[0.5rem] shadow"
@@ -148,6 +149,7 @@ const Toolbar: React.FC = () => {
 }
 
 export default Toolbar
+
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ReactNode
   tooltip: string

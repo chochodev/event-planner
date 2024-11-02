@@ -49,6 +49,10 @@ interface EventGuiState {
   deleteZone: (id: string) => void
   zoomLevel: number
   setZoomLevel: (level: number) => void
+
+  // :::::::::::::::: Clipboard 
+  clipboard: fabric.Object[] | null
+  setClipboard: (objects: fabric.Object[] | null) => void
 }
 
 export const useEventGuiStore = create<EventGuiState>((set) => ({
@@ -104,4 +108,8 @@ export const useEventGuiStore = create<EventGuiState>((set) => ({
   // ::::::::::::::::::: Action state
   toolAction: null,
   setToolAction: (action: Action) => set({toolAction: action}),
+
+  // ::::::::::::::::::: Clipboard state
+  clipboard: null,
+  setClipboard: (objects) => set({ clipboard: objects }),
 }))
