@@ -1,4 +1,4 @@
-import { toFloat } from '../utils';
+import { toFloat } from '@/utils';
 
 const CircleProperties = ({ properties, updateObject }) => (
   <div>
