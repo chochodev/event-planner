@@ -55,9 +55,17 @@ interface EventGuiState {
   setClipboard: (objects: fabric.Object[] | null) => void
   lastClickedPoint: { x: number; y: number } | null
   setLastClickedPoint: (point: { x: number; y: number } | null) => void
+
+  
+  // New properties for undo/redo functionality
+  undoStack: string[]
+  redoStack: string[]
+  addToUndoStack: (state: string) => void
+  undo: () => void
+  redo: () => void
 }
 
-export const useEventGuiStore = create<EventGuiState>((set) => ({
+export const useEventGuiStore = create<EventGuiState>((set, get) => ({
   
   // ::::::::::::::::::: Canvas state
   canvas: null,
@@ -116,4 +124,41 @@ export const useEventGuiStore = create<EventGuiState>((set) => ({
   setClipboard: (objects) => set({ clipboard: objects }),
   lastClickedPoint: null,
   setLastClickedPoint: (point) => set({ lastClickedPoint: point }),
+
+  
+  // ::::::::::::::::::::: Undo/redo functionality
+  undoStack: [],
+  redoStack: [],
+  addToUndoStack: (state) => set((prevState) => ({
+    undoStack: [...prevState.undoStack, state],
+    redoStack: [],
+  })),
+  undo: () => {
+    const { canvas, undoStack, redoStack } = get()
+    if (undoStack.length > 0 && canvas) {
+      const currentState = JSON.stringify(canvas.toJSON())
+      const previousState = undoStack[undoStack.length - 1]
+      canvas.loadFromJSON(previousState, () => {
+        canvas.renderAll()
+        set({
+          undoStack: undoStack.slice(0, -1),
+          redoStack: [...redoStack, currentState],
+        })
+      })
+    }
+  },
+  redo: () => {
+    const { canvas, undoStack, redoStack } = get()
+    if (redoStack.length > 0 && canvas) {
+      const currentState = JSON.stringify(canvas.toJSON())
+      const nextState = redoStack[redoStack.length - 1]
+      canvas.loadFromJSON(nextState, () => {
+        canvas.renderAll()
+        set({
+          undoStack: [...undoStack, currentState],
+          redoStack: redoStack.slice(0, -1),
+        })
+      })
+    }
+  },
 }))
