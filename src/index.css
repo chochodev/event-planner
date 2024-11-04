@@ -120,3 +120,7 @@ html {
   color: #10B981;
 }
 
+/* :::::::::::::: For the loader */
+.loader-font-family {
+  font-family: var(--dancing-font), cursive;
+}
