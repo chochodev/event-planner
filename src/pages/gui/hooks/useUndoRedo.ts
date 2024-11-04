@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { useEventGuiStore } from '@/zustand/store'
+import { useEffect } from 'react';
+import { useEventGuiStore } from '@/zustand/store';
 
 const useUndoRedo = () => {
   const { canvas, addToUndoStack, undo, redo } = useEventGuiStore()
