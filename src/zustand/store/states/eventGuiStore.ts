@@ -21,7 +21,7 @@ interface Zone {
 }
 
 export type Mode = 'select' | 'one-seat' | 'multiple-seat' | 'shape-square' | 'text'
-type Action = null | 'delete' | 'copy' | 'move' | 'paste'
+export type Action = null | 'delete' | 'copy' | 'cut' | 'paste'
 
 interface EventGuiState {
   canvas: fabric.Canvas | null

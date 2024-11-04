@@ -77,9 +77,24 @@ const Toolbar: React.FC = () => {
     },
     { icon: LuUndo, tooltip: "Undo", onClick: () => {}, state: false },
     { icon: LuRedo, tooltip: "Redo", onClick: () => {}, state: false },
-    { icon: LuScissors, tooltip: "Cut", onClick: cutSelectedObjects, state: false },
-    { icon: LuCopy, tooltip: "Copy", onClick: copySelectedObjects, state: false },
-    { icon: LuClipboardCheck, tooltip: "Paste", onClick: pasteObjects, state: false },
+    { 
+      icon: LuScissors, 
+      tooltip: "Cut", 
+      onClick: cutSelectedObjects, 
+      state: toolAction === 'cut'
+    },
+    { 
+      icon: LuCopy, 
+      tooltip: "Copy", 
+      onClick: copySelectedObjects, 
+      state: toolAction === 'copy'
+    },
+    { 
+      icon: LuClipboardCheck, 
+      tooltip: "Paste", 
+      onClick: pasteObjects, 
+      state: toolAction === 'paste'
+    },
     { 
       icon: LuTrash2, 
       tooltip: "Delete", 
