@@ -18,7 +18,7 @@ const Sidebar: React.FC = () => {
   const [objectType, setObjectType] = useState<'circle' | 'rect' | 'i-text' | null>(null);
   
   const { properties, setProperties } = useObjectProperties(canvas, selectedObject);
-  const { updateObject } = useObjectUpdater(selectedObject, canvas, setProperties);
+  const { updateObject } = useObjectUpdater(canvas, setProperties);
 
   // ::::::::::::::::::::::: Listen for object selection
   useEffect(() => {
