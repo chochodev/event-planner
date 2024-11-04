@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useEventGuiStore } from '@/zustand/store';
 import useClipboardActions from '../../hooks/useClipboardActions';
+import useUndoRedo from '../../hooks/useUndoRedo';
 import {
   LuFile,
   LuFolderOpen,
@@ -32,6 +33,7 @@ const Toolbar: React.FC = () => {
   } = useEventGuiStore();
 
   const { copySelectedObjects, cutSelectedObjects, pasteObjects } = useClipboardActions();
+  const { undo, redo } = useUndoRedo();
 
   // ::::::::::::::::::: Function: toggle create multiple seats mode
   const toggleMultipleSeatMode = () => {
@@ -75,8 +77,8 @@ const Toolbar: React.FC = () => {
       onClick: toggleMultipleSeatMode, 
       state: toolMode === 'multiple-seat'
     },
-    { icon: LuUndo, tooltip: "Undo", onClick: () => {}, state: false },
-    { icon: LuRedo, tooltip: "Redo", onClick: () => {}, state: false },
+    { icon: LuUndo, tooltip: "Undo", onClick: undo, state: false },
+    { icon: LuRedo, tooltip: "Redo", onClick: redo, state: false },
     { 
       icon: LuScissors, 
       tooltip: "Cut", 
