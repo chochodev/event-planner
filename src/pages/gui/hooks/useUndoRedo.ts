@@ -2,26 +2,38 @@ import { useEffect } from 'react';
 import { useEventGuiStore } from '@/zustand/store';
 
 const useUndoRedo = () => {
-  const { canvas, addToUndoStack, undo, redo } = useEventGuiStore()
+  const { canvas, addToUndoStack, undo, redo, undoStack } = useEventGuiStore();
 
   useEffect(() => {
     if (!canvas) return
 
+    // :::::::::::::::: Function: appends undo state
     const handleObjectModified = () => {
-      const jsonState = JSON.stringify(canvas.toJSON())
-      addToUndoStack(jsonState)
+      const jsonState = JSON.stringify(canvas.toJSON());
+      addToUndoStack(jsonState);
+      console.log('handle object modified called!!', undoStack?.length);
     }
 
-    canvas.on('object:modified', handleObjectModified)
-    canvas.on('object:added', handleObjectModified)
-    canvas.on('object:removed', handleObjectModified)
+    const eventsToListen = [
+      'object:moving',
+      'object:rotating',
+      'object:scaling', 
+      'object:modified',
+      'object:added',
+      'object:removed'
+    ];
+
+    // ::::::::::::::: Loop through events to call function
+    eventsToListen.forEach(event => {
+      canvas.on(event, handleObjectModified);
+    });
 
     return () => {
-      canvas.off('object:modified', handleObjectModified)
-      canvas.off('object:added', handleObjectModified)
-      canvas.off('object:removed', handleObjectModified)
+      eventsToListen.forEach(event => {
+        canvas.off(event, handleObjectModified);
+      });
     }
-  }, [canvas, addToUndoStack])
+  }, [canvas])
 
   return { undo, redo }
 }
