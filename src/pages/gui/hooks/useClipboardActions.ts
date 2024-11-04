@@ -1,5 +1,5 @@
-import { useEventGuiStore } from '@/zustand/store'
-import { fabric } from 'fabric'
+import { useEventGuiStore } from '@/zustand/store';
+import { fabric } from 'fabric';
 
 const useClipboardActions = () => {
   const { canvas, clipboard, setClipboard, lastClickedPoint } = useEventGuiStore()
