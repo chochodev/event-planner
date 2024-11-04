@@ -11,7 +11,9 @@ interface RectanglePropertiesProps {
   updateObject: (updates: Partial<Properties>) => void;
 }
 
-const RectangleProperties: React.FC<RectanglePropertiesProps> = ({ properties, updateObject }) => (
+const RectangleProperties: React.FC<RectanglePropertiesProps> = ({ 
+  properties, updateObject 
+}) => (
   <>
     <div>
       <label className="block text-sm font-medium text-gray-700">Width</label>
