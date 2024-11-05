@@ -129,10 +129,15 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
   // ::::::::::::::::::::: Undo/redo functionality
   undoStack: [],
   redoStack: [],
-  addToUndoStack: (state) => set((prevState) => ({
-    undoStack: [...prevState.undoStack, state],
-    redoStack: [],
-  })),
+  addToUndoStack: (state) => {
+    const { undoStack, redoStack } = get();
+    console.log('Updated state: ', typeof(state), state, '\nundo stack', undoStack);
+
+    set({
+      undoStack: [...undoStack, state],
+      redoStack: [],
+    })
+  },
   undo: () => {
     const { canvas, undoStack, redoStack } = get()
     if (undoStack.length > 0 && canvas) {

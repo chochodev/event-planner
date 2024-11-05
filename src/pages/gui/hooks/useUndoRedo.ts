@@ -11,13 +11,13 @@ const useUndoRedo = () => {
     const handleObjectModified = () => {
       const jsonState = JSON.stringify(canvas.toJSON());
       addToUndoStack(jsonState);
-      console.log('handle object modified called!!', undoStack?.length);
+      console.log('handle object modified called!!', undoStack);
     }
 
     const eventsToListen = [
-      'object:moving',
-      'object:rotating',
-      'object:scaling', 
+      // 'object:moving',
+      // 'object:rotating',
+      // 'object:scaling', 
       'object:modified',
       'object:added',
       'object:removed'
@@ -33,7 +33,7 @@ const useUndoRedo = () => {
         canvas.off(event, handleObjectModified);
       });
     }
-  }, [canvas])
+  }, [canvas, addToUndoStack])
 
   return { undo, redo }
 }
