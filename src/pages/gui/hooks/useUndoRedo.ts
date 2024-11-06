@@ -15,9 +15,6 @@ const useUndoRedo = () => {
     }
 
     const eventsToListen = [
-      // 'object:moving',
-      // 'object:rotating',
-      // 'object:scaling', 
       'object:modified',
       'object:added',
       'object:removed'
