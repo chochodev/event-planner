@@ -1,18 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useEventGuiStore } from '@/zustand/store';
 
 const useUndoRedo = () => {
   const { canvas, addToUndoStack, undo, redo, undoStack } = useEventGuiStore();
+  const [isUndoRedo, setIsUndoRedo] = useState(false);
 
   useEffect(() => {
     if (!canvas) return
 
     // :::::::::::::::: Function: appends undo state
     const handleObjectModified = () => {
+      if (isUndoRedo) return;
+
       const jsonState = JSON.stringify(canvas.toJSON());
       addToUndoStack(jsonState);
-      console.log('handle object modified called!!', undoStack.length);
-    }
+      console.log('handleObjectModified called!', undoStack.length);
+    };
 
     const eventsToListen = [
       'object:modified',
@@ -30,9 +33,22 @@ const useUndoRedo = () => {
         canvas.off(event, handleObjectModified);
       });
     }
-  }, [canvas, addToUndoStack])
+  }, [canvas, isUndoRedo, undoStack, addToUndoStack])
 
-  return { undo, redo }
+  const handleUndo = () => {
+    setIsUndoRedo(true); // Set flag to indicate undo action
+    undo();
+    setIsUndoRedo(false); // Reset flag after undo completes
+  };
+
+  // Custom redo function
+  const handleRedo = () => {
+    setIsUndoRedo(true); // Set flag to indicate redo action
+    redo();
+    setIsUndoRedo(false); // Reset flag after redo completes
+  };
+
+  return { handleUndo, handleRedo }
 }
 
 export default useUndoRedo;

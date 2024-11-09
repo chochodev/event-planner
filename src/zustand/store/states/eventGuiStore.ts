@@ -143,9 +143,9 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
         undoStack: [...prevState.undoStack, state],
         redoStack: [],
       }));
+      
+      console.table(undoStack);
     }
-    
-    console.log('\n\nundo stack', undoStack);
   },
   // undo: () => {
   //   const { canvas, undoStack, redoStack } = get()
@@ -174,6 +174,8 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
           redoStack: [currentState, ...redoStack],
         });
       });
+      
+      console.log('\n\nundo func: ', undoStack);
     }
   },
   // redo: () => {
@@ -192,7 +194,7 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
   // },
   redo: () => {
     const { canvas, undoStack, redoStack } = get();
-    
+
     if (redoStack.length > 0 && canvas) {
       const nextState = redoStack[0];
       canvas.loadFromJSON(nextState, () => {
@@ -203,6 +205,8 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
           redoStack: redoStack.slice(1),
         });
       });
+      
+      console.log('\n\nredo func: ', undoStack, '\n\nredo stack: ', redoStack);
     }
   },
 }))

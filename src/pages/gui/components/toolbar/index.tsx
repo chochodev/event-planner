@@ -33,7 +33,7 @@ const Toolbar: React.FC = () => {
   } = useEventGuiStore();
 
   const { copySelectedObjects, cutSelectedObjects, pasteObjects } = useClipboardActions();
-  const { undo, redo } = useUndoRedo();
+  const { handleUndo, handleRedo } = useUndoRedo();
 
   // ::::::::::::::::::: Function: toggle create multiple seats mode
   const toggleMultipleSeatMode = () => {
@@ -77,8 +77,8 @@ const Toolbar: React.FC = () => {
       onClick: toggleMultipleSeatMode, 
       state: toolMode === 'multiple-seat'
     },
-    { icon: LuUndo, tooltip: "Undo", onClick: undo, state: false },
-    { icon: LuRedo, tooltip: "Redo", onClick: redo, state: false },
+    { icon: LuUndo, tooltip: "Undo", onClick: handleUndo, state: false },
+    { icon: LuRedo, tooltip: "Redo", onClick: handleRedo, state: false },
     { 
       icon: LuScissors, 
       tooltip: "Cut", 
