@@ -145,8 +145,6 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
         undoStack: [...prevState.undoStack, state],
         redoStack: [],
       }));
-      
-      console.log('\n\n stack state: ', undoStack);
     }
   },
 
