@@ -1,38 +1,73 @@
 import { fabric } from 'fabric';
 import { v4 as uuidv4 } from 'uuid';
 
-// :::::::::::::::::: Custom Rect object
 class CustomRect extends fabric.Rect {
   readonly id: string;
 
   constructor(options: any) {
     super(options);
-    this.id = uuidv4();
+    this.id = options.id || uuidv4();
+  }
+
+  toObject(propertiesToInclude: string[] = []) {
+    return fabric.util.object.extend(super.toObject(propertiesToInclude), {
+      id: this.id,
+      borderColor: this.borderColor,
+      borderDashArray: this.borderDashArray,
+      cornerColor: this.cornerColor,
+      cornerSize: this.cornerSize,
+      cornerStrokeColor: this.cornerStrokeColor,
+      transparentCorners: this.transparentCorners,
+    });
   }
 }
 
-// :::::::::::::::::: Custom Circle object
 class CustomCircle extends fabric.Circle {
   readonly id: string;
 
   constructor(options: any) {
     super(options);
-    this.id = uuidv4();
+    this.id = options.id || uuidv4();
+  }
+
+  toObject(propertiesToInclude: string[] = []) {
+    return fabric.util.object.extend(super.toObject(propertiesToInclude), {
+      id: this.id,
+      borderColor: this.borderColor,
+      borderDashArray: this.borderDashArray,
+      cornerColor: this.cornerColor,
+      cornerSize: this.cornerSize,
+      cornerStrokeColor: this.cornerStrokeColor,
+      transparentCorners: this.transparentCorners,
+      rx: this.radius,
+      ry: this.radius,
+    });
   }
 }
 
-// :::::::::::::::::: Custom Text object
 class CustomText extends fabric.IText {
   readonly id: string;
 
   constructor(options: any) {
     super(options.text, options);
-    this.id = uuidv4();
+    this.id = options.id || uuidv4();
+  }
+
+  toObject(propertiesToInclude: string[] = []) {
+    return fabric.util.object.extend(super.toObject(propertiesToInclude), {
+      id: this.id,
+      borderColor: this.borderColor,
+      borderDashArray: this.borderDashArray,
+      cornerColor: this.cornerColor,
+      cornerSize: this.cornerSize,
+      cornerStrokeColor: this.cornerStrokeColor,
+      transparentCorners: this.transparentCorners,
+    });
   }
 }
 
 // ::::::::::::::: Create rectangle object
-export const createRect = (left: number, top: number) => {
+const createRect = (left: number, top: number) => {
   const rect = new CustomRect({
     left,
     top,
@@ -63,7 +98,7 @@ export const createRect = (left: number, top: number) => {
 };
 
 // ::::::::::::::: Create seat object
-export const createSeat = (left: number, top: number) => {
+const createSeat = (left: number, top: number) => {
   const seat = new CustomCircle({
     left,
     top,
@@ -94,7 +129,7 @@ export const createSeat = (left: number, top: number) => {
 };
 
 // ::::::::::::::: Create text object
-export const createText = (left: number, top: number, text: string = 'Type here') => {
+const createText = (left: number, top: number, text: string = 'Type here') => {
   const textObject = new CustomText({
     left,
     top,
@@ -124,4 +159,4 @@ export const createText = (left: number, top: number, text: string = 'Type here'
 };
 
 
-export { CustomRect, CustomCircle, CustomText };
+export { CustomRect, CustomCircle, CustomText, createRect, createSeat, createText };

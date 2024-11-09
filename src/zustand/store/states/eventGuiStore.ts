@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { fabric } from 'fabric'
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
+import { CustomRect, CustomCircle, CustomText } from '@/pages/gui/components/createObject';
 
 interface Seat {
   id: string
@@ -159,7 +160,16 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
 
       const currentState = JSON.stringify(canvas.toJSON());
       const previousState = undoStack[undoStack.length - 2];
+
+      // ::::::::::::: update the canvas
       canvas.loadFromJSON(previousState, () => {
+        canvas.getObjects().forEach((obj) => {
+          if (obj instanceof fabric.Circle) {
+            obj.setControlsVisibility({
+              mt: false, mb: false, ml: false, mr: false,
+            });
+          }
+        });
         canvas.renderAll();
         set({
           undoStack: undoStack.slice(0, -1),
@@ -183,9 +193,18 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
       set({ loading: true });
 
       const nextState = redoStack[0];
+
+      // :::::::::::::::: update the canvas
       canvas.loadFromJSON(nextState, () => {
+        canvas.getObjects().forEach((obj) => {
+          if (obj instanceof fabric.Circle) {
+            obj.setControlsVisibility({
+              mt: false, mb: false, ml: false, mr: false,
+            });
+          }
+        });
         canvas.renderAll();
-        const currentState = JSON.stringify(canvas.toJSON());
+        const currentState = JSON.stringify(canvas.toJSON(['id', 'borderColor', 'borderDashArray', 'cornerColor', 'cornerSize', 'cornerStrokeColor', 'transparentCorners', 'rx', 'ry']));
         set({
           undoStack: [...undoStack, currentState],
           redoStack: redoStack.slice(1),
