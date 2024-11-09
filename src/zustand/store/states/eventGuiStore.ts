@@ -178,7 +178,7 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
       // ::::::::::::::::: set loading to false
       set({ loading: false });
       
-      console.log('\n\nundo func: ', undoStack);
+      // console.log('\n\nundo func: ', undoStack);
     }
   },
 
@@ -212,7 +212,7 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
       // ::::::::::::::::: set loading to false
       set({ loading: false });
       
-      console.log('\n\nredo func: ', undoStack, '\n\nredo stack: ', redoStack);
+      // console.log('\n\nredo func: ', undoStack, '\n\nredo stack: ', redoStack);
     }
   },
 }))
