@@ -24,6 +24,10 @@ export type Mode = 'select' | 'one-seat' | 'multiple-seat' | 'shape-square' | 't
 export type Action = null | 'delete' | 'copy' | 'cut' | 'paste'
 
 interface EventGuiState {
+  // ::::::::::: Loading state
+  loading: boolean
+
+  // ::::::::::: Canvas
   canvas: fabric.Canvas | null
   setCanvas: (canvas: fabric.Canvas) => void
   seats: Seat[]
@@ -66,6 +70,8 @@ interface EventGuiState {
 }
 
 export const useEventGuiStore = create<EventGuiState>((set, get) => ({
+  // ::::::::::::::::::: Loading state
+  loading: false,
   
   // ::::::::::::::::::: Canvas state
   canvas: null,
@@ -130,7 +136,7 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
   undoStack: [],
   redoStack: [],
   addToUndoStack: (state) => {
-    const { undoStack } = get();
+    const { loading, undoStack } = get();
     const lastState = undoStack[undoStack.length - 1];
     
     // set({
@@ -138,7 +144,7 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
       //   redoStack: [],
       // })
       
-    if (lastState !== state) {
+    if (lastState !== state && !loading) {
       set((prevState) => ({
         undoStack: [...prevState.undoStack, state],
         redoStack: [],
@@ -165,6 +171,9 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
     const { canvas, undoStack, redoStack } = get();
 
     if (undoStack.length > 1 && canvas) {
+      // :::::::::::::::: set loading to true
+      set({ loading: true });
+
       const currentState = JSON.stringify(canvas.toJSON());
       const previousState = undoStack[undoStack.length - 2]; // Get the second last state
       canvas.loadFromJSON(previousState, () => {
@@ -174,6 +183,9 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
           redoStack: [currentState, ...redoStack],
         });
       });
+
+      // ::::::::::::::::: set loading to false
+      set({ loading: false });
       
       console.log('\n\nundo func: ', undoStack);
     }
@@ -196,6 +208,9 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
     const { canvas, undoStack, redoStack } = get();
 
     if (redoStack.length > 0 && canvas) {
+      // :::::::::::::::: set loading to true
+      set({ loading: true });
+
       const nextState = redoStack[0];
       canvas.loadFromJSON(nextState, () => {
         canvas.renderAll();
@@ -205,6 +220,9 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
           redoStack: redoStack.slice(1),
         });
       });
+      
+      // ::::::::::::::::: set loading to false
+      set({ loading: false });
       
       console.log('\n\nredo func: ', undoStack, '\n\nredo stack: ', redoStack);
     }
