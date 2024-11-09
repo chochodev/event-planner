@@ -179,7 +179,7 @@ const Button: React.FC<ButtonProps> = ({ icon, tooltip, ...props }) => {
   return (
     <div className="relative">
       <button
-        className={`p-2 rounded-md hover:bg-gray-200/60 ${props.state? 'ring-1 ring-gray-400 shadow-sm shadow-gray-400' : '' } ease-250`}
+        className={`p-2 rounded-md hover:bg-gray-200/60 ${props.state? 'ring-1 ring-gray-400 shadow-sm shadow-gray-400' : '' } active:bg-gray-200 ease-250 `}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         {...props}

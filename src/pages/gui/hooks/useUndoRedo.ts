@@ -11,7 +11,7 @@ const useUndoRedo = () => {
     const handleObjectModified = () => {
       const jsonState = JSON.stringify(canvas.toJSON());
       addToUndoStack(jsonState);
-      console.log('handle object modified called!!', undoStack);
+      console.log('handle object modified called!!', undoStack.length);
     }
 
     const eventsToListen = [

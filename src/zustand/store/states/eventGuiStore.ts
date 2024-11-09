@@ -130,40 +130,79 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
   undoStack: [],
   redoStack: [],
   addToUndoStack: (state) => {
-    const { undoStack, redoStack } = get();
-    console.log('Updated state: ', typeof(state), state, '\nundo stack', undoStack);
-
-    set({
-      undoStack: [...undoStack, state],
-      redoStack: [],
-    })
+    const { undoStack } = get();
+    const lastState = undoStack[undoStack.length - 1];
+    
+    // set({
+      //   undoStack: [...undoStack, state],
+      //   redoStack: [],
+      // })
+      
+    if (lastState !== state) {
+      set((prevState) => ({
+        undoStack: [...prevState.undoStack, state],
+        redoStack: [],
+      }));
+    }
+    
+    console.log('\n\nundo stack', undoStack);
   },
+  // undo: () => {
+  //   const { canvas, undoStack, redoStack } = get()
+  //   if (undoStack.length > 0 && canvas) {
+  //     const currentState = JSON.stringify(canvas.toJSON())
+  //     const previousState = undoStack[undoStack.length - 1]
+  //     canvas.loadFromJSON(previousState, () => {
+  //       canvas.renderAll()
+  //       set({
+  //         undoStack: undoStack.slice(0, -1),
+  //         redoStack: [...redoStack, currentState],
+  //       })
+  //     })
+  //   }
+  // },
   undo: () => {
-    const { canvas, undoStack, redoStack } = get()
-    if (undoStack.length > 0 && canvas) {
-      const currentState = JSON.stringify(canvas.toJSON())
-      const previousState = undoStack[undoStack.length - 1]
+    const { canvas, undoStack, redoStack } = get();
+
+    if (undoStack.length > 1 && canvas) {
+      const currentState = JSON.stringify(canvas.toJSON());
+      const previousState = undoStack[undoStack.length - 2]; // Get the second last state
       canvas.loadFromJSON(previousState, () => {
-        canvas.renderAll()
+        canvas.renderAll();
         set({
-          undoStack: undoStack.slice(0, -1),
-          redoStack: [...redoStack, currentState],
-        })
-      })
+          undoStack: undoStack.slice(0, -1), // Remove the last state
+          redoStack: [currentState, ...redoStack],
+        });
+      });
     }
   },
+  // redo: () => {
+  //   const { canvas, undoStack, redoStack } = get()
+  //   if (redoStack.length > 0 && canvas) {
+  //     const currentState = JSON.stringify(canvas.toJSON())
+  //     const nextState = redoStack[redoStack.length - 1]
+  //     canvas.loadFromJSON(nextState, () => {
+  //       canvas.renderAll()
+  //       set({
+  //         undoStack: [...undoStack, currentState],
+  //         redoStack: redoStack.slice(0, -1),
+  //       })
+  //     })
+  //   }
+  // },
   redo: () => {
-    const { canvas, undoStack, redoStack } = get()
+    const { canvas, undoStack, redoStack } = get();
+    
     if (redoStack.length > 0 && canvas) {
-      const currentState = JSON.stringify(canvas.toJSON())
-      const nextState = redoStack[redoStack.length - 1]
+      const nextState = redoStack[0];
       canvas.loadFromJSON(nextState, () => {
-        canvas.renderAll()
+        canvas.renderAll();
+        const currentState = JSON.stringify(canvas.toJSON());
         set({
           undoStack: [...undoStack, currentState],
-          redoStack: redoStack.slice(0, -1),
-        })
-      })
+          redoStack: redoStack.slice(1),
+        });
+      });
     }
   },
 }))
