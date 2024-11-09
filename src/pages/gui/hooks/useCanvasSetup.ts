@@ -24,7 +24,7 @@ const useCanvasSetup = (canvasRef: React.RefObject<HTMLCanvasElement>, canvasPar
 
     const seat = createSeat(100, 100);
     seat.angle = 45;
-    newCanvas.add(seat);
+    // newCanvas.add(seat);
 
     newCanvas.on('object:moving', (event) => {
       const obj = event.target;
