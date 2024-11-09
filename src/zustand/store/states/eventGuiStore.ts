@@ -138,35 +138,18 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
   addToUndoStack: (state) => {
     const { loading, undoStack } = get();
     const lastState = undoStack[undoStack.length - 1];
-    
-    // set({
-      //   undoStack: [...undoStack, state],
-      //   redoStack: [],
-      // })
-      
+
     if (lastState !== state && !loading) {
       set((prevState) => ({
         undoStack: [...prevState.undoStack, state],
         redoStack: [],
       }));
       
-      console.table(undoStack);
+      console.log('\n\n stack state: ', undoStack);
     }
   },
-  // undo: () => {
-  //   const { canvas, undoStack, redoStack } = get()
-  //   if (undoStack.length > 0 && canvas) {
-  //     const currentState = JSON.stringify(canvas.toJSON())
-  //     const previousState = undoStack[undoStack.length - 1]
-  //     canvas.loadFromJSON(previousState, () => {
-  //       canvas.renderAll()
-  //       set({
-  //         undoStack: undoStack.slice(0, -1),
-  //         redoStack: [...redoStack, currentState],
-  //       })
-  //     })
-  //   }
-  // },
+
+  // ::::::::::::::: Function: UNDO
   undo: () => {
     const { canvas, undoStack, redoStack } = get();
 
@@ -175,11 +158,11 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
       set({ loading: true });
 
       const currentState = JSON.stringify(canvas.toJSON());
-      const previousState = undoStack[undoStack.length - 2]; // Get the second last state
+      const previousState = undoStack[undoStack.length - 2];
       canvas.loadFromJSON(previousState, () => {
         canvas.renderAll();
         set({
-          undoStack: undoStack.slice(0, -1), // Remove the last state
+          undoStack: undoStack.slice(0, -1),
           redoStack: [currentState, ...redoStack],
         });
       });
@@ -190,20 +173,8 @@ export const useEventGuiStore = create<EventGuiState>((set, get) => ({
       console.log('\n\nundo func: ', undoStack);
     }
   },
-  // redo: () => {
-  //   const { canvas, undoStack, redoStack } = get()
-  //   if (redoStack.length > 0 && canvas) {
-  //     const currentState = JSON.stringify(canvas.toJSON())
-  //     const nextState = redoStack[redoStack.length - 1]
-  //     canvas.loadFromJSON(nextState, () => {
-  //       canvas.renderAll()
-  //       set({
-  //         undoStack: [...undoStack, currentState],
-  //         redoStack: redoStack.slice(0, -1),
-  //       })
-  //     })
-  //   }
-  // },
+
+  // :::::::::::::: Function: REDO 
   redo: () => {
     const { canvas, undoStack, redoStack } = get();
 
